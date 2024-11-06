@@ -2,5 +2,8 @@
     "title":"Slowlylight",
     "subTitle":"Less is more, leave things better than when you find them",
     "avatarUrl":"https://avatars.githubusercontent.com/u/180890187?s=400&u=91b73661f9c8346c1b8bab4e034895a9e6f27f13&v=4",
-    "GMEEK_VERSION":"last"
+    "GMEEK_VERSION":"last",
+    "themeMode":"fix",
+    "dayTheme":"dark",
+    "nightTheme":"dark-blue",
 }
