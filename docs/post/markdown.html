@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark-blue" data-light-theme="dark" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/180890187?s=400&u=91b73661f9c8346c1b8bab4e034895a9e6f27f13&v=4">
+<meta name="description" content="https://learnxinyminutes.com/docs/markdown/
+
+Select theme:
+Learn X in Y minutes
+Where X=Markdown
+
+Get the code: markdown.md
+
+Markdown was created by John Gruber in 2004. It’s meant to be an easy to read and write syntax which converts easily to HTML (and now many other formats as well).
+
+Markdown also varies in implementation from one parser to a next. This guide will attempt to clarify when features are universal or when they are specific to a certain parser.
+HTML Elements
+
+Markdown is a superset of HTML, so any HTML file is valid Markdown.
+
+<!--This means we can use HTML elements in Markdown, such as the comment
+element, and they won't be affected by a markdown parser. However, if you
+create an HTML element in your markdown file, you cannot use markdown syntax
+within that element's contents.-->
+
+Headings
+
+You can create HTML elements <h1> through <h6> easily by prepending the text you want to be in that element by a number of hashes (#).
+
+# This is an <h1>
+## This is an <h2>
+### This is an <h3>
+#### This is an <h4>
+##### This is an <h5>
+###### This is an <h6>
+
+Markdown also provides us with two alternative ways of indicating h1 and h2.
+
+This is an h1
+=============
+
+This is an h2
+-------------
+
+Simple text styles
+
+Text can be easily styled as italic or bold using markdown.
+
+*This text is in italics.*
+_And so is this text._
+
+**This text is in bold.**
+__And so is this text.__
+
+***This text is in both.***
+**_As is this!_**
+*__And this!__*
+
+In GitHub Flavored Markdown, which is used to render markdown files on GitHub, we also have strikethrough:
+
+~~This text is rendered with strikethrough.~~
+
+Paragraphs
+
+Paragraphs are a one or multiple adjacent lines of text separated by one or multiple blank lines.
+
+This is a paragraph. I'm typing in a paragraph isn't this fun?
+
+Now I'm in paragraph 2.
+I'm still in paragraph 2 too!
+
+
+I'm in paragraph three!
+
+Should you ever want to insert an HTML <br /> tag, you can end a paragraph with two or more spaces and then begin a new paragraph.
+
+I end with two spaces (highlight me to see them).
+
+There's a <br /> above me!
+
+Block quotes are easy and done with the > character.
+
+> This is a block quote. You can either
+> manually wrap your lines and put a `>` before every line or you can let your lines get really long and wrap on their own.
+> It doesn't make a difference so long as they start with a `>`.
+
+> You can also use more than one level
+>> of indentation?
+> How neat is that?
+
+Lists
+
+Unordered lists can be made using asterisks, pluses, or hyphens.
+
+* Item
+* Item
+* Another item
+
+or
+
++ Item
++ Item
++ One more item
+
+or
+
+- Item
+- Item
+- One last item
+
+Ordered lists are done with a number followed by a period.
+
+1. Item one
+2. Item two
+3. Item three
+
+You don’t even have to label the items correctly and Markdown will still render the numbers in order, but this may not be a good idea.
+
+1. Item one
+1. Item two
+1. Item three
+
+(This renders the same as the example above.)
+
+You can also use sublists.
+
+1. Item one
+2. Item two
+3. Item three
+    * Sub-item
+    * Sub-item
+4. Item four
+
+There are even task lists. This creates HTML checkboxes.
+
+Boxes below without the 'x' are unchecked HTML checkboxes.
+- [ ] First task to complete.
+- [ ] Second task that needs done
+This checkbox below will be a checked HTML checkbox.
+- [x] This task has been completed
+
+Code blocks
+
+You can indicate a code block (which uses the <code> element) by indenting a line with four spaces or a tab.
+
+    This is code
+    So is this
+
+You can also re-tab (or add an additional four spaces) for indentation inside your code.
+
+    my_array.each do |item|
+      puts item
+    end
+
+Inline code can be created using the backtick character `.
+
+John didn't even know what the `go_to()` function did!
+
+In GitHub Flavored Markdown, you can use a special syntax for code.
+
+```ruby
+def foobar
+  puts 'Hello world!'
+end
+```
+
+The above text doesn’t require indenting, plus GitHub will use syntax highlighting of the language you specify after the opening ```.
+Horizontal rule
+
+Horizontal rules (<hr/>) are easily added with three or more asterisks or hyphens, with or without spaces.
+
+***
+---
+- - -
+****************
+
+Links
+
+One of the best things about markdown is how easy it is to make links. Put the text to display in hard brackets [] followed by the url in parentheses ()
+
+[Click me!](http://test.com/)
+
+You can also add a link title using quotes inside the parentheses.
+
+[Click me!](http://test.com/ 'Link to Test.com')
+
+Relative paths work too.
+
+[Go to music](/music/).
+
+Markdown also supports reference style links.
+
+[Click this link][link1] for more info about it!
+[Also check out this link][foobar] if you want to.
+
+[link1]: http://test.com/ 'Cool!'
+[foobar]: http://foobar.biz/ 'Alright!'
+
+The title can also be in single quotes or in parentheses, or omitted entirely. The references can be anywhere in your document and the reference IDs can be anything so long as they are unique.
+
+There is also “implicit naming” which lets you use the link text as the id.
+
+[This][] is a link.
+
+[This]: http://thisisalink.com/
+
+But it’s not that commonly used.
+Table of contents
+
+Some Markdown flavors even make use of the combination of lists, links and headings in order to create tables of contents. In this case, heading titles in lowercase are prepended with hash (#) and are used as link ids. Should the heading have multiple words, they will be connected with a hyphen (-), that also replaces some special characters. (Some other special characters are omitted though.)
+
+- [Heading](#heading)
+- [Another heading](#another-heading)
+- [Chapter](#chapter)
+  - [Subchapter <h3 />](#subchapter-h3-)
+
+Nonetheless, this is a feature that might not be working in all Markdown implementations the same way.
+Images
+
+Images are done the same way as links but with an exclamation point in front!
+
+![This is the alt-attribute for my image](http://imgur.com/myimage.jpg 'An optional title')
+
+And reference style works as expected.
+
+![This is the alt-attribute.][myimage]
+
+[myimage]: relative/urls/cool/image.jpg 'if you need a title, it's here'
+
+Miscellany
+Auto-links
+
+<http://testwebsite.com/> is equivalent to
+[http://testwebsite.com/](http://testwebsite.com/)
+
+Auto-links for emails
+
+<foo@bar.com>
+
+Escaping characters
+
+I want to type *this text surrounded by asterisks* but I don't want it to be
+in italics, so I do this: \*this text surrounded by asterisks\*.
+
+Keyboard keys
+
+In GitHub Flavored Markdown, you can use a <kbd> tag to represent keyboard keys.
+
+Your computer crashed? Try sending a
+<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Del</kbd>
+
+Tables
+
+Tables are only available in GitHub Flavored Markdown and are slightly cumbersome, but if you really want it:
+
+| Col1         | Col2     | Col3          |
+| :----------- | :------: | ------------: |
+| Left-aligned | Centered | Right-aligned |
+| blah         | blah     | blah          |
+
+or, for the same results
+
+Col 1 | Col2 | Col3
+:-- | :-: | --:
+Ugh this is so ugly | make it | stop
+
+Markdownlint
+
+In order to simplify work with Markdown and to unify its coding style, Markdownlint has been created. Available as a separate tool as well as a plugin for some IDEs, it can be used to ensure validity and readability of Markdown.
+Further reading
+
+For more info, check out John Gruber’s official post of syntax here and Adam Pritchard’s great cheatsheet here.
+
+If you want to learn more on some major Markdown flavors’ features, see:
+
+    GitHub Flavored Markdown
+    GitLab Flavored Markdown
+
+
+。">
+<meta property="og:title" content="markdown">
+<meta property="og:description" content="https://learnxinyminutes.com/docs/markdown/
+
+Select theme:
+Learn X in Y minutes
+Where X=Markdown
+
+Get the code: markdown.md
+
+Markdown was created by John Gruber in 2004. It’s meant to be an easy to read and write syntax which converts easily to HTML (and now many other formats as well).
+
+Markdown also varies in implementation from one parser to a next. This guide will attempt to clarify when features are universal or when they are specific to a certain parser.
+HTML Elements
+
+Markdown is a superset of HTML, so any HTML file is valid Markdown.
+
+<!--This means we can use HTML elements in Markdown, such as the comment
+element, and they won't be affected by a markdown parser. However, if you
+create an HTML element in your markdown file, you cannot use markdown syntax
+within that element's contents.-->
+
+Headings
+
+You can create HTML elements <h1> through <h6> easily by prepending the text you want to be in that element by a number of hashes (#).
+
+# This is an <h1>
+## This is an <h2>
+### This is an <h3>
+#### This is an <h4>
+##### This is an <h5>
+###### This is an <h6>
+
+Markdown also provides us with two alternative ways of indicating h1 and h2.
+
+This is an h1
+=============
+
+This is an h2
+-------------
+
+Simple text styles
+
+Text can be easily styled as italic or bold using markdown.
+
+*This text is in italics.*
+_And so is this text._
+
+**This text is in bold.**
+__And so is this text.__
+
+***This text is in both.***
+**_As is this!_**
+*__And this!__*
+
+In GitHub Flavored Markdown, which is used to render markdown files on GitHub, we also have strikethrough:
+
+~~This text is rendered with strikethrough.~~
+
+Paragraphs
+
+Paragraphs are a one or multiple adjacent lines of text separated by one or multiple blank lines.
+
+This is a paragraph. I'm typing in a paragraph isn't this fun?
+
+Now I'm in paragraph 2.
+I'm still in paragraph 2 too!
+
+
+I'm in paragraph three!
+
+Should you ever want to insert an HTML <br /> tag, you can end a paragraph with two or more spaces and then begin a new paragraph.
+
+I end with two spaces (highlight me to see them).
+
+There's a <br /> above me!
+
+Block quotes are easy and done with the > character.
+
+> This is a block quote. You can either
+> manually wrap your lines and put a `>` before every line or you can let your lines get really long and wrap on their own.
+> It doesn't make a difference so long as they start with a `>`.
+
+> You can also use more than one level
+>> of indentation?
+> How neat is that?
+
+Lists
+
+Unordered lists can be made using asterisks, pluses, or hyphens.
+
+* Item
+* Item
+* Another item
+
+or
+
++ Item
++ Item
++ One more item
+
+or
+
+- Item
+- Item
+- One last item
+
+Ordered lists are done with a number followed by a period.
+
+1. Item one
+2. Item two
+3. Item three
+
+You don’t even have to label the items correctly and Markdown will still render the numbers in order, but this may not be a good idea.
+
+1. Item one
+1. Item two
+1. Item three
+
+(This renders the same as the example above.)
+
+You can also use sublists.
+
+1. Item one
+2. Item two
+3. Item three
+    * Sub-item
+    * Sub-item
+4. Item four
+
+There are even task lists. This creates HTML checkboxes.
+
+Boxes below without the 'x' are unchecked HTML checkboxes.
+- [ ] First task to complete.
+- [ ] Second task that needs done
+This checkbox below will be a checked HTML checkbox.
+- [x] This task has been completed
+
+Code blocks
+
+You can indicate a code block (which uses the <code> element) by indenting a line with four spaces or a tab.
+
+    This is code
+    So is this
+
+You can also re-tab (or add an additional four spaces) for indentation inside your code.
+
+    my_array.each do |item|
+      puts item
+    end
+
+Inline code can be created using the backtick character `.
+
+John didn't even know what the `go_to()` function did!
+
+In GitHub Flavored Markdown, you can use a special syntax for code.
+
+```ruby
+def foobar
+  puts 'Hello world!'
+end
+```
+
+The above text doesn’t require indenting, plus GitHub will use syntax highlighting of the language you specify after the opening ```.
+Horizontal rule
+
+Horizontal rules (<hr/>) are easily added with three or more asterisks or hyphens, with or without spaces.
+
+***
+---
+- - -
+****************
+
+Links
+
+One of the best things about markdown is how easy it is to make links. Put the text to display in hard brackets [] followed by the url in parentheses ()
+
+[Click me!](http://test.com/)
+
+You can also add a link title using quotes inside the parentheses.
+
+[Click me!](http://test.com/ 'Link to Test.com')
+
+Relative paths work too.
+
+[Go to music](/music/).
+
+Markdown also supports reference style links.
+
+[Click this link][link1] for more info about it!
+[Also check out this link][foobar] if you want to.
+
+[link1]: http://test.com/ 'Cool!'
+[foobar]: http://foobar.biz/ 'Alright!'
+
+The title can also be in single quotes or in parentheses, or omitted entirely. The references can be anywhere in your document and the reference IDs can be anything so long as they are unique.
+
+There is also “implicit naming” which lets you use the link text as the id.
+
+[This][] is a link.
+
+[This]: http://thisisalink.com/
+
+But it’s not that commonly used.
+Table of contents
+
+Some Markdown flavors even make use of the combination of lists, links and headings in order to create tables of contents. In this case, heading titles in lowercase are prepended with hash (#) and are used as link ids. Should the heading have multiple words, they will be connected with a hyphen (-), that also replaces some special characters. (Some other special characters are omitted though.)
+
+- [Heading](#heading)
+- [Another heading](#another-heading)
+- [Chapter](#chapter)
+  - [Subchapter <h3 />](#subchapter-h3-)
+
+Nonetheless, this is a feature that might not be working in all Markdown implementations the same way.
+Images
+
+Images are done the same way as links but with an exclamation point in front!
+
+![This is the alt-attribute for my image](http://imgur.com/myimage.jpg 'An optional title')
+
+And reference style works as expected.
+
+![This is the alt-attribute.][myimage]
+
+[myimage]: relative/urls/cool/image.jpg 'if you need a title, it's here'
+
+Miscellany
+Auto-links
+
+<http://testwebsite.com/> is equivalent to
+[http://testwebsite.com/](http://testwebsite.com/)
+
+Auto-links for emails
+
+<foo@bar.com>
+
+Escaping characters
+
+I want to type *this text surrounded by asterisks* but I don't want it to be
+in italics, so I do this: \*this text surrounded by asterisks\*.
+
+Keyboard keys
+
+In GitHub Flavored Markdown, you can use a <kbd> tag to represent keyboard keys.
+
+Your computer crashed? Try sending a
+<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Del</kbd>
+
+Tables
+
+Tables are only available in GitHub Flavored Markdown and are slightly cumbersome, but if you really want it:
+
+| Col1         | Col2     | Col3          |
+| :----------- | :------: | ------------: |
+| Left-aligned | Centered | Right-aligned |
+| blah         | blah     | blah          |
+
+or, for the same results
+
+Col 1 | Col2 | Col3
+:-- | :-: | --:
+Ugh this is so ugly | make it | stop
+
+Markdownlint
+
+In order to simplify work with Markdown and to unify its coding style, Markdownlint has been created. Available as a separate tool as well as a plugin for some IDEs, it can be used to ensure validity and readability of Markdown.
+Further reading
+
+For more info, check out John Gruber’s official post of syntax here and Adam Pritchard’s great cheatsheet here.
+
+If you want to learn more on some major Markdown flavors’ features, see:
+
+    GitHub Flavored Markdown
+    GitLab Flavored Markdown
+
+
+。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://isharebox.github.io/post/markdown.html">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/180890187?s=400&u=91b73661f9c8346c1b8bab4e034895a9e6f27f13&v=4">
+<title>markdown</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">markdown</h1>
+<div class="title-right">
+    <a href="https://isharebox.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/isharebox/isharebox.github.io/issues/4" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p><a href="https://learnxinyminutes.com/docs/markdown/" rel="nofollow">https://learnxinyminutes.com/docs/markdown/</a></p>
+<p>Select theme:<br>
+Learn X in Y minutes<br>
+Where X=Markdown</p>
+<p>Get the code: markdown.md</p>
+<p>Markdown was created by John Gruber in 2004. It’s meant to be an easy to read and write syntax which converts easily to HTML (and now many other formats as well).</p>
+<p>Markdown also varies in implementation from one parser to a next. This guide will attempt to clarify when features are universal or when they are specific to a certain parser.<br>
+HTML Elements</p>
+<p>Markdown is a superset of HTML, so any HTML file is valid Markdown.</p>
+
+<p>Headings</p>
+<p>You can create HTML elements </p><h1> through </h1><h6> easily by prepending the text you want to be in that element by a number of hashes (#).<p></p>
+</h6><h1>This is an </h1><h1></h1>
+<h2>This is an </h2><h2></h2>
+<h3>This is an </h3><h3></h3>
+<h4>This is an </h4><h4></h4>
+<h5>This is an </h5><h5></h5>
+<h6>This is an </h6><h6></h6>
+<p>Markdown also provides us with two alternative ways of indicating h1 and h2.</p>
+<h1>This is an h1</h1>
+<h2>This is an h2</h2>
+<p>Simple text styles</p>
+<p>Text can be easily styled as italic or bold using markdown.</p>
+<p><em>This text is in italics.</em><br>
+<em>And so is this text.</em></p>
+<p><strong>This text is in bold.</strong><br>
+<strong>And so is this text.</strong></p>
+<p><em><strong>This text is in both.</strong></em><br>
+<strong><em>As is this!</em></strong><br>
+<em><strong>And this!</strong></em></p>
+<p>In GitHub Flavored Markdown, which is used to render markdown files on GitHub, we also have strikethrough:</p>
+<p><del>This text is rendered with strikethrough.</del></p>
+<p>Paragraphs</p>
+<p>Paragraphs are a one or multiple adjacent lines of text separated by one or multiple blank lines.</p>
+<p>This is a paragraph. I'm typing in a paragraph isn't this fun?</p>
+<p>Now I'm in paragraph 2.<br>
+I'm still in paragraph 2 too!</p>
+<p>I'm in paragraph three!</p>
+<p>Should you ever want to insert an HTML <br> tag, you can end a paragraph with two or more spaces and then begin a new paragraph.</p>
+<p>I end with two spaces (highlight me to see them).</p>
+<p>There's a <br> above me!</p>
+<p>Block quotes are easy and done with the &gt; character.</p>
+<blockquote>
+<p>This is a block quote. You can either<br>
+manually wrap your lines and put a <code class="notranslate">&gt;</code> before every line or you can let your lines get really long and wrap on their own.<br>
+It doesn't make a difference so long as they start with a <code class="notranslate">&gt;</code>.</p>
+</blockquote>
+<blockquote>
+<p>You can also use more than one level</p>
+<blockquote>
+<p>of indentation?<br>
+How neat is that?</p>
+</blockquote>
+</blockquote>
+<p>Lists</p>
+<p>Unordered lists can be made using asterisks, pluses, or hyphens.</p>
+<ul>
+<li>Item</li>
+<li>Item</li>
+<li>Another item</li>
+</ul>
+<p>or</p>
+<ul>
+<li>Item</li>
+<li>Item</li>
+<li>One more item</li>
+</ul>
+<p>or</p>
+<ul>
+<li>Item</li>
+<li>Item</li>
+<li>One last item</li>
+</ul>
+<p>Ordered lists are done with a number followed by a period.</p>
+<ol>
+<li>Item one</li>
+<li>Item two</li>
+<li>Item three</li>
+</ol>
+<p>You don’t even have to label the items correctly and Markdown will still render the numbers in order, but this may not be a good idea.</p>
+<ol>
+<li>Item one</li>
+<li>Item two</li>
+<li>Item three</li>
+</ol>
+<p>(This renders the same as the example above.)</p>
+<p>You can also use sublists.</p>
+<ol>
+<li>Item one</li>
+<li>Item two</li>
+<li>Item three
+<ul>
+<li>Sub-item</li>
+<li>Sub-item</li>
+</ul>
+</li>
+<li>Item four</li>
+</ol>
+<p>There are even task lists. This creates HTML checkboxes.</p>
+<p>Boxes below without the 'x' are unchecked HTML checkboxes.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox"> First task to complete.</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox"> Second task that needs done<br>
+This checkbox below will be a checked HTML checkbox.</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" checked=""> This task has been completed</li>
+</ul>
+<p>Code blocks</p>
+<p>You can indicate a code block (which uses the <code class="notranslate"> element) by indenting a line with four spaces or a tab.</code></p><code class="notranslate">
+<pre class="notranslate"><code class="notranslate">This is code
+So is this
+</code></pre>
+<p>You can also re-tab (or add an additional four spaces) for indentation inside your code.</p>
+<pre class="notranslate"><code class="notranslate">my_array.each do |item|
+  puts item
+end
+</code></pre>
+<p>Inline code can be created using the backtick character `.</p>
+<p>John didn't even know what the <code class="notranslate">go_to()</code> function did!</p>
+<p>In GitHub Flavored Markdown, you can use a special syntax for code.</p>
+<div class="highlight highlight-source-ruby"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">foobar</span>
+  <span class="pl-en">puts</span> <span class="pl-s">"Hello world!"</span>
+<span class="pl-k">end</span></pre></div>
+<p>The above text doesn’t require indenting, plus GitHub will use syntax highlighting of the language you specify after the opening ```.<br>
+Horizontal rule</p>
+<p>Horizontal rules (</p><hr>) are easily added with three or more asterisks or hyphens, with or without spaces.<p></p>
+<hr>
+<hr>
+<hr>
+<hr>
+<p>Links</p>
+<p>One of the best things about markdown is how easy it is to make links. Put the text to display in hard brackets [] followed by the url in parentheses ()</p>
+<p><a href="http://test.com/" rel="nofollow">Click me!</a></p>
+<p>You can also add a link title using quotes inside the parentheses.</p>
+<p><a href="http://test.com/" title="Link to Test.com" rel="nofollow">Click me!</a></p>
+<p>Relative paths work too.</p>
+<p><a href="/music/">Go to music</a>.</p>
+<p>Markdown also supports reference style links.</p>
+<p><a href="http://test.com/" title="Cool!" rel="nofollow">Click this link</a> for more info about it!<br>
+<a href="http://foobar.biz/" title="Alright!" rel="nofollow">Also check out this link</a> if you want to.</p>
+<p>The title can also be in single quotes or in parentheses, or omitted entirely. The references can be anywhere in your document and the reference IDs can be anything so long as they are unique.</p>
+<p>There is also “implicit naming” which lets you use the link text as the id.</p>
+<p><a href="http://thisisalink.com/" rel="nofollow">This</a> is a link.</p>
+<p>But it’s not that commonly used.<br>
+Table of contents</p>
+<p>Some Markdown flavors even make use of the combination of lists, links and headings in order to create tables of contents. In this case, heading titles in lowercase are prepended with hash (#) and are used as link ids. Should the heading have multiple words, they will be connected with a hyphen (-), that also replaces some special characters. (Some other special characters are omitted though.)</p>
+<ul>
+<li><a href="#heading">Heading</a></li>
+<li><a href="#another-heading">Another heading</a></li>
+<li><a href="#chapter">Chapter</a>
+<ul>
+<li><a href="#subchapter-h3-">Subchapter </a><h3></h3></li>
+</ul>
+</li>
+</ul>
+<p>Nonetheless, this is a feature that might not be working in all Markdown implementations the same way.<br>
+Images</p>
+<p>Images are done the same way as links but with an exclamation point in front!</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/bbfe0b7fd5b5b2893238f9068ea9c2dede07f9a6c939ddcb7f5a4676ad76a39a/687474703a2f2f696d6775722e636f6d2f6d79696d6167652e6a7067"><img src="https://camo.githubusercontent.com/bbfe0b7fd5b5b2893238f9068ea9c2dede07f9a6c939ddcb7f5a4676ad76a39a/687474703a2f2f696d6775722e636f6d2f6d79696d6167652e6a7067" alt="This is the alt-attribute for my image" title="An optional title" data-canonical-src="http://imgur.com/myimage.jpg" style="max-width: 100%;"></a></p>
+<p>And reference style works as expected.</p>
+<p><a target="_blank" rel="noopener noreferrer" href="relative/urls/cool/image.jpg"><img src="relative/urls/cool/image.jpg" alt="This is the alt-attribute." title="if you need a title, it's here" style="max-width: 100%;"></a></p>
+<p>Miscellany<br>
+Auto-links</p>
+<p><a href="http://testwebsite.com/" rel="nofollow">http://testwebsite.com/</a> is equivalent to<br>
+<a href="http://testwebsite.com/" rel="nofollow">http://testwebsite.com/</a></p>
+<p>Auto-links for emails</p>
+<p><a href="mailto:foo@bar.com">foo@bar.com</a></p>
+<p>Escaping characters</p>
+<p>I want to type <em>this text surrounded by asterisks</em> but I don't want it to be<br>
+in italics, so I do this: *this text surrounded by asterisks*.</p>
+<p>Keyboard keys</p>
+<p>In GitHub Flavored Markdown, you can use a <kbd> tag to represent keyboard keys.</kbd></p>
+<p>Your computer crashed? Try sending a<br>
+<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Del</kbd></p>
+<p>Tables</p>
+<p>Tables are only available in GitHub Flavored Markdown and are slightly cumbersome, but if you really want it:</p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th align="left">Col1</th>
+<th align="center">Col2</th>
+<th align="right">Col3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Left-aligned</td>
+<td align="center">Centered</td>
+<td align="right">Right-aligned</td>
+</tr>
+<tr>
+<td align="left">blah</td>
+<td align="center">blah</td>
+<td align="right">blah</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p>or, for the same results</p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th align="left">Col 1</th>
+<th align="center">Col2</th>
+<th align="right">Col3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Ugh this is so ugly</td>
+<td align="center">make it</td>
+<td align="right">stop</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p>Markdownlint</p>
+<p>In order to simplify work with Markdown and to unify its coding style, Markdownlint has been created. Available as a separate tool as well as a plugin for some IDEs, it can be used to ensure validity and readability of Markdown.<br>
+Further reading</p>
+<p>For more info, check out John Gruber’s official post of syntax here and Adam Pritchard’s great cheatsheet here.</p>
+<p>If you want to learn more on some major Markdown flavors’ features, see:</p>
+<pre class="notranslate"><code class="notranslate">GitHub Flavored Markdown
+GitLab Flavored Markdown
+</code></pre></code></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://isharebox.github.io">Slowlylight</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var utterancesLoad=0;
+
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","isharebox/isharebox.github.io");
+    script.setAttribute("issue-term","title");
+    
+    script.setAttribute("theme","dark-blue");
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
+
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
+
+</script>
+
+
+</html>
