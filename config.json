@@ -1,15 +1,6 @@
 {
     "title":"Slowlylight",
-    "subTitle":"Less is more",
+    "subTitle":"Less is more, leave things better than when you find them",
     "avatarUrl":"https://github.githubassets.com/favicons/favicon.svg",
-    "displayTitle":"Slowlylight",
-    "homeUrl":"http://isharebox.github.io",
-    "commentLabelColor":"#006b75",
-    "yearColorList":["#bc4c00", "#0969da", "#1f883d", "#A333D0"],    
-    "UTC":8,
-    "themeMode":"manual",
-    "dayTheme":"light",
-    "nightTheme":"dark_colorblind",
     "GMEEK_VERSION":"last"
-    
 }
