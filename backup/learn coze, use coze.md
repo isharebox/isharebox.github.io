@@ -1,0 +1,1 @@
+time to use ai for everyone without computer background
