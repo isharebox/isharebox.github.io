@@ -1,1 +1,0 @@
-buy deep in a rising market, sell bounce in a sinking market
