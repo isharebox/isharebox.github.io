@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Slowlylight</title><link>https://isharebox.github.io</link><description>Less is more, leave things better than when you find them</description><copyright>Slowlylight</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/180890187?s=400&amp;u=91b73661f9c8346c1b8bab4e034895a9e6f27f13&amp;v=4</url><title>avatar</title><link>https://isharebox.github.io</link></image><lastBuildDate>Mon, 23 Dec 2024 02:37:50 +0000</lastBuildDate><managingEditor>Slowlylight</managingEditor><ttl>60</ttl><webMaster>Slowlylight</webMaster><item><title>豆瓣2024年度好书榜单</title><link>https://isharebox.github.io/post/dou-ban-2024-nian-du-hao-shu-bang-dan.html</link><description>豆瓣2024年度读书榜单&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Slowlylight</title><link>https://isharebox.github.io</link><description>Less is more, leave things better than when you find them</description><copyright>Slowlylight</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/180890187?s=400&amp;u=91b73661f9c8346c1b8bab4e034895a9e6f27f13&amp;v=4</url><title>avatar</title><link>https://isharebox.github.io</link></image><lastBuildDate>Mon, 23 Dec 2024 02:40:29 +0000</lastBuildDate><managingEditor>Slowlylight</managingEditor><ttl>60</ttl><webMaster>Slowlylight</webMaster><item><title>豆瓣2024年度好书榜单</title><link>https://isharebox.github.io/post/dou-ban-2024-nian-du-hao-shu-bang-dan.html</link><description>豆瓣2024年度读书榜单&#13;
 ### 年度最佳图书&#13;
 《世上为什么要有图书馆》 杨素秋 / 上海译文出版社 豆瓣评分: 8.9&#13;
 《比山更高》 宋明蔚 / 单读 铸刻文化 / 上海文艺出版社 豆瓣评分: 9.3&#13;
@@ -75,7 +75,7 @@
 《自我》 [英国] 齐格蒙特·鲍曼 [爱沙尼亚] 瑞恩·罗德 / 南京大学出版社·守望者 / 南京大学出版社 豆瓣评分: 8.7&#13;
 《蛋先生的学术生存》 施爱东 / 艺文志eons / 上海文艺出版社 豆瓣评分: 8.5&#13;
 《移民路上的生与死》 [美] 杰森·德莱昂 / 也人 / 上海书店出版社 豆瓣评分: 8.5&#13;
-// 年度社会·纪实图书&#13;
+### 年度社会·纪实图书&#13;
 《我看见的世界》 [美] 李飞飞 / 中信出版社 豆瓣评分: 9.1&#13;
 《命悬一线我不放手》 薄世宁 / 磨铁图书 / 北京联合出版公司 豆瓣评分: 8.6&#13;
 《超越百岁》 彼得 · 阿提亚（Peter Attia） 比尔 · 吉福德（Bill Gifford） / 中译出版社 豆瓣评分: 7.9&#13;
@@ -106,7 +106,7 @@
 《韩国电影100年》 范小青 / 后浪 / 上海三联书店 豆瓣评分: 8.2&#13;
 《新浪潮》 [法] 安托万·德巴克 / 惊奇 / 广西师范大学出版社 豆瓣评分: 8.4&#13;
 《戎夷之衣》 李静 / 单读 铸刻文化 / 上海文艺出版社 豆瓣评分: 8.4&#13;
-// 年度科学·新知图书&#13;
+### 年度科学·新知图书&#13;
 《阿西莫夫科幻短篇全集 1》 [美] 艾萨克·阿西莫夫 / 读客文化 / 江苏凤凰文艺出版社 豆瓣评分: 9.1&#13;
 《枭起青壤》 尾鱼 / 磨铁图书 / 四川文艺出版社 豆瓣评分: 8.4&#13;
 《2181序曲》 顾适 / 八光分文化 / 新星出版社 豆瓣评分: 8.8&#13;
