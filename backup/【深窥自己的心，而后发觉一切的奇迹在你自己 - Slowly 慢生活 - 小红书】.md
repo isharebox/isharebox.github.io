@@ -1,0 +1,3 @@
+[【深窥自己的心，而后发觉一切的奇迹在你自己 - Slowly 慢生活 | 小红书】](https://www.xiaohongshu.com/discovery/item/676e8fff000000000902ec25?source=webshare&xhsshare=pc_web&xsec_token=ABR9DRVgshOgnjioiPr_IGBHEMCnROSqK9rcRZPjYMj1I=&xsec_source=pc_share)
+
+![slowly](https://photo.sibnet.ru/upload/imggreat/1735314366821494611.jpg)
