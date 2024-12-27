@@ -1,54 +1,40 @@
-1. Bonjour! (Good morning / Hello)
 
-Bonjour! 🌞👋😊
-2. Bonsoir! (Good evening)
+1. Bonjour! (Good morning / Hello) Bonjour! 🌞👋😊
 
-Bonsoir! 🌙👋😊
-3. Salut! (Hi / Hello - informal)
+2. Bonsoir! (Good evening) Bonsoir! 🌙👋😊
 
-Salut! 👋😄
-4. Ça va ? (How’s it going?)
+3. Salut! (Hi / Hello - informal) Salut! 👋😄
 
-Ça va ? 🤔😊
-5. Comment ça va ? (How are you?)
+4. Ça va ? (How’s it going?) Ça va ? 🤔😊
 
-Comment ça va ? 🤗🙂
-6. Comment allez-vous ? (How are you? - formal)
+5. Comment ça va ? (How are you?) Comment ça va ? 🤗🙂
 
-Comment allez-vous ? 🤵👩‍💼
-7. Enchanté(e)! (Nice to meet you!)
+6. Comment allez-vous ? (How are you? - formal) Comment allez-vous ? 🤵👩‍💼
 
-Enchanté(e)! 🤝🙂
-8. Bien sûr! (Of course)
+7. Enchanté(e)! (Nice to meet you!) Enchanté(e)! 🤝🙂
 
-Bien sûr! 👍😊
-9. Bienvenue! (Welcome)
+8. Bien sûr! (Of course) Bien sûr! 👍😊
 
-Bienvenue! 🏡😊
-10. Bonne nuit! (Good night)
+9. Bienvenue! (Welcome) Bienvenue! 🏡😊
 
-Bonne nuit! 🌙😴
-11. À bientôt! (See you soon!)
+10. Bonne nuit! (Good night) Bonne nuit! 🌙😴
 
-À bientôt! 👋😊
-12. À demain! (See you tomorrow!)
+11. À bientôt! (See you soon!) À bientôt! 👋😊
 
-À demain! 🌅👋
-13. Merci! (Thank you)
+12. À demain! (See you tomorrow!) À demain! 🌅👋
 
-Merci! 🙏😊
-14. Merci beaucoup! (Thank you very much)
+13. Merci! (Thank you) Merci! 🙏😊
 
-Merci beaucoup! 🙏😄
-15. Pardon! (Excuse me / Sorry)
+14. Merci beaucoup! (Thank you very much) Merci beaucoup! 🙏😄
 
-Pardon! 🙇‍♂️🙇‍♀️
-16. Désolé(e)! (Sorry)
+15. Pardon! (Excuse me / Sorry) Pardon! 🙇‍♂️🙇‍♀️
 
-Désolé(e)! 😔🙏
-17. Bonne journée! (Have a good day)
+16. Désolé(e)! (Sorry) Désolé(e)! 😔🙏
 
-Bonne journée! 🌞👋
-18. Bonne soirée! (Have a good evening)
+17. Bonne journée! (Have a good day) Bonne journée! 🌞👋
 
-Bonne soirée! 🌙😊
+18. Bonne soirée! (Have a good evening) Bonne soirée! 🌙😊
+
+19. Bon appétit! 🍽️😋🍷 (Enjoy your meal! or Have a good meal!)
+
+These greetings should cover a range of situations from casual chats to more formal encounters. 
