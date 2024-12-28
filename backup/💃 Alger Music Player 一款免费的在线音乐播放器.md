@@ -15,6 +15,8 @@ Alger Music Player 是基于网易云音乐API 的一款免费的在线音乐播
 
 [![Alger player](https://photo.sibnet.ru/upload/imggreat/1735352368231494611.jpg)](http://mc.alger.fun/)
 
+[![Alger player](https://photo.sibnet.ru/upload/imggreat/1735355782191494611.jpg)](http://mc.alger.fun/)
+
 Alger Music Player 网站地址
 
 Demo地址：[http://mc.alger.fun](http://mc.alger.fun) 💃
