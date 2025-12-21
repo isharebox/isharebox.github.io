@@ -2,4 +2,4 @@ two trails must try,
 
 - trans canada trail
 
-- ![water front trail](https://photo.sibnet.ru/alb80771/ft2312889/#foto)
+- ![water front trail](https://dataphoto.sibnet.ru/upload/imgbig/1766360024231494611.jpg)
