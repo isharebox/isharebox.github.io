@@ -9,3 +9,49 @@ const pageSize = config.pagination.size;
 ---
 
 <Home posts={posts.slice(0, pageSize)} page={0} pages={Math.ceil(posts.length / pageSize)} />
+---
+<!-- ★ 在文章列表后、页脚前添加标签云 -->
+<section class="tags-section">
+  <h3>Tags</h3>
+  <div class="tags">
+    <a href="/tag/ai">#ai</a>
+    <a href="/tag/essay">#essay</a>
+    <a href="/tag/tech">#tech</a>
+    <a href="/tag/knowledge">#knowledge</a>
+    <a href="/tag/poem">#poem</a>
+    <a href="/tag/workflow">#workflow</a>
+  </div>
+</section>
+
+<!-- 保留原有 Footer -->
+
+<style>
+  .tags-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px dashed var(--border);
+  }
+  
+  .tags-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .tags a {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+  
+  .tags a:hover {
+    color: var(--text-accent);
+  }
+</style>
