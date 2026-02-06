@@ -13,7 +13,7 @@ interface Props {
 const { posts, page, pages } = Astro.props;
 
 // 标签列表
-const tags = ['tag', 'ai', 'urodele', 'essay', 'tech', 'knowledge', 'vibecoding', 'poem', 'workflow'];
+const tags = ['ai', 'Urodele', 'vibecoding', 'essay', 'tech', 'knowledge', 'travel', 'poem', 'workflow'];
 ---
 
 <script>
@@ -22,10 +22,11 @@ const tags = ['tag', 'ai', 'urodele', 'essay', 'tech', 'knowledge', 'vibecoding'
 </script>
 
 <Layout title={config.head.title}>
-  <!-- ★ 删除：顶部大黑框 -->
-  <!-- <div class="w-full h-40 bg-black text-white font-bold text-3xl flex items-center justify-center">
-    {config.head.brand}
-  </div> -->
+  <!-- ★ 新增：顶部博客标题和描述 -->
+  <header class="site-header">
+    <h1 class="blog-title">2kindlebox</h1>
+    <p class="blog-desc">因一念有无故空灭而仿佛无处可逃。由此，心无放逸，不失众善。</p>
+  </header>
   
   <main>
     <div class="content">
@@ -60,9 +61,8 @@ const tags = ['tag', 'ai', 'urodele', 'essay', 'tech', 'knowledge', 'vibecoding'
       <!-- 分页 -->
       <Pagination page={page} pages={pages} />
       
-      <!-- 标签云 -->
+      <!-- 标签云（无标题） -->
       <section class="tags-section">
-        <h3>Tags</h3>
         <div class="tags">
           {tags.map(tag => (
             <a href={`/tag/${encodeURIComponent(tag)}`}>#{tag}</a>
@@ -74,18 +74,36 @@ const tags = ['tag', 'ai', 'urodele', 'essay', 'tech', 'knowledge', 'vibecoding'
 </Layout>
 
 <style>
+  /* 顶部标题区域 */
+  .site-header {
+    text-align: center;
+    padding: 3rem 1.5rem 2rem;
+    border-bottom: 1px dashed var(--border, #1a4a4a);
+  }
+  
+  .blog-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-primary, #e0e0e0);
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.5px;
+  }
+  
+  .blog-desc {
+    color: var(--text-secondary, #8cbaba);
+    font-size: 0.95rem;
+    font-style: italic;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  
+  /* 标签云 */
   .tags-section {
     margin-top: 3rem;
     padding-top: 2rem;
     border-top: 1px dashed var(--border, #1a4a4a);
     text-align: center;
-  }
-  
-  .tags-section h3 {
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-    color: var(--text-primary, #e0e0e0);
-    font-weight: 600;
   }
   
   .tags {
