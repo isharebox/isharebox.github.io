@@ -7,35 +7,55 @@ header {
     top: 0;
     z-index: 20;
     @apply bg-bg;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+    header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
 }
 
 ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+    width: 8px;
+    height: 8px;
     background-color: transparent;
-    opacity: 0;
 }
 
-::-webkit-scrollbar:hover {
-    width: 4px;
-    height: 4px;
-    opacity: 1;
+::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.28);
-    border-radius: 5px;
+    background-color: rgba(200, 211, 245, 0.2);
+    border-radius: 4px;
+    
+    &:hover {
+        background-color: rgba(200, 211, 245, 0.4);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(74, 158, 255, 0.3);
+        
+        &:hover {
+            background-color: rgba(74, 158, 255, 0.5);
+        }
+    }
 }
 
 @media (prefers-color-scheme: dark) {
     hr {
-        border-color: rgb(119, 119, 119)
+        border-color: rgba(200, 211, 245, 0.2);
     }
 }
 
 // button
 .buttoned {
     @apply px-2 py-1 rounded flex items-center justify-center gap-2 transition-all;
+    background-color: rgba(74, 158, 255, 0.1);
+    color: #4a9eff;
 
     &:disabled {
         @apply opacity-50 cursor-not-allowed;
@@ -43,11 +63,11 @@ header {
 
     &:not(:disabled) {
         &:active {
-            @apply brightness-90;
+            background-color: rgba(74, 158, 255, 0.2);
         }
 
         &:not(:active):hover {
-            @apply brightness-95;
+            background-color: rgba(74, 158, 255, 0.15);
         }
     }
 
@@ -71,7 +91,29 @@ header {
 
 .text-button {
     @apply px-2 py-1 rounded flex items-center justify-center gap-2 transition-all;
-    @apply hover:(bg-black bg-opacity-10) active:(bg-black bg-opacity-20);
+    color: #c8d3f5;
+    
+    &:hover {
+        background-color: rgba(74, 158, 255, 0.1);
+    }
+    
+    &:active {
+        background-color: rgba(74, 158, 255, 0.2);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .text-button {
+        color: #000;
+        
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        &:active {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+    }
 }
 
 // loading
@@ -79,7 +121,7 @@ div[data-modal-loading] {
     position: relative;
 
     &::before {
-        @apply absolute w-full h-full top-0 left-0 bg-bg bg-opacity-80;
+        @apply absolute w-full h-full top-0 left-0 bg-bg bg-opacity-90;
         content: '';
         background-size: 24px;
         background-image: icon('i-svg-spinners:ring-resize');
@@ -120,5 +162,18 @@ div[data-modal-loading="false"] {
     .page-title::after {
         content: 'draft';
         @apply bg-yellow-200 dark:bg-yellow rounded mx-1 px-2 py-1 text-xs align-super;
+    }
+}
+
+// Selection styling
+::selection {
+    background-color: rgba(74, 158, 255, 0.3);
+    color: #c8d3f5;
+}
+
+@media (prefers-color-scheme: light) {
+    ::selection {
+        background-color: rgba(250, 204, 21, 0.3);
+        color: #000;
     }
 }
