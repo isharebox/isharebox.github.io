@@ -11,19 +11,25 @@ interface Props {
 }
 
 const { posts, page, pages } = Astro.props;
+
+// 标签列表
+const tags = ['tag', 'ai', 'urodele', 'essay', 'tech', 'knowledge', 'vibecoding', 'poem', 'workflow'];
 ---
 
 <script>
   import { mount } from "../components/RelativeTime";
-
   mount("data-acc-time");
 </script>
+
 <Layout title={config.head.title}>
-  <div class="w-full h-40 bg-black text-white font-bold text-3xl flex items-center justify-center">
+  <!-- ★ 删除：顶部大黑框 -->
+  <!-- <div class="w-full h-40 bg-black text-white font-bold text-3xl flex items-center justify-center">
     {config.head.brand}
-  </div>
+  </div> -->
+  
   <main>
     <div class="content">
+      <!-- 文章列表 -->
       {
         posts.map((item) => (
           <>
@@ -50,7 +56,53 @@ const { posts, page, pages } = Astro.props;
           </>
         ))
       }
+      
+      <!-- 分页 -->
       <Pagination page={page} pages={pages} />
+      
+      <!-- 标签云 -->
+      <section class="tags-section">
+        <h3>Tags</h3>
+        <div class="tags">
+          {tags.map(tag => (
+            <a href={`/tag/${encodeURIComponent(tag)}`}>#{tag}</a>
+          ))}
+        </div>
+      </section>
     </div>
   </main>
 </Layout>
+
+<style>
+  .tags-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px dashed var(--border, #1a4a4a);
+    text-align: center;
+  }
+  
+  .tags-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary, #e0e0e0);
+    font-weight: 600;
+  }
+  
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .tags a {
+    color: var(--text-muted, #5c8a8a);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .tags a:hover {
+    color: var(--text-accent, #6b9999);
+  }
+</style>
