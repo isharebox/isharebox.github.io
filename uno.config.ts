@@ -21,28 +21,3 @@ const themes = {
     },
   },
 };
-
-export default defineConfig({
-  transformers: [transformerDirectives({ enforce: "pre" })],
-  presets: [
-    presetUno({
-      dark: "media",
-
-    }),
-    presetTheme({
-      theme: {
-        dark: themes.dark,
-      },
-    }),
-    presetIcons({
-      autoInstall: true,
-    }),
-    // ...other presets
-  ],
-  theme: themes.light,
-  content: {
-    filesystem: [
-      'src/**/*.tsx'
-    ]
-  }
-});
