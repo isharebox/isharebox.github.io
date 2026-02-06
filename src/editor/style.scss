@@ -51,7 +51,7 @@
     outline: none;
 
     h1.is-empty:first-child::before {
-      color: #adb5bd;
+      color: rgba(200, 211, 245, 0.5);
       content: attr(data-placeholder);
       float: left;
       height: 0;
@@ -59,7 +59,7 @@
     }
 
     .is-empty:not(h1):before {
-      color: #adb5bd;
+      color: rgba(200, 211, 245, 0.5);
       content: attr(data-placeholder);
       float: left;
       height: 0;
@@ -76,23 +76,39 @@
     display: block;
     font-size: 2em;
     font-weight: bold;
+    color: #bb9af7;
   }
 
   h2 {
     display: block;
     font-size: 1.5em;
     font-weight: bold;
+    color: #7aa2f7;
   }
 
   h3 {
     display: block;
     font-size: 1.17em;
     font-weight: bold;
+    color: #7dcfff;
   }
 
   h4 {
     display: block;
     font-weight: bold;
+    color: #9ece6a;
+  }
+
+  h5 {
+    display: block;
+    font-weight: bold;
+    color: #e0af68;
+  }
+
+  h6 {
+    display: block;
+    font-weight: bold;
+    color: #ff9e64;
   }
 
   img {
@@ -102,25 +118,33 @@
   }
 
   blockquote {
-    border-left: 2px solid gray;
+    border-left: 3px solid #bb9af7;
     margin: 0;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    color: rgba(200, 211, 245, 0.8);
+    background: rgba(187, 154, 247, 0.1);
+    padding: 8px 12px;
+    border-radius: 0 4px 4px 0;
   }
 
   code {
     border-radius: 4px;
-    @apply bg-[#e8e8e8] dark:bg-[#727272];
-    caret-color: #fff;
-    padding: 1px;
-    border: 1px solid rgba(31, 35, 41, 0.04);
+    @apply bg-[#f0f0f0] dark:bg-[#2a2e45];
+    caret-color: #c8d3f5;
+    padding: 2px 6px;
+    border: 1px solid rgba(41, 46, 66, 0.5);
+    font-family: 'JetBrainsMono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.9em;
+    color: #e0af68;
   }
 
   .llt-code {
     position: relative;
     padding-top: 4px;
-    background: #2d2b29;
+    background: #24283b;
     border-radius: 0.5rem;
+    border: 1px solid rgba(41, 46, 66, 0.5);
 
     .language {
       position: absolute;
@@ -128,18 +152,19 @@
       // appearance: none;
       padding: 0 4px;
       height: 20px;
-      background-color: rgba(var(--un-preset-theme-colors-modal, 255 255 255));
-      border: none;
+      background-color: rgba(31, 35, 53, 0.9);
+      border: 1px solid rgba(41, 46, 66, 0.5);
       border-radius: 4px;
       outline: none;
       font-size: 12px;
+      color: #c8d3f5;
     }
 
     .wrapper {
       display: flex;
       justify-content: center;
 
-      $selected: #707070;
+      $selected: #4a9eff;
 
       // &:hover {
       //   .indicator {
@@ -163,7 +188,7 @@
         }
 
         .show-preview {
-          color: white;
+          color: #c8d3f5;
         }
 
         .show-code,
@@ -185,7 +210,7 @@
 
           .show-code {
             background-color: transparent;
-            color: white;
+            color: #c8d3f5;
           }
         }
 
@@ -202,29 +227,33 @@
 
     .playground {
       // transition: all ease 0.2s;
-      background: white;
+      background: rgba(31, 35, 53, 0.95);
       flex: 1 1 0;
       margin: 1.5rem 0.25rem 0.25rem 0.25rem;
       padding: 0.75rem 1rem;
       border-radius: 4px;
+      border: 1px solid rgba(41, 46, 66, 0.5);
     }
   }
 
   pre {
     flex: 1 1 0;
     // transition: all ease 0.2s;
-    background: transparent;
-    color: #ffffff;
-    font-family: 'JetBrainsMono', monospace;
+    background: #24283b;
+    color: #c8d3f5;
+    font-family: 'JetBrainsMono', 'Fira Code', monospace;
     margin: 1.5rem 0.25rem 0.25rem 0.25rem;
     padding: 0.75rem 1rem;
     overflow-y: auto;
+    border-radius: 4px;
+    border: 1px solid rgba(41, 46, 66, 0.5);
 
     code {
       background: none;
       color: inherit;
       font-size: 0.8rem;
       padding: 0;
+      border: none;
     }
 
     pre code.hljs {
@@ -239,42 +268,28 @@
 
     /*
     
-    Atom One Dark by Daniel Gamage
-    Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
-    
-    base:    #282c34
-    mono-1:  #abb2bf
-    mono-2:  #818896
-    mono-3:  #5c6370
-    hue-1:   #56b6c2
-    hue-2:   #61aeee
-    hue-3:   #c678dd
-    hue-4:   #98c379
-    hue-5:   #e06c75
-    hue-5-2: #be5046
-    hue-6:   #d19a66
-    hue-6-2: #e6c07b
+    Tokyo Night theme - similar to Typora Dark Blue
     
     */
     .hljs {
-      color: #abb2bf;
-      background: #282c34
+      color: #c8d3f5;
+      background: #24283b
     }
 
     .hljs-tag {
-      color: #808080;
+      color: #f7768e;
     }
 
     .hljs-comment,
     .hljs-quote {
-      color: #5c6370;
+      color: #565f89;
       font-style: italic
     }
 
     .hljs-doctag,
     .hljs-keyword,
     .hljs-formula {
-      color: #c678dd
+      color: #bb9af7
     }
 
     .hljs-section,
@@ -282,11 +297,11 @@
     .hljs-selector-tag,
     .hljs-deletion,
     .hljs-subst {
-      color: #e06c75
+      color: #f7768e
     }
 
     .hljs-literal {
-      color: #56b6c2
+      color: #7dcfff
     }
 
     .hljs-string,
@@ -294,7 +309,7 @@
     .hljs-addition,
     .hljs-attribute,
     .hljs-meta .hljs-string {
-      color: #98c379
+      color: #9ece6a
     }
 
     .hljs-attr,
@@ -305,7 +320,7 @@
     .hljs-selector-attr,
     .hljs-selector-pseudo,
     .hljs-number {
-      color: #d19a66
+      color: #e0af68
     }
 
     .hljs-symbol,
@@ -314,13 +329,13 @@
     .hljs-meta,
     .hljs-selector-id,
     .hljs-title {
-      color: #61aeee
+      color: #7aa2f7
     }
 
     .hljs-built_in,
     .hljs-title.class_,
     .hljs-class .hljs-title {
-      color: #e6c07b
+      color: #7dcfff
     }
 
     .hljs-emphasis {
@@ -337,7 +352,12 @@
   }
 
   a {
-    color: #60a5fa;
+    color: #4a9eff;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   ul,
@@ -347,6 +367,7 @@
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     padding-inline-start: 40px;
+    color: #c8d3f5;
   }
 
   ul {
@@ -355,6 +376,20 @@
 
   ol {
     list-style-type: decimal;
+  }
+
+  p {
+    color: #c8d3f5;
+    line-height: 1.7;
+  }
+
+  strong {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  em {
+    color: #bb9af7;
   }
 
   ul[data-type="taskList"] {
@@ -367,7 +402,8 @@
 
     li {
       display: flex;
-      gap: 4px
+      gap: 8px;
+      color: #c8d3f5;
     }
   }
 
@@ -379,47 +415,57 @@
 }
 
 .ud-wrapper {
-  --shadow: 0px 12px 33px 0px rgba(0, 0, 0, .06), 0px 3.618px 9.949px 0px rgba(0, 0, 0, .04);
+  --shadow: 0px 12px 33px 0px rgba(0, 0, 0, .15), 0px 3.618px 9.949px 0px rgba(0, 0, 0, .1);
 
   &.bubble-menu {
     display: flex;
     gap: 8px;
-    padding: 4px 8px;
-    border: 1px solid rgba(0, 0, 0, .05);
-    border-radius: 4px;
+    padding: 6px 10px;
+    border: 1px solid rgba(74, 158, 255, 0.3);
+    border-radius: 6px;
     box-shadow: var(--shadow);
     @apply bg-modal <md:w-[calc(100vw-60px)] <md:justify-around;
+    background: rgba(31, 35, 53, 0.95);
+    backdrop-filter: blur(10px);
 
     $types: bold, italic, underline, strike, code, link;
 
     @each $type in $types {
       &[data-ud-active-#{$type}="true"] {
         .ud-bm-#{$type} {
-          @apply bg-yellow;
+          background-color: rgba(74, 158, 255, 0.3);
+          color: #4a9eff;
         }
       }
     }
-
-
   }
 
   &.slash-menu {
-    padding: 4px;
+    padding: 6px;
     display: flex;
     gap: 4px;
     flex-flow: column nowrap;
-    border: 1px solid rgba(0, 0, 0, .05);
-    border-radius: 4px;
+    border: 1px solid rgba(74, 158, 255, 0.3);
+    border-radius: 6px;
     box-shadow: var(--shadow);
     @apply text-sm bg-modal;
+    background: rgba(31, 35, 53, 0.95);
+    backdrop-filter: blur(10px);
+    color: #c8d3f5;
 
     button {
+      color: #c8d3f5;
+      
       &.selected {
-        @apply bg-yellow;
+        background-color: rgba(74, 158, 255, 0.3);
+        color: #4a9eff;
+      }
+      
+      &:hover:not(.selected) {
+        background-color: rgba(74, 158, 255, 0.15);
       }
     }
   }
-
 
   &.front-handle {
     position: fixed;
@@ -431,6 +477,7 @@
     z-index: 50;
     display: flex;
     cursor: grab;
+    background: rgba(74, 158, 255, 0.1);
 
     &.hide {
       opacity: 0;
@@ -450,15 +497,18 @@
     // left: 0;
     transition: all ease 0.2s;
     transition-delay: 0.2s;
-    border-radius: 4px;
+    border-radius: 6px;
     display: flex;
     flex-direction: column;
     gap: 8px;
     font-size: 14px;
-    padding: 4px;
+    padding: 6px;
     box-shadow: var(--shadow);
     white-space: nowrap;
     @apply bg-modal;
+    background: rgba(31, 35, 53, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(74, 158, 255, 0.3);
   }
 
   button,
@@ -476,14 +526,59 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #c8d3f5;
 
     &:hover {
-      background-color: #f2f2f2;
-      @apply dark:bg-gray;
+      background-color: rgba(74, 158, 255, 0.15);
     }
 
     &:active {
-      background-color: #e5e5e5;
+      background-color: rgba(74, 158, 255, 0.25);
+    }
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .ud-root {
+    h1, h2, h3, h4, h5, h6 {
+      color: #000;
+    }
+    
+    p, ul, ol {
+      color: #333;
+    }
+    
+    blockquote {
+      border-left-color: #666;
+      background: rgba(0, 0, 0, 0.05);
+      color: #666;
+    }
+    
+    code {
+      background: #f0f0f0;
+      border-color: #ddd;
+      color: #d14;
+    }
+    
+    a {
+      color: #0066cc;
+    }
+  }
+  
+  .ud-wrapper {
+    &.bubble-menu,
+    &.slash-menu,
+    &.front-handle-menu {
+      background: #fff;
+      border-color: #ddd;
+    }
+    
+    button {
+      color: #333;
+      
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
     }
   }
 }
