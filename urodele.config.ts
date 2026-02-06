@@ -1,18 +1,18 @@
 export const config = {
   github: {
-    login: "glink25", // github login name, not user name
-    repo: "test-for-anything", //"urodele",
+    login: "2kindlebox", // github login name, not user name
+    repo: "2kindlebox.github.io", //"urodele",
     logInUrl: "",
     logInAuthUrl: "",
   },
   head: {
-    title: "Urodele",
-    brand: "Urodele",
-    description: "A self-owned full-static blog system",
+    title: "2kindlebox",
+    brand: "2kindlebox",
+    description: "Less is more",
   },
   footer: {
-    copyright: "© Glink",
-    copyrightUrl: "https://github.com/glink25",
+    copyright: "© 2kindlebox",
+    copyrightUrl: "https://2kindlebox.github.io",
   },
   pagination: {
     size: 10,
