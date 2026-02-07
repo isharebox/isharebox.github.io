@@ -15,10 +15,9 @@ allPosts.forEach((post: any) => {
 
 // 按数量排序
 const sortedTags = Object.entries(tagCount)
-  .sort((a, b) => b[1] - a[1])
-  .map(([tag, count]) => ({ tag, count }));
+  .sort((a, b) => b[1] - a[1]);
 
-// 序列化数据给客户端
+// 序列化数据
 const postsData = allPosts.map((p: any) => ({
   id: p.id,
   title: p.title,
@@ -31,353 +30,250 @@ const postsData = allPosts.map((p: any) => ({
 <Layout title={`Tags | ${config.head.brand}`}>
   <main>
     <div class="content">
-      <h1 class="page-title">Tags</h1>
-      
       <!-- 搜索框 -->
       <div class="search-box">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
         <input 
           type="search" 
           id="search-input" 
           class="search-input" 
-          placeholder="Search posts..."
+          placeholder="Search tags or posts..."
           autocomplete="off"
         />
-        <button class="search-btn" id="search-btn">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M11.7422 10.3439C12.5329 9.2673 13 7.9382 13 6.5C13 2.91015 10.0899 0 6.5 0C2.91015 0 0 2.91015 0 6.5C0 10.0899 2.91015 13 6.5 13C7.9382 13 9.2673 12.5329 10.3439 11.7422L14.1464 15.5456L15.5456 14.1464L11.7422 10.3439ZM6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 8.98528 8.98528 11 6.5 11Z"/>
-          </svg>
-          Search
-        </button>
       </div>
 
-      <!-- 标签云 -->
+      <!-- 标签云 - 显示数量 -->
+      <h2 class="section-title">Trending Tags</h2>
       <div class="tag-cloud" id="tag-cloud">
-        <button class="tag-btn active" data-tag="All">
-          All <span class="tag-count">{allPosts.length}</span>
-        </button>
-        {sortedTags.map(({ tag, count }) => (
-          <button class="tag-btn" data-tag={tag}>
-            {tag} <span class="tag-count">{count}</span>
-          </button>
+        {sortedTags.map(([tag, count]) => (
+          <a href={`/tag/${encodeURIComponent(tag)}`} class="tag-card">
+            <span class="tag-name">#{tag}</span>
+            <span class="tag-num">{count}</span>
+          </a>
         ))}
       </div>
 
-      <!-- 结果标题 -->
-      <h2 class="result-title" id="result-title">All Posts</h2>
-
-      <!-- 文章列表 -->
-      <div class="post-list" id="post-list">
-        <!-- 由 JS 渲染 -->
-      </div>
-
-      <div class="not-found" id="not-found" style="display: none;">
-        Not found
+      <!-- 搜索结果 - 紧凑列表 -->
+      <div id="search-results" style="display: none;">
+        <h2 class="section-title" id="results-title">Results</h2>
+        <ul class="post-list" id="post-list"></ul>
+        <a href="/tag" class="back-link" onclick="resetSearch(event)">← Clear search</a>
       </div>
     </div>
   </main>
 </Layout>
 
 <script define:vars={{ postsData }}>
-  // 渲染文章列表
-  function renderPosts(posts) {
-    const container = document.getElementById('post-list');
-    container.innerHTML = posts.map(post => `
-      <article class="post-card" data-tags="${post.tags.join(' ')}">
-        <a href="/post/${post.id}" class="post-link">
-          <div class="post-header">
-            <h3 class="post-title">${escapeHtml(post.title)}</h3>
-            <time class="post-date">${formatDate(post.createTime)}</time>
-          </div>
-          <p class="post-intro">${escapeHtml(post.intro || '')}</p>
-          <div class="post-tags">
-            ${post.tags.map(tag => `<span class="post-tag">${escapeHtml(tag)}</span>`).join('')}
-          </div>
-        </a>
-      </article>
-    `).join('');
-  }
-
-  // 初始化渲染
-  renderPosts(postsData);
-
-  // 工具函数
-  function escapeHtml(text) {
-    if (!text) return '';
-    return text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
+  const searchInput = document.getElementById('search-input');
+  const tagCloud = document.getElementById('tag-cloud');
+  const searchResults = document.getElementById('search-results');
+  const postList = document.getElementById('post-list');
+  const resultsTitle = document.getElementById('results-title');
 
   function formatDate(dateStr) {
     return new Date(dateStr).toISOString().split('T')[0];
   }
 
-  // 标签筛选
-  document.getElementById('tag-cloud').addEventListener('click', (e) => {
-    const btn = e.target.closest('.tag-btn');
-    if (!btn) return;
-    
-    const tag = btn.dataset.tag;
-    
-    // 更新按钮状态
-    document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    
-    // 筛选
-    filterPosts(tag, null);
-  });
-
-  // 搜索
-  document.getElementById('search-btn').addEventListener('click', doSearch);
-  document.getElementById('search-input').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') doSearch();
-  });
-
-  function doSearch() {
-    const query = document.getElementById('search-input').value.trim();
-    
-    // 清除标签选中
-    document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
-    
-    filterPosts(null, query);
+  function escapeHtml(text) {
+    if (!text) return '';
+    return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  // 统一筛选函数
-  function filterPosts(tag, searchQuery) {
-    let filtered = postsData;
-    
-    // 标签筛选
-    if (tag && tag !== 'All') {
-      filtered = filtered.filter(p => p.tags.includes(tag));
+  // 紧凑列表渲染 - 与主页一致
+  function renderPosts(posts, query) {
+    if (posts.length === 0) {
+      postList.innerHTML = '<li class="empty-state">No results found</li>';
+      return;
     }
-    
-    // 搜索筛选
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase();
-      filtered = filtered.filter(p => 
-        p.title.toLowerCase().includes(q) ||
-        (p.intro && p.intro.toLowerCase().includes(q)) ||
-        p.tags.some(t => t.toLowerCase().includes(q))
-      );
-    }
-    
-    // 渲染
-    renderPosts(filtered);
-    
-    // 更新标题
-    const titleEl = document.getElementById('result-title');
-    if (searchQuery) {
-      titleEl.textContent = `Search: "${searchQuery}"`;
-    } else if (tag && tag !== 'All') {
-      titleEl.textContent = `Tag: #${tag}`;
-    } else {
-      titleEl.textContent = 'All Posts';
-    }
-    
-    // 显示/隐藏未找到
-    const notFound = document.getElementById('not-found');
-    notFound.style.display = filtered.length === 0 ? 'block' : 'none';
-    notFound.textContent = searchQuery 
-      ? `Not found "${searchQuery}"`
-      : (tag && tag !== 'All' ? `No posts with tag #${tag}` : 'No posts');
-    
-    // 更新 URL
-    const hash = searchQuery ? `search:${searchQuery}` : (tag && tag !== 'All' ? tag : '');
-    window.location.hash = hash;
+
+    postList.innerHTML = posts.map(post => `
+      <li class="post-item">
+        <time class="post-date">${formatDate(post.createTime)}</time>
+        <a href="/post/${post.id}" class="post-title">${escapeHtml(post.title)}</a>
+      </li>
+    `).join('');
   }
 
-  // 页面加载时解析 hash
-  window.addEventListener('DOMContentLoaded', () => {
-    const hash = decodeURIComponent(window.location.hash.slice(1));
-    if (!hash) return;
+  function resetSearch(e) {
+    e.preventDefault();
+    searchInput.value = '';
+    tagCloud.style.display = 'flex';
+    searchResults.style.display = 'none';
+  }
+
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.trim().toLowerCase();
     
-    if (hash.startsWith('search:')) {
-      const query = hash.slice(7);
-      document.getElementById('search-input').value = query;
-      doSearch();
-    } else {
-      const btn = document.querySelector(`[data-tag="${hash}"]`);
-      if (btn) {
-        document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        filterPosts(hash, null);
-      }
+    if (!query) {
+      tagCloud.style.display = 'flex';
+      searchResults.style.display = 'none';
+      return;
     }
+
+    tagCloud.style.display = 'none';
+    searchResults.style.display = 'block';
+    resultsTitle.textContent = query ? `Search: "${query}"` : 'All Posts';
+
+    const filtered = postsData.filter(p => 
+      p.title.toLowerCase().includes(query) ||
+      (p.intro && p.intro.toLowerCase().includes(query)) ||
+      p.tags.some(t => t.toLowerCase().includes(query))
+    );
+
+    renderPosts(filtered, query);
   });
 </script>
 
 <style>
-  .page-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #e8f4f4;
-    margin-bottom: 1.5rem;
+  /* 居中布局 - 与主页一致 */
+  main {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 16px;
   }
-  
+
+  .content {
+    width: 100%;
+    max-width: 720px;
+    padding: 2rem 0;
+  }
+
+  /* 搜索框 */
   .search-box {
     display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .search-input {
-    flex: 1;
-    padding: 0.5rem 0.75rem;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
     background: #05282a;
     border: 1px solid #1a4a4c;
-    border-radius: 4px;
+    border-radius: 24px;
+    margin-bottom: 2rem;
+  }
+
+  .search-icon {
+    color: #8ab3b3;
+    flex-shrink: 0;
+  }
+
+  .search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
     color: #e8f4f4;
-    font-size: 0.9rem;
-  }
-  
-  .search-input:focus {
+    font-size: 1rem;
     outline: none;
-    border-color: #3da0a3;
   }
-  
-  .search-btn {
+
+  .search-input::placeholder {
+    color: #565f89;
+  }
+
+  /* 标题 */
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #e8f4f4;
+    margin: 1.5rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed #1a4a4c;
+  }
+
+  /* 标签云 - 显示数量 */
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tag-card {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    background: rgba(61, 160, 163, 0.1);
-    border: 1px solid #1a4a4c;
-    border-radius: 4px;
-    color: #3da0a3;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  
-  .search-btn:hover {
-    background: rgba(61, 160, 163, 0.15);
-    color: #e8f4f4;
-  }
-  
-  .tag-cloud {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px dashed #1a4a4c;
-  }
-  
-  .tag-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.35rem 0.75rem;
     background: #05282a;
     border: 1px solid #1a4a4c;
-    border-radius: 4px;
-    color: #8ab3b3;
-    font-size: 0.85rem;
-    cursor: pointer;
+    border-radius: 20px;
+    text-decoration: none;
     transition: all 0.2s;
   }
-  
-  .tag-btn:hover {
+
+  .tag-card:hover {
     border-color: #3da0a3;
-    color: #b0d4d4;
+    background: rgba(61, 160, 163, 0.1);
   }
-  
-  .tag-btn.active {
-    background: rgba(61, 160, 163, 0.2);
-    border-color: #3da0a3;
-    color: #e8f4f4;
+
+  .tag-name {
+    color: #3da0a3;
+    font-size: 0.9rem;
   }
-  
-  .tag-count {
+
+  .tag-num {
     padding: 0.1rem 0.4rem;
     background: #1a4a4c;
-    border-radius: 3px;
+    border-radius: 10px;
     font-size: 0.75rem;
-    color: #b0d4d4;
+    color: #8ab3b3;
   }
-  
-  .result-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #e8f4f4;
-    margin-bottom: 1rem;
-  }
-  
+
+  /* 紧凑列表 - 与主页完全一致 */
   .post-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .post-card {
-    padding: 1rem;
-    background: #05282a;
-    border: 1px solid #1a4a4c;
-    border-radius: 6px;
-    transition: all 0.2s;
-  }
-  
-  .post-card:hover {
-    border-color: #2a7c7e;
-  }
-  
-  .post-link {
-    display: block;
-    text-decoration: none;
-  }
-  
-  .post-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .post-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e8f4f4;
+    list-style: none;
+    padding: 0;
     margin: 0;
   }
-  
-  .post-date {
-    font-size: 0.75rem;
-    color: #8ab3b3;
-    font-family: "SF Mono", monospace;
-    white-space: nowrap;
-  }
-  
-  .post-intro {
-    font-size: 0.85rem;
-    color: #8ab3b3;
-    margin: 0 0 0.75rem 0;
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  
-  .post-tags {
+
+  .post-item {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 0.35rem 0;
+    transition: background 0.15s;
   }
-  
-  .post-tag {
-    padding: 0.15rem 0.5rem;
-    background: #0a3d3f;
-    border-radius: 3px;
-    font-size: 0.75rem;
+
+  .post-item:hover {
+    background: rgba(42, 124, 126, 0.05);
+  }
+
+  .post-date {
+    font-family: "SF Mono", Monaco, monospace;
+    font-size: 0.8rem;
+    color: #8ab3b3;
+    min-width: 90px;
+    flex-shrink: 0;
+  }
+
+  .post-title {
+    color: #3da0a3;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .post-title:hover {
+    color: #e8f4f4;
+    text-decoration: underline;
+  }
+
+  .back-link {
+    display: block;
+    margin-top: 2rem;
+    color: #8ab3b3;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
     color: #3da0a3;
   }
-  
-  .not-found {
+
+  .empty-state {
+    padding: 2rem;
     text-align: center;
-    padding: 3rem;
     color: #8ab3b3;
-    font-size: 1.1rem;
   }
 </style>
