@@ -1,0 +1,122 @@
+
+/* src/styles/global.css */
+/* JustGoIdea 深青色主题 */
+
+:root {
+  /* 颜色系统 */
+  --bg-primary: #0a2e2e;
+  --bg-secondary: #0d3b3b;
+  --text-primary: #e0e0e0;
+  --text-secondary: #8cbaba;
+  --text-muted: #5c8a8a;
+  --accent: #6b9999;
+  --border: #1a4a4a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* 链接 */
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+/* 按钮（保留Login/Edit/New Post按钮功能） */
+button, .btn {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+button:hover, .btn:hover {
+  background: rgba(107, 153, 153, 0.1);
+  color: var(--text-primary);
+}
+
+/* 主要按钮 */
+button.primary, .btn-primary {
+  background: var(--accent);
+  color: var(--bg-primary);
+  border: none;
+}
+
+/* 布局 */
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* 导航 */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.nav-links a {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* 文章列表 */
+.post-list {
+  list-style: none;
+}
+
+.post-item {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 0.8rem;
+  align-items: baseline;
+}
+
+.post-date {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  min-width: 90px;
+  font-family: monospace;
+}
+
+.post-title a {
+  color: var(--accent);
+}
+
+/* 页脚 */
+footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px dashed var(--border);
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
