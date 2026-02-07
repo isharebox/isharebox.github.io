@@ -11,7 +11,7 @@ export const config = {
     description: "Less is more",
   },
   footer: {
-    copyright: "©  2kindlebox * since 2026  ",
+    copyright: "©  2kindlebox  ·  since 2026  ",
     copyrightUrl: "https://2kindlebox.github.io",
   },
   pagination: {
