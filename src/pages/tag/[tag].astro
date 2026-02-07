@@ -7,6 +7,10 @@ const tag = (Astro.params as any).tag;
 const all = await getPageList();
 const posts = all.filter((v) => v.tags.includes(decodeURIComponent(tag)));
 
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toISOString().split('T')[0];
+}
+
 export const getStaticPaths = async () => {
   const all = await getPageList();
   return all
@@ -20,34 +24,115 @@ export const getStaticPaths = async () => {
 };
 ---
 
-<script>
-  import { mount } from "@/components/RelativeTime";
-
-  mount("data-acc-time");
-</script>
-
 <Layout title={`Tag | ${decodeURIComponent(tag)}`}>
   <main>
-    <div class="content flex flex-col w-full items-center justify-center px-4">
-      <div class="w-full flex justify-between">
-        <div class="text-4xl">#{tag}</div>
-        <div>{posts.length}</div>
-      </div>
-      {
-        posts.map((item) => (
-          <>
-            <div class="w-full group pt-8 pb-2">
-              <a href={`/post/${item.id}?fromTag=${tag}`} class="px-4 pb-4  flex flex-col w-full">
-                <div class="text-lg transition-all font-semibold group-hover:underline">{item.title}</div>
-                <div class="text-text text-opacity-60 text-sm">{item.intro}</div>
+    <div class="content">
+      <!-- 标签标题 -->
+      <header class="tag-header">
+        <h1 class="tag-title">#{decodeURIComponent(tag)}</h1>
+        <span class="tag-count">{posts.length} posts</span>
+      </header>
+
+      <!-- 紧凑文章列表 -->
+      <ul class="post-list">
+        {
+          posts.map((item) => (
+            <li class="post-item">
+              <time class="post-date">{formatDate(item.createTime)}</time>
+              <a href={`/post/${item.id}?fromTag=${tag}`} class="post-title">
+                {item.title}
               </a>
-              <div data-acc-time={item.createTime} class="text-end text-xs text-gray" />
-            </div>
-            <hr class="w-full" />
-          </>
-        ))
-      }
-      <a href="/tag" class="mt-4 text-blue"> All Tags </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <a href="/tag" class="back-link">← All Tags</a>
     </div>
   </main>
 </Layout>
+
+<style>
+  /* 居中布局 - 与首页一致 */
+  main {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 16px;
+  }
+
+  .content {
+    width: 100%;
+    max-width: 720px;
+  }
+
+  .tag-header {
+    text-align: center;
+    padding: 2rem 0 1.5rem;
+    border-bottom: 1px dashed #1a4a4c;
+    margin-bottom: 1rem;
+  }
+
+  .tag-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #e8f4f4;
+    margin-bottom: 0.5rem;
+  }
+
+  .tag-count {
+    color: #8ab3b3;
+    font-size: 0.9rem;
+  }
+
+  /* 紧凑列表 */
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .post-item {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 0.35rem 0;
+    transition: background 0.15s;
+  }
+
+  .post-item:hover {
+    background: rgba(42, 124, 126, 0.05);
+  }
+
+  .post-date {
+    font-family: "SF Mono", Monaco, monospace;
+    font-size: 0.8rem;
+    color: #8ab3b3;
+    min-width: 90px;
+    flex-shrink: 0;
+  }
+
+  .post-title {
+    color: #3da0a3;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .post-title:hover {
+    color: #e8f4f4;
+    text-decoration: underline;
+  }
+
+  .back-link {
+    display: block;
+    margin-top: 2rem;
+    color: #8ab3b3;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    color: #3da0a3;
+  }
+</style>
