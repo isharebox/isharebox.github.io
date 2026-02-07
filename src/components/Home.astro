@@ -11,7 +11,6 @@ interface Props {
 }
 
 const { posts, page, pages } = Astro.props;
-
 const tags = ['ai', 'Urodele', 'vibecoding', 'essay', 'tech', 'knowledge', 'travel', 'poem', 'workflow'];
 
 function formatDate(dateStr: string) {
@@ -20,61 +19,44 @@ function formatDate(dateStr: string) {
 ---
 
 <Layout title={config.head.title}>
-  <header class="site-header">
-    <h1 class="blog-title">Less is more</h1>
-    <p class="blog-desc">因一念有无故空灭而仿佛无处可逃。由此心无放逸不失众善。</p>
+  <!-- ★ 使用 UnoCSS 类 -->
+  <header class="text-center py-8 border-b border-border">
+    <h1 class="text-2xl font-semibold text-text mb-2 tracking-tight">Less is more</h1>
+    <p class="text-comment text-sm italic max-w-md mx-auto">因一念有无故空灭而仿佛无处可逃。由此心无放逸不失众善。</p>
   </header>
   
   <main>
     <div class="content">
-      <h2 class="section-title">Most recent posts</h2>
+      <h2 class="text-lg font-semibold text-text mt-6 mb-4 pb-2 border-b border-border">Most recent posts</h2>
       
-      <!-- ★ 紧凑列表：时间 + 标题 -->
-      <ul class="post-list">
+      <ul class="list-none p-0 m-0">
         {
           posts.map((item) => (
-            <li class="post-item">
-              <time class="post-date">{formatDate(item.createTime)}</time>
-              <a href={`/post/${item.id}`} class="post-title">{item.title}</a>
+            <li class="flex items-baseline gap-6 py-1 hover:bg-selection transition-colors">
+              <time class="font-mono text-xs text-comment whitespace-nowrap w-20">{formatDate(item.createTime)}</time>
+              <a href={`/post/${item.id}`} class="text-function text-sm hover:text-text hover:underline transition-colors">
+                {item.title}
+              </a>
             </li>
           ))
         }
       </ul>
       
-      <a href="/stream" class="view-more">查看更多碎片思考，请前往 Stream →</a>
+      <a href="/stream" class="block mt-6 text-comment text-sm italic hover:text-function transition-colors">
+        查看更多碎片思考，请前往 Stream →
+      </a>
       
       <Pagination page={page} pages={pages} />
       
-      <section class="tags-section">
-        <div class="tags">
-          {tags.map(tag => <a href={`/tag/${encodeURIComponent(tag)}`}>#{tag}</a>)}
+      <section class="mt-8 pt-6 border-t border-border text-center">
+        <div class="flex flex-wrap justify-center gap-3">
+          {tags.map(tag => (
+            <a href={`/tag/${encodeURIComponent(tag)}`} class="text-comment text-sm hover:text-function transition-colors">
+              #{tag}
+            </a>
+          ))}
         </div>
       </section>
     </div>
   </main>
 </Layout>
-
-<style>
-  .site-header { text-align: center; padding: 2rem 0 1.5rem; border-bottom: 1px dashed #292e42; }
-  .blog-title { font-size: 1.5rem; font-weight: 600; color: #c8d3f5; margin-bottom: 0.6rem; }
-  .blog-desc { text-align: center; color: #565f89; font-size: 0.9rem; font-style: italic; }
-  
-  .section-title { font-size: 1.1rem; font-weight: 600; color: #c8d3f5; margin: 1.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px dashed #292e42; }
-  
-  /* ★ 紧凑列表核心样式 */
-  .post-list { list-style: none; padding: 0; margin: 0; }
-  .post-item { display: flex; align-items: baseline; gap: 1.5rem; padding: 0.3rem 0; }
-  .post-item:hover { background: rgba(74, 158, 255, 0.05); }
-  
-  .post-date { font-family: "SF Mono", Monaco, monospace; font-size: 0.8rem; color: #565f89; min-width: 90px; flex-shrink: 0; }
-  .post-title { color: #7aa2f7; font-size: 0.95rem; text-decoration: none; }
-  .post-title:hover { color: #c8d3f5; text-decoration: underline; }
-  
-  .view-more { display: block; margin-top: 1.5rem; color: #565f89; font-size: 0.85rem; font-style: italic; }
-  .view-more:hover { color: #7aa2f7; }
-  
-  .tags-section { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed #292e42; text-align: center; }
-  .tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; }
-  .tags a { color: #565f89; font-size: 0.85rem; text-decoration: none; }
-  .tags a:hover { color: #7aa2f7; }
-</style>
