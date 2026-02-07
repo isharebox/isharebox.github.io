@@ -1,5 +1,5 @@
 ---
-import "@/index.scss";
+import "@/index.scss";  // 所有样式从这里加载
 import Auth from "@/components/Auth/index.astro";
 import Footer from "@/components/Footer.astro";
 import config from "urodele.config";
@@ -23,17 +23,14 @@ const { title, description, footer = true } = Astro.props;
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content={config.head.brand} />
     <meta name="msapplication-TileColor" content="#1e2030" />
-    <meta
-      name="viewport"
-      content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
-    />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <meta name="description" content={description ?? config.head.description} />
     <link rel="icon" href="/favicon.ico" />
     <title>{[config.head.brand, title].filter(Boolean).reverse().join(" | ")}</title>
   </head>
-  <body class="min-h-screen">
-    <header class="flex justify-between items-center px-4 py-3 border-b" style="border-color: #292e42;">
-      <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity" style="color: #c8d3f5;">
+  <body class="min-h-screen bg-bg text-text">
+    <header class="flex justify-between items-center px-4 py-3 border-b border-border">
+      <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity text-text">
         {config.head.brand}
       </a>
       <div class="flex items-center gap-3">
@@ -47,110 +44,3 @@ const { title, description, footer = true } = Astro.props;
     {footer && <Footer />}
   </body>
 </html>
-
-<style is:global>
-  /* ★ 强制深蓝色背景 */
-  html, body {
-    background-color: #1e2030 !important;
-    color: #c8d3f5 !important;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-  
-  /* 强制所有文字为深蓝主题色 */
-  h1, h2, h3, h4, h5, h6, p, span, div {
-    color: inherit;
-  }
-  
-  /* 链接颜色 - 深蓝色主题 */
-  a {
-    color: #7aa2f7;
-    text-decoration: none;
-  }
-  
-  a:hover {
-    color: #c8d3f5;
-    text-decoration: underline;
-  }
-  
-  main {
-    display: flex;
-    width: 100%;
-    padding: 0 16px;
-    gap: 12px;
-    justify-content: center;
-  }
-  
-  .content {
-    max-width: 720px;
-    width: 100%;
-    overflow-x: hidden;
-    flex: 1 1 0;
-    padding: 0;
-  }
-  
-  /* 时间字体 - 深蓝色主题灰色 */
-  time, .post-date {
-    font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
-    font-size: 0.85rem;
-    color: #565f89;
-    white-space: nowrap;
-  }
-  
-  /* 文章标题链接 - 深蓝色主题亮蓝 */
-  .post-title {
-    color: #7aa2f7;
-    transition: color 0.2s;
-  }
-  
-  .post-title:hover {
-    color: #c8d3f5;
-    text-decoration: underline;
-  }
-  
-  /* 紧凑列表 */
-  .post-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .post-item {
-    display: flex;
-    align-items: baseline;
-    gap: 1.5rem;
-    padding: 0.4rem 0;
-    border-bottom: 1px solid transparent;
-  }
-  
-  .post-item:hover {
-    background: rgba(74, 158, 255, 0.05);
-  }
-  
-  /* 边框颜色 - 深蓝色主题 */
-  .border, .border-b, .border-t, hr {
-    border-color: #292e42 !important;
-  }
-  
-  /* 滚动条 - 深蓝色主题 */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-    background: transparent;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: #3b4261;
-    border-radius: 3px;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: #565f89;
-  }
-  
-  /* 选中文字 */
-  ::selection {
-    background: rgba(74, 158, 255, 0.3);
-    color: #c8d3f5;
-  }
-</style>
