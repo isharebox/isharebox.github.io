@@ -41,8 +41,7 @@ export default defineConfig({
   transformers: [transformerDirectives({ enforce: "pre" })],
   presets: [
     presetUno({
-      dark: "media",
-
+      dark: "class",  // ★ 改："media" → "class"
     }),
     presetTheme({
       theme: {
@@ -53,10 +52,8 @@ export default defineConfig({
       autoInstall: true,
     }),
   ],
-  theme: themes.light,
+  theme: themes.dark,  // ★ 改：themes.light → themes.dark
   content: {
-    filesystem: [
-      'src/**/*.tsx'
-    ]
+    filesystem: ["src/**/*.tsx", "src/**/*.astro"],  // ★ 添加 astro
   }
 });
