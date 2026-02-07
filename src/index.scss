@@ -2,13 +2,13 @@ html {
   scroll-behavior: smooth;
 }
 
-/* 强制深色，移除 @media (prefers-color-scheme: dark) */
+/* 强制深蓝色 header */
 header {
   position: sticky;
   top: 0;
   z-index: 20;
-  background-color: #0a2e2e;
-  border-bottom: 1px solid #1a4a4a;
+  background-color: #1e2030;  // ★ 改：#0a2e2e → #1e2030
+  border-bottom: 1px solid #292e42;  // ★ 改：#1a4a4a → #292e42
 }
 
 ::-webkit-scrollbar {
@@ -22,27 +22,27 @@ header {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(92, 138, 138, 0.3);
+  background-color: rgba(59, 66, 97, 0.5);  // ★ 改：rgba(92, 138, 138, 0.3) → 深蓝
   border-radius: 3px;
   
   &:hover {
-    background-color: rgba(92, 138, 138, 0.5);
+    background-color: rgba(86, 95, 137, 0.7);  // ★ 改：rgba(92, 138, 138, 0.5) → 深蓝
   }
 }
 
 hr {
-  border-color: #1a4a4a;
+  border-color: #292e42;  // ★ 改：#1a4a4a → #292e42
   border-style: dashed;
   border-width: 1px 0 0 0;
   margin: 1.5rem 0;
 }
 
-// 按钮样式 - 深色主题
+// 按钮样式 - 深蓝色主题
 .buttoned {
   @apply px-3 py-1.5 rounded flex items-center justify-center gap-2 transition-all text-sm;
-  background-color: rgba(107, 153, 153, 0.1);
-  color: #8cbaba;
-  border: 1px solid #1a4a4a;
+  background-color: rgba(74, 158, 255, 0.1);  // ★ 改：rgba(107, 153, 153, 0.1) → 蓝色
+  color: #7aa2f7;  // ★ 改：#8cbaba → #7aa2f7
+  border: 1px solid #292e42;  // ★ 改：#1a4a4a → #292e42
 
   &:disabled {
     @apply opacity-50 cursor-not-allowed;
@@ -50,27 +50,27 @@ hr {
 
   &:not(:disabled) {
     &:active {
-      background-color: rgba(107, 153, 153, 0.2);
+      background-color: rgba(74, 158, 255, 0.2);  // ★ 改：绿色 → 蓝色
     }
 
     &:not(:active):hover {
-      background-color: rgba(107, 153, 153, 0.15);
-      border-color: #5c8a8a;
+      background-color: rgba(74, 158, 255, 0.15);  // ★ 改：绿色 → 蓝色
+      border-color: #4a9eff;  // ★ 改：#5c8a8a → #4a9eff
     }
   }
 }
 
 .text-button {
   @apply px-2 py-1 rounded flex items-center justify-center gap-2 transition-all text-sm;
-  color: #8cbaba;
+  color: #565f89;  // ★ 改：#8cbaba → #565f89
   
   &:hover {
-    background-color: rgba(107, 153, 153, 0.1);
-    color: #e0e0e0;
+    background-color: rgba(74, 158, 255, 0.1);  // ★ 改：绿色 → 蓝色
+    color: #c8d3f5;  // ★ 改：#e0e0e0 → #c8d3f5
   }
   
   &:active {
-    background-color: rgba(107, 153, 153, 0.2);
+    background-color: rgba(74, 158, 255, 0.2);  // ★ 改：绿色 → 蓝色
   }
 }
 
@@ -120,12 +120,12 @@ div[data-modal-loading="false"] {
   .page-title::after {
     content: 'draft';
     @apply bg-yellow-200 dark:bg-yellow rounded mx-1 px-2 py-1 text-xs align-super;
-    display: none; // 隐藏 draft 标记，保持简洁
+    display: none;
   }
 }
 
-// Selection styling
+// Selection styling - 深蓝色主题
 ::selection {
-  background-color: rgba(107, 153, 153, 0.3);
-  color: #e0e0e0;
+  background-color: rgba(74, 158, 255, 0.3);  // ★ 改：绿色 → 蓝色
+  color: #c8d3f5;  // ★ 改：#e0e0e0 → #c8d3f5
 }
