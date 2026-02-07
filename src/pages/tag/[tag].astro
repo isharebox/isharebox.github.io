@@ -33,7 +33,7 @@ export const getStaticPaths = async () => {
         <span class="tag-count">{posts.length} posts</span>
       </div>
 
-      <!-- 紧凑文章列表 - 与主页一致 -->
+      <!-- 紧凑文章列表 -->
       <ul class="post-list">
         {posts.map((item) => (
           <li class="post-item">
@@ -49,7 +49,6 @@ export const getStaticPaths = async () => {
 </Layout>
 
 <style>
-  /* 居中布局 - 与主页一致 */
   main {
     display: flex;
     justify-content: center;
@@ -66,28 +65,27 @@ export const getStaticPaths = async () => {
   .tag-header {
     text-align: center;
     padding: 2rem 0 1.5rem;
-    border-bottom: 1px dashed #1a4a4c;
+    border-bottom: 1px dashed #292e42;
     margin-bottom: 1rem;
   }
 
   .tag-title {
     font-size: 1.8rem;
     font-weight: 600;
-    color: #e8f4f4;
+    color: #c8d3f5;
     margin-bottom: 0.5rem;
   }
 
   .tag-hash {
-    color: #3da0a3;
+    color: #7aa2f7;
     margin-right: 0.2rem;
   }
 
   .tag-count {
-    color: #8ab3b3;
+    color: #565f89;
     font-size: 0.9rem;
   }
 
-  /* 紧凑列表 - 与主页完全一致 */
   .post-list {
     list-style: none;
     padding: 0;
@@ -103,140 +101,38 @@ export const getStaticPaths = async () => {
   }
 
   .post-item:hover {
-    background: rgba(42, 124, 126, 0.05);
+    background: rgba(74, 158, 255, 0.05);
   }
 
   .post-date {
     font-family: "SF Mono", Monaco, monospace;
     font-size: 0.8rem;
-    color: #8ab3b3;
+    color: #565f89;
     min-width: 90px;
     flex-shrink: 0;
   }
 
   .post-title {
-    color: #3da0a3;
+    color: #7aa2f7;
     font-size: 0.95rem;
     text-decoration: none;
     transition: color 0.2s;
   }
 
   .post-title:hover {
-    color: #e8f4f4;
+    color: #c8d3f5;
     text-decoration: underline;
   }
 
   .back-link {
     display: block;
     margin-top: 2rem;
-    color: #8ab3b3;
+    color: #565f89;
     font-size: 0.9rem;
     text-decoration: none;
   }
 
   .back-link:hover {
-    color: #3da0a3;
-  }
-</style>
-      <ul class="post-list">
-        {
-          posts.map((item) => (
-            <li class="post-item">
-              <time class="post-date">{formatDate(item.createTime)}</time>
-              <a href={`/post/${item.id}?fromTag=${tag}`} class="post-title">
-                {item.title}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-
-      <a href="/tag" class="back-link">← All Tags</a>
-    </div>
-  </main>
-</Layout>
-
-<style>
-  /* 居中布局 - 与首页一致 */
-  main {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    padding: 0 16px;
-  }
-
-  .content {
-    width: 100%;
-    max-width: 720px;
-  }
-
-  .tag-header {
-    text-align: center;
-    padding: 2rem 0 1.5rem;
-    border-bottom: 1px dashed #1a4a4c;
-    margin-bottom: 1rem;
-  }
-
-  .tag-title {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #e8f4f4;
-    margin-bottom: 0.5rem;
-  }
-
-  .tag-count {
-    color: #8ab3b3;
-    font-size: 0.9rem;
-  }
-
-  /* 紧凑列表 */
-  .post-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .post-item {
-    display: flex;
-    align-items: baseline;
-    gap: 1.5rem;
-    padding: 0.35rem 0;
-    transition: background 0.15s;
-  }
-
-  .post-item:hover {
-    background: rgba(42, 124, 126, 0.05);
-  }
-
-  .post-date {
-    font-family: "SF Mono", Monaco, monospace;
-    font-size: 0.8rem;
-    color: #8ab3b3;
-    min-width: 90px;
-    flex-shrink: 0;
-  }
-
-  .post-title {
-    color: #3da0a3;
-    font-size: 0.95rem;
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .post-title:hover {
-    color: #e8f4f4;
-    text-decoration: underline;
-  }
-
-  .back-link {
-    display: block;
-    margin-top: 2rem;
-    color: #8ab3b3;
-    font-size: 0.9rem;
-    text-decoration: none;
-  }
-
-  .back-link:hover {
-    color: #3da0a3;
+    color: #7aa2f7;
   }
 </style>
