@@ -5,7 +5,6 @@ import config from "urodele.config";
 
 const allPosts = await getPageList();
 
-// 统计标签
 const tagCount: Record<string, number> = {};
 allPosts.forEach((post: any) => {
   post.tags?.forEach((tag: string) => {
@@ -13,11 +12,8 @@ allPosts.forEach((post: any) => {
   });
 });
 
-// 按数量排序
-const sortedTags = Object.entries(tagCount)
-  .sort((a, b) => b[1] - a[1]);
+const sortedTags = Object.entries(tagCount).sort((a, b) => b[1] - a[1]);
 
-// 序列化数据
 const postsData = allPosts.map((p: any) => ({
   id: p.id,
   title: p.title,
@@ -30,7 +26,7 @@ const postsData = allPosts.map((p: any) => ({
 <Layout title={`Tags | ${config.head.brand}`}>
   <main>
     <div class="content">
-      <!-- 搜索框 -->
+      <!-- 搜索框 - 深灰蓝背景 -->
       <div class="search-box">
         <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"></circle>
@@ -45,7 +41,7 @@ const postsData = allPosts.map((p: any) => ({
         />
       </div>
 
-      <!-- 标签云 - 显示数量 -->
+      <!-- 标签云 - 深灰蓝背景 -->
       <h2 class="section-title">Trending Tags</h2>
       <div class="tag-cloud" id="tag-cloud">
         {sortedTags.map(([tag, count]) => (
@@ -56,7 +52,7 @@ const postsData = allPosts.map((p: any) => ({
         ))}
       </div>
 
-      <!-- 搜索结果 - 紧凑列表 -->
+      <!-- 搜索结果 -->
       <div id="search-results" style="display: none;">
         <h2 class="section-title" id="results-title">Results</h2>
         <ul class="post-list" id="post-list"></ul>
@@ -82,8 +78,7 @@ const postsData = allPosts.map((p: any) => ({
     return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  // 紧凑列表渲染 - 与主页一致
-  function renderPosts(posts, query) {
+  function renderPosts(posts) {
     if (posts.length === 0) {
       postList.innerHTML = '<li class="empty-state">No results found</li>';
       return;
@@ -101,6 +96,7 @@ const postsData = allPosts.map((p: any) => ({
     e.preventDefault();
     searchInput.value = '';
     tagCloud.style.display = 'flex';
+    document.querySelector('.section-title').style.display = 'block';
     searchResults.style.display = 'none';
   }
 
@@ -109,13 +105,15 @@ const postsData = allPosts.map((p: any) => ({
     
     if (!query) {
       tagCloud.style.display = 'flex';
+      document.querySelector('.section-title').style.display = 'block';
       searchResults.style.display = 'none';
       return;
     }
 
     tagCloud.style.display = 'none';
+    document.querySelector('.section-title').style.display = 'none';
     searchResults.style.display = 'block';
-    resultsTitle.textContent = query ? `Search: "${query}"` : 'All Posts';
+    resultsTitle.textContent = `Search: "${query}"`;
 
     const filtered = postsData.filter(p => 
       p.title.toLowerCase().includes(query) ||
@@ -123,12 +121,11 @@ const postsData = allPosts.map((p: any) => ({
       p.tags.some(t => t.toLowerCase().includes(query))
     );
 
-    renderPosts(filtered, query);
+    renderPosts(filtered);
   });
 </script>
 
 <style>
-  /* 居中布局 - 与主页一致 */
   main {
     display: flex;
     justify-content: center;
@@ -142,20 +139,20 @@ const postsData = allPosts.map((p: any) => ({
     padding: 2rem 0;
   }
 
-  /* 搜索框 */
+  /* 搜索框 - 深灰蓝背景 #2a2e45 */
   .search-box {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem 1rem;
-    background: #05282a;
-    border: 1px solid #1a4a4c;
+    background: #2a2e45;
+    border: 1px solid #3b4261;
     border-radius: 24px;
     margin-bottom: 2rem;
   }
 
   .search-icon {
-    color: #8ab3b3;
+    color: #565f89;
     flex-shrink: 0;
   }
 
@@ -163,7 +160,7 @@ const postsData = allPosts.map((p: any) => ({
     flex: 1;
     background: transparent;
     border: none;
-    color: #e8f4f4;
+    color: #c8d3f5;
     font-size: 1rem;
     outline: none;
   }
@@ -172,17 +169,16 @@ const postsData = allPosts.map((p: any) => ({
     color: #565f89;
   }
 
-  /* 标题 */
   .section-title {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #e8f4f4;
+    color: #c8d3f5;
     margin: 1.5rem 0 1rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px dashed #1a4a4c;
+    border-bottom: 1px dashed #292e42;
   }
 
-  /* 标签云 - 显示数量 */
+  /* 标签云 - 深灰蓝背景 */
   .tag-cloud {
     display: flex;
     flex-wrap: wrap;
@@ -195,32 +191,31 @@ const postsData = allPosts.map((p: any) => ({
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    background: #05282a;
-    border: 1px solid #1a4a4c;
+    background: #2a2e45;
+    border: 1px solid #3b4261;
     border-radius: 20px;
     text-decoration: none;
     transition: all 0.2s;
   }
 
   .tag-card:hover {
-    border-color: #3da0a3;
-    background: rgba(61, 160, 163, 0.1);
+    border-color: #7aa2f7;
+    background: #3b4261;
   }
 
   .tag-name {
-    color: #3da0a3;
+    color: #7aa2f7;
     font-size: 0.9rem;
   }
 
   .tag-num {
     padding: 0.1rem 0.4rem;
-    background: #1a4a4c;
+    background: #1e2030;
     border-radius: 10px;
     font-size: 0.75rem;
-    color: #8ab3b3;
+    color: #565f89;
   }
 
-  /* 紧凑列表 - 与主页完全一致 */
   .post-list {
     list-style: none;
     padding: 0;
@@ -236,44 +231,44 @@ const postsData = allPosts.map((p: any) => ({
   }
 
   .post-item:hover {
-    background: rgba(42, 124, 126, 0.05);
+    background: rgba(74, 158, 255, 0.05);
   }
 
   .post-date {
     font-family: "SF Mono", Monaco, monospace;
     font-size: 0.8rem;
-    color: #8ab3b3;
+    color: #565f89;
     min-width: 90px;
     flex-shrink: 0;
   }
 
   .post-title {
-    color: #3da0a3;
+    color: #7aa2f7;
     font-size: 0.95rem;
     text-decoration: none;
     transition: color 0.2s;
   }
 
   .post-title:hover {
-    color: #e8f4f4;
+    color: #c8d3f5;
     text-decoration: underline;
   }
 
   .back-link {
     display: block;
     margin-top: 2rem;
-    color: #8ab3b3;
+    color: #565f89;
     font-size: 0.9rem;
     text-decoration: none;
   }
 
   .back-link:hover {
-    color: #3da0a3;
+    color: #7aa2f7;
   }
 
   .empty-state {
     padding: 2rem;
     text-align: center;
-    color: #8ab3b3;
+    color: #565f89;
   }
 </style>
