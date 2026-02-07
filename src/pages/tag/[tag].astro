@@ -17,23 +17,127 @@ export const getStaticPaths = async () => {
     .map((p) => p.tags)
     .flat()
     .map((p) => ({
-      params: {
-        tag: p,
-      },
+      params: { tag: p },
     }));
 };
 ---
 
-<Layout title={`Tag | ${decodeURIComponent(tag)}`}>
+<Layout title={`#${decodeURIComponent(tag)}`}>
   <main>
     <div class="content">
       <!-- 标签标题 -->
-      <header class="tag-header">
-        <h1 class="tag-title">#{decodeURIComponent(tag)}</h1>
+      <div class="tag-header">
+        <h1 class="tag-title">
+          <span class="tag-hash">#</span>{decodeURIComponent(tag)}
+        </h1>
         <span class="tag-count">{posts.length} posts</span>
-      </header>
+      </div>
 
-      <!-- 紧凑文章列表 -->
+      <!-- 紧凑文章列表 - 与主页一致 -->
+      <ul class="post-list">
+        {posts.map((item) => (
+          <li class="post-item">
+            <time class="post-date">{formatDate(item.createTime)}</time>
+            <a href={`/post/${item.id}`} class="post-title">{item.title}</a>
+          </li>
+        ))}
+      </ul>
+
+      <a href="/tag" class="back-link">← All Tags</a>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  /* 居中布局 - 与主页一致 */
+  main {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 16px;
+  }
+
+  .content {
+    width: 100%;
+    max-width: 720px;
+    padding: 2rem 0;
+  }
+
+  .tag-header {
+    text-align: center;
+    padding: 2rem 0 1.5rem;
+    border-bottom: 1px dashed #1a4a4c;
+    margin-bottom: 1rem;
+  }
+
+  .tag-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #e8f4f4;
+    margin-bottom: 0.5rem;
+  }
+
+  .tag-hash {
+    color: #3da0a3;
+    margin-right: 0.2rem;
+  }
+
+  .tag-count {
+    color: #8ab3b3;
+    font-size: 0.9rem;
+  }
+
+  /* 紧凑列表 - 与主页完全一致 */
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .post-item {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 0.35rem 0;
+    transition: background 0.15s;
+  }
+
+  .post-item:hover {
+    background: rgba(42, 124, 126, 0.05);
+  }
+
+  .post-date {
+    font-family: "SF Mono", Monaco, monospace;
+    font-size: 0.8rem;
+    color: #8ab3b3;
+    min-width: 90px;
+    flex-shrink: 0;
+  }
+
+  .post-title {
+    color: #3da0a3;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .post-title:hover {
+    color: #e8f4f4;
+    text-decoration: underline;
+  }
+
+  .back-link {
+    display: block;
+    margin-top: 2rem;
+    color: #8ab3b3;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    color: #3da0a3;
+  }
+</style>
       <ul class="post-list">
         {
           posts.map((item) => (
