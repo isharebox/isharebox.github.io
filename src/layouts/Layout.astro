@@ -3,7 +3,7 @@ import "@/index.scss";
 import Auth from "@/components/Auth/index.astro";
 import Footer from "@/components/Footer.astro";
 import config from "urodele.config";
-import "@/global.css";
+
 interface Props {
   title?: string;
   description?: string;
@@ -14,7 +14,7 @@ const { title, description, footer = true } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN" class="dark"> <!-- ★ 强制 dark 类 -->
   <head>
     <meta charset="UTF-8" />
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon.png" />
@@ -22,30 +22,40 @@ const { title, description, footer = true } = Astro.props;
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content={config.head.brand} />
-    <meta name="msapplication-TileColor" content="#000000" />
+    <meta name="msapplication-TileColor" content="#0a2e2e" />
     <meta
       name="viewport"
       content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
     />
     <meta name="description" content={description ?? config.head.description} />
     <link rel="icon" href="/favicon.ico" />
-    <title>{[config.head.brand, title].reverse().join(" | ")}</title>
+    <title>{[config.head.brand, title].filter(Boolean).reverse().join(" | ")}</title>
   </head>
-  <body class="text-text bg-bg">
-    <header class="flex justify-between items-center p-2 gap-2 h-10">
-      <a href="/" class="text-button text-lg" aria-label="homepage">
-        <div class="i-ri:menu-4-fill"></div>
+  <body class="text-text bg-bg min-h-screen">
+    <!-- ★ 简化 header：只有品牌名和 Auth -->
+    <header class="flex justify-between items-center px-4 py-3 border-b border-border">
+      <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity">
+        {config.head.brand}
       </a>
-      <div class="flex gap-2 items-center header-operations">
+      <div class="flex items-center gap-3">
         <slot name="operations" />
-        {(<Auth />)}
+        <Auth />
       </div>
     </header>
+    
     <slot />
+    
     {footer && <Footer />}
   </body>
 </html>
+
 <style is:global>
+  /* 全局字体优化 */
+  html {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  
   main {
     display: flex;
     width: 100%;
@@ -53,11 +63,56 @@ const { title, description, footer = true } = Astro.props;
     gap: 12px;
     justify-content: center;
   }
+  
   .content {
-    /* width: 100%; */
     max-width: 720px;
-    /* padding: 0 24px; */
+    width: 100%;
     overflow-x: hidden;
     flex: 1 1 0;
+    padding: 0;
+  }
+  
+  /* 链接样式 */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  /* 时间字体 */
+  time, .post-date {
+    font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
+    font-size: 0.85rem;
+    color: #5c8a8a;
+    white-space: nowrap;
+  }
+  
+  /* 文章标题链接 */
+  .post-title {
+    color: #8cbaba;
+    transition: color 0.2s;
+  }
+  
+  .post-title:hover {
+    color: #e0e0e0;
+    text-decoration: underline;
+  }
+  
+  /* 紧凑列表 */
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .post-item {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid transparent;
+  }
+  
+  .post-item:hover {
+    background: rgba(107, 153, 153, 0.05);
   }
 </style>
