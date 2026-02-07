@@ -1,179 +1,131 @@
 html {
-    scroll-behavior: smooth
+  scroll-behavior: smooth;
 }
 
+/* 强制深色，移除 @media (prefers-color-scheme: dark) */
 header {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    @apply bg-bg;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-@media (prefers-color-scheme: dark) {
-    header {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background-color: #0a2e2e;
+  border-bottom: 1px solid #1a4a4a;
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-    background-color: transparent;
+  width: 6px;
+  height: 6px;
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: rgba(200, 211, 245, 0.2);
-    border-radius: 4px;
-    
-    &:hover {
-        background-color: rgba(200, 211, 245, 0.4);
-    }
+  background-color: rgba(92, 138, 138, 0.3);
+  border-radius: 3px;
+  
+  &:hover {
+    background-color: rgba(92, 138, 138, 0.5);
+  }
 }
 
-@media (prefers-color-scheme: dark) {
-    ::-webkit-scrollbar-thumb {
-        background-color: rgba(74, 158, 255, 0.3);
-        
-        &:hover {
-            background-color: rgba(74, 158, 255, 0.5);
-        }
-    }
+hr {
+  border-color: #1a4a4a;
+  border-style: dashed;
+  border-width: 1px 0 0 0;
+  margin: 1.5rem 0;
 }
 
-@media (prefers-color-scheme: dark) {
-    hr {
-        border-color: rgba(200, 211, 245, 0.2);
-    }
-}
-
-// button
+// 按钮样式 - 深色主题
 .buttoned {
-    @apply px-2 py-1 rounded flex items-center justify-center gap-2 transition-all;
-    background-color: rgba(74, 158, 255, 0.1);
-    color: #4a9eff;
+  @apply px-3 py-1.5 rounded flex items-center justify-center gap-2 transition-all text-sm;
+  background-color: rgba(107, 153, 153, 0.1);
+  color: #8cbaba;
+  border: 1px solid #1a4a4a;
 
-    &:disabled {
-        @apply opacity-50 cursor-not-allowed;
+  &:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  &:not(:disabled) {
+    &:active {
+      background-color: rgba(107, 153, 153, 0.2);
     }
 
-    &:not(:disabled) {
-        &:active {
-            background-color: rgba(74, 158, 255, 0.2);
-        }
-
-        &:not(:active):hover {
-            background-color: rgba(74, 158, 255, 0.15);
-        }
+    &:not(:active):hover {
+      background-color: rgba(107, 153, 153, 0.15);
+      border-color: #5c8a8a;
     }
-
-    &[data-loading] {
-        &::before {
-            content: '';
-            @apply w-3 h-3;
-            background-size: contain;
-            background-image: icon('i-svg-spinners:ring-resize');
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-    }
-
-    &[data-loading="false"] {
-        &::before {
-            content: none;
-        }
-    }
+  }
 }
 
 .text-button {
-    @apply px-2 py-1 rounded flex items-center justify-center gap-2 transition-all;
-    color: #c8d3f5;
-    
-    &:hover {
-        background-color: rgba(74, 158, 255, 0.1);
-    }
-    
-    &:active {
-        background-color: rgba(74, 158, 255, 0.2);
-    }
-}
-
-@media (prefers-color-scheme: light) {
-    .text-button {
-        color: #000;
-        
-        &:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-        
-        &:active {
-            background-color: rgba(0, 0, 0, 0.1);
-        }
-    }
+  @apply px-2 py-1 rounded flex items-center justify-center gap-2 transition-all text-sm;
+  color: #8cbaba;
+  
+  &:hover {
+    background-color: rgba(107, 153, 153, 0.1);
+    color: #e0e0e0;
+  }
+  
+  &:active {
+    background-color: rgba(107, 153, 153, 0.2);
+  }
 }
 
 // loading
 div[data-modal-loading] {
-    position: relative;
+  position: relative;
 
-    &::before {
-        @apply absolute w-full h-full top-0 left-0 bg-bg bg-opacity-90;
-        content: '';
-        background-size: 24px;
-        background-image: icon('i-svg-spinners:ring-resize');
-        background-position: center;
-        background-repeat: no-repeat;
-        pointer-events: all;
-    }
+  &::before {
+    @apply absolute w-full h-full top-0 left-0 bg-bg bg-opacity-90;
+    content: '';
+    background-size: 24px;
+    background-image: icon('i-svg-spinners:ring-resize');
+    background-position: center;
+    background-repeat: no-repeat;
+    pointer-events: all;
+  }
 }
 
 div[data-modal-loading="false"] {
-    &::before {
-        content: none;
-    }
+  &::before {
+    content: none;
+  }
 }
 
 // transition
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
-    opacity: 0;
+  opacity: 0;
 }
 
 // page
 [data-page-draft]:not([data-page-draft="verified"]) {
-    display: none;
-    visibility: hidden;
+  display: none;
+  visibility: hidden;
 }
 
 [data-page-draft] {
-    .page-title {
-        position: relative;
-    }
+  .page-title {
+    position: relative;
+  }
 
-    .page-title::after {
-        content: 'draft';
-        @apply bg-yellow-200 dark:bg-yellow rounded mx-1 px-2 py-1 text-xs align-super;
-    }
+  .page-title::after {
+    content: 'draft';
+    @apply bg-yellow-200 dark:bg-yellow rounded mx-1 px-2 py-1 text-xs align-super;
+    display: none; // 隐藏 draft 标记，保持简洁
+  }
 }
 
 // Selection styling
 ::selection {
-    background-color: rgba(74, 158, 255, 0.3);
-    color: #c8d3f5;
-}
-
-@media (prefers-color-scheme: light) {
-    ::selection {
-        background-color: rgba(250, 204, 21, 0.3);
-        color: #000;
-    }
+  background-color: rgba(107, 153, 153, 0.3);
+  color: #e0e0e0;
 }
