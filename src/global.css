@@ -2,6 +2,14 @@
 /* src/styles/global.css */
 /* JustGoIdea 深青色主题 */
 
+/* 提高优先级，覆盖默认样式 */
+:root {
+  --bg-primary: #0a2e2e !important;
+  --text-primary: #e0e0e0 !important;
+  /* ... 其他变量 */
+}
+
+
 :root {
   /* 颜色系统 */
   --bg-primary: #0a2e2e;
