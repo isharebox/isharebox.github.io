@@ -9,18 +9,41 @@ import config from "urodele.config";
       <h1 class="page-title">About</h1>
       
       <div class="about-content">
-        <p>你好，我是 2kindlebox。</p>
+        <p>Hi，I'm 2kindlebox。</p>
         
-        <p>这是一个关于页面，你可以在这里介绍自己：</p>
+        <p>The Rolling Minimalist
+
+    Two wheels. Paperbacks with creased spines. Leonard Cohen on loop. Building a life light enough to carry to an island someday—with her.</p>
         
         <ul>
-          <li>你的背景</li>
-          <li>你的兴趣</li>
-          <li>你的项目</li>
-          <li>联系方式</li>
+          <li>to be continued</li>
+          <li>to be continued</li>
+          <li>to be continued</li>
+          <li>to be continued</li>
         </ul>
         
-        <p>编辑 <code>src/pages/about.astro</code> 来自定义这个页面。</p>
+        <p>
+<p id="hitokoto">
+  <a href="#" id="hitokoto_text">:D 获取中...</a>
+</p>
+<script>
+  fetch('https://v1.hitokoto.cn')
+    .then(response => response.json())
+    .then(data => {
+      const hitokoto = document.querySelector('#hitokoto_text')
+      hitokoto.href = `https://hitokoto.cn/?uuid=${data.uuid}`
+      hitokoto.innerText = data.hitokoto
+    })
+    .catch(console.error)
+</script>
+<style>
+  #hitokoto_text {
+    text-shadow: 1px 0px 10px #757575; font-weight: bold; color: #000000; letter-spacing: 3pt; word-spacing: 3pt; font-size: 20px; text-align: left; font-family: trebuchet ms; line-height: 1; margin: 26px; padding: 5px;
+    color: #9336B4;
+    font-size: 16px;
+  }
+</style>
+</p>
       </div>
       
       <a href="/" class="back-link">← Back to Home</a>
