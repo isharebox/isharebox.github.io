@@ -1,0 +1,180 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import config from "urodele.config";
+
+// 要嵌入的网站
+const embedUrl = "https://getnote.top/qqqq";
+---
+
+<Layout title={`Tools | ${config.head.brand}`}>
+  <main class="tools-page">
+    <!-- 顶部工具栏 -->
+    <div class="toolbar">
+      <h1 class="page-title">Tools</h1>
+      <div class="url-display">
+        <span class="url-label">Loading:</span>
+        <span class="url-text">{embedUrl}</span>
+      </div>
+    </div>
+
+    <!-- iframe 容器 -->
+    <div class="iframe-container">
+      <iframe 
+        src={embedUrl}
+        class="embed-frame"
+        title="Embedded Tool"
+        allow="fullscreen; clipboard-write; encrypted-media"
+        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+      >
+      </iframe>
+      
+      <!-- 加载提示 -->
+      <div class="loading-overlay" id="loading">
+        <div class="loading-spinner"></div>
+        <p>Loading...</p>
+      </div>
+    </div>
+
+    <!-- 底部说明 -->
+    <div class="footer-note">
+      <p>External site embedded via iframe. 
+        <a href={embedUrl} target="_blank" rel="noopener noreferrer">Open in new tab →</a>
+      </p>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  // 隐藏加载提示
+  const iframe = document.querySelector('.embed-frame');
+  const loading = document.getElementById('loading');
+  
+  iframe.addEventListener('load', () => {
+    loading.style.display = 'none';
+  });
+  
+  // 5秒后自动隐藏加载提示（防止加载事件不触发）
+  setTimeout(() => {
+    loading.style.display = 'none';
+  }, 5000);
+</script>
+
+<style>
+  .tools-page {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px); /* 减去 header 高度 */
+  }
+
+  /* 顶部工具栏 */
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: #1e2030;
+    border-bottom: 1px solid #292e42;
+  }
+
+  .page-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #c8d3f5;
+    margin: 0;
+  }
+
+  .url-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .url-label {
+    color: #565f89;
+  }
+
+  .url-text {
+    color: #7aa2f7;
+    font-family: monospace;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* iframe 容器 */
+  .iframe-container {
+    flex: 1;
+    position: relative;
+    background: #0a0a0a;
+  }
+
+  .embed-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* 加载提示 */
+  .loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #1e2030;
+    color: #565f89;
+    gap: 1rem;
+  }
+
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #292e42;
+    border-top-color: #7aa2f7;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* 底部说明 */
+  .footer-note {
+    padding: 0.75rem 1.5rem;
+    background: #1e2030;
+    border-top: 1px solid #292e42;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #565f89;
+  }
+
+  .footer-note a {
+    color: #7aa2f7;
+    text-decoration: none;
+  }
+
+  .footer-note a:hover {
+    text-decoration: underline;
+  }
+
+  /* 响应式 */
+  @media (max-width: 768px) {
+    .toolbar {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+
+    .url-text {
+      max-width: 200px;
+    }
+  }
+</style>
