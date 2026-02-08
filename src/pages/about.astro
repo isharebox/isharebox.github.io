@@ -1,0 +1,92 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import config from "urodele.config";
+---
+
+<Layout title={`About | ${config.head.brand}`}>
+  <main>
+    <div class="content">
+      <h1 class="page-title">About</h1>
+      
+      <div class="about-content">
+        <p>你好，我是 2kindlebox。</p>
+        
+        <p>这是一个关于页面，你可以在这里介绍自己：</p>
+        
+        <ul>
+          <li>你的背景</li>
+          <li>你的兴趣</li>
+          <li>你的项目</li>
+          <li>联系方式</li>
+        </ul>
+        
+        <p>编辑 <code>src/pages/about.astro</code> 来自定义这个页面。</p>
+      </div>
+      
+      <a href="/" class="back-link">← Back to Home</a>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 16px;
+  }
+
+  .content {
+    width: 100%;
+    max-width: 720px;
+    padding: 2rem 0;
+  }
+
+  .page-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #c8d3f5;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed #292e42;
+  }
+
+  .about-content {
+    color: #c8d3f5;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  .about-content p {
+    margin-bottom: 1rem;
+  }
+
+  .about-content ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+    color: #8ab3b3;
+  }
+
+  .about-content li {
+    margin-bottom: 0.5rem;
+  }
+
+  .about-content code {
+    background: #2a2e45;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9em;
+    color: #7aa2f7;
+  }
+
+  .back-link {
+    color: #565f89;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    color: #7aa2f7;
+  }
+</style>
