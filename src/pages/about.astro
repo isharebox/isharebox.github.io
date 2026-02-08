@@ -14,23 +14,9 @@ import config from "urodele.config";
            <blockquote>
           「Why join the navy if you can be a pirate.」 
            </blockquote>
-
-<style>
-  blockquote {
-    margin: 2rem 0;
-    padding: 1rem 1.5rem;
-    max-width: 720px;
-    border-left: 3px solid #7aa2f7;
-    background: rgba(122, 162, 247, 0.05);
-    color: #b0d4d4;
-    font-style: italic;
-  }
-</style> </p>
-        <p></p>
+        </p>
         <p>Two wheels. Paperbacks with creased spines. Leonard Cohen on loop.</p> 
-        <p></p>
         <p>Building a life light enough to carry to an island someday—with her.</p>
-        <p></p>
         <p id="hitokoto">
           <a href="#" id="hitokoto_text">:D 获取中...</a>
         </p>
@@ -63,8 +49,6 @@ import config from "urodele.config";
     width: 100%;
     max-width: 720px;
     padding: 2rem 0;
-    margin: 0 auto;              /* ← ADD THIS: ensures centering */
-    text-align: center;          /* ← ADD THIS: centers all text content */
   }
 
   .page-title {
@@ -82,33 +66,50 @@ import config from "urodele.config";
     margin-bottom: 2rem;
   }
 
-  .about-content p {
-    margin-bottom: 1rem;
+  /* ★ Quote Block - 宽度自适应，不撑满 */
+  .quote-block {
+    margin: 2rem auto;           /* 上下间距，左右居中 */
+    padding: 1rem 1.5rem;
+    border-left: 3px solid #7aa2f7;
+    background: rgba(122, 162, 247, 0.05);
+    color: #b0d4d4;
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+    display: inline-block;       /* ★ 宽度自适应内容 */
+    width: fit-content;           /* 严格适配内容宽度 */
+    max-width: 100%;             /* 不超过父容器 */
+  }
+
+  .quote-block p {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+
+  /* ★ 段落间距平均分布 */
+  .about-content > p {
+    margin: 2rem 0;              /* 上下相等的间距 */
+  }
+
+  .about-content > p:first-of-type {
+    margin-top: 2.5rem;          /* 第一个段落与 quote 的间距 */
+  }
+
+  .about-content > p:last-of-type {
+    margin-bottom: 2.5rem;       /* 最后一个段落下方的间距 */
+  }
+
+  /* 中文特殊样式 */
+  .chinese-text {
+    color: #7aa2f7;              /* 紫色高亮 */
   }
 
   .back-link {
-    display: inline-block;       /* ← ADD THIS: allows centering to work */
     color: #565f89;
     font-size: 0.9rem;
     text-decoration: none;
-    margin-top: 1rem;
   }
 
   .back-link:hover {
     color: #7aa2f7;
-  }
-
-  #hitokoto_text {
-    text-shadow: 1px 0px 10px #757575; 
-    font-weight: bold; 
-    color: #9336B4;
-    letter-spacing: 3pt; 
-    word-spacing: 3pt; 
-    font-size: 16px; 
-    text-align: center;          /* ← CHANGED: was left, now center */
-    font-family: trebuchet ms; 
-    line-height: 1; 
-    margin: 26px; 
-    padding: 5px;
   }
 </style>
