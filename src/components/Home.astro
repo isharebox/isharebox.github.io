@@ -22,9 +22,9 @@ function formatDate(dateStr: string) {
   <header class="site-header">
     <h1 class="blog-title">Less is more</h1>
     <p class="blog-desc">
-      <span class="text-cn">一念空灭，无处可逃；心无放逸，众善不失。</span>
-      <span class="text-en">A digital garden for thoughts, notes, and fragments.</span>
-    </p>
+  <span class="text-en">A digital garden for thoughts, notes, and fragments.</span>
+  <span class="text-cn">一念空灭，无处可逃；心无放逸，众善不失。</span>
+</p>
   </header>
   
   <main>
@@ -71,38 +71,40 @@ function formatDate(dateStr: string) {
   
   /* ★ 悬停切换效果 */
   .blog-desc { 
-    color: #565f89; 
-    font-size: 0.95rem; 
-    font-style: italic; 
-    max-width: 500px;
-    margin: 0 auto;
-    line-height: 1.6;
-    position: relative;
-    cursor: pointer;
-  }
-  
-  .blog-desc .text-cn,
-  .blog-desc .text-en {
-    display: block;
-    transition: opacity 0.3s ease;
-  }
-  
-  .blog-desc .text-en {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    opacity: 0;
-    pointer-events: none;
-  }
-  
-  .blog-desc:hover .text-cn {
-    opacity: 0;
-  }
-  
-  .blog-desc:hover .text-en {
-    opacity: 1;
-  }
+  color: #565f89; 
+  font-size: 0.95rem; 
+  font-style: italic; 
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.6;
+  position: relative;
+  cursor: pointer;
+}
+
+.blog-desc .text-cn,
+.blog-desc .text-en {
+  display: block;
+  transition: opacity 0.3s ease;
+}
+
+/* 中文默认隐藏 */
+.blog-desc .text-cn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 悬停时英文隐藏，中文显示 */
+.blog-desc:hover .text-en {
+  opacity: 0;
+}
+
+.blog-desc:hover .text-cn {
+  opacity: 1;
+}
   
   main {
     display: flex;
