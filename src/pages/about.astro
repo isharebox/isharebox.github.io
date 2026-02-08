@@ -9,8 +9,9 @@ import config from "urodele.config";
       <h1 class="page-title">About me</h1>
       
       <div class="about-content">
-        
+        <blockquote class="quote-block">
         <p>「Why join the navy if you can be a pirate.」 </p>
+        </blockquote>
         <p>Two wheels. Paperbacks with creased spines. Leonard Cohen on loop.</p> 
         <p>Building a life light enough to carry to an island someday—with her.</p>
         
@@ -80,7 +81,19 @@ import config from "urodele.config";
   .back-link:hover {
     color: #7aa2f7;
   }
-
+   /* ★ Quote Block - 宽度自适应，不撑满 */
+  .quote-block {
+    margin: 2rem auto;           /* 上下间距，左右居中 */
+    padding: 1rem 1.5rem;
+    border-left: 3px solid #7aa2f7;
+    background: rgba(122, 162, 247, 0.05);
+    color: #b0d4d4;
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+    display: inline-block;       /* ★ 宽度自适应内容 */
+    width: fit-content; 
+    max-width: 100%;             /* 不超过父容器 */
+  }
   #hitokoto_text {
     text-shadow: 1px 0px 10px #757575; 
     font-weight: bold; 
