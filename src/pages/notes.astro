@@ -1,0 +1,106 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import config from "urodele.config";
+
+const embedUrl = "https://webnote.cc/CYA2E087T3wWgPAV";
+---
+
+<Layout title={`Tools | ${config.head.brand}`}>
+  <main class="tools-page">
+    <div class="toolbar">
+      <h1 class="page-title">WebNote</h1>
+      <span class="badge">Dark Mode</span>
+    </div>
+
+    <div class="iframe-wrapper">
+      <!-- 暗色滤镜层 -->
+      <div class="dark-filter">
+        <iframe 
+          src={embedUrl}
+          class="embed-frame"
+          title="WebNote"
+          allow="fullscreen"
+        >
+        </iframe>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <a href={embedUrl} target="_blank" rel="noopener noreferrer">
+        Open Original →
+      </a>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .tools-page {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px);
+  }
+
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: #1e2030;
+    border-bottom: 1px solid #292e42;
+  }
+
+  .page-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #c8d3f5;
+    margin: 0;
+  }
+
+  .badge {
+    padding: 0.25rem 0.75rem;
+    background: rgba(122, 162, 247, 0.15);
+    color: #7aa2f7;
+    font-size: 0.75rem;
+    border-radius: 12px;
+  }
+
+  .iframe-wrapper {
+    flex: 1;
+    background: #1e2030;
+    position: relative;
+  }
+
+  /* ★ 关键：暗色滤镜 */
+  .dark-filter {
+    width: 100%;
+    height: 100%;
+    /* 反色 + 色相旋转 + 亮度调整 = 伪暗色模式 */
+    filter: invert(0.9) hue-rotate(180deg) brightness(0.9) contrast(0.95);
+  }
+
+  .embed-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    /* 防止滤镜影响性能 */
+    transform: translateZ(0);
+  }
+
+  .footer-bar {
+    padding: 0.75rem 1.5rem;
+    background: #1e2030;
+    border-top: 1px solid #292e42;
+    text-align: center;
+  }
+
+  .footer-bar a {
+    color: #7aa2f7;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+
+  .footer-bar a:hover {
+    text-decoration: underline;
+  }
+</style>
