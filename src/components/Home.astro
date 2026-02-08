@@ -21,10 +21,12 @@ function formatDate(dateStr: string) {
 <Layout title={config.head.title}>
   <header class="site-header">
     <h1 class="blog-title">Less is more</h1>
-    <p class="blog-desc">一念空灭，无处可逃；心无放逸，众善不失。</p>
+    <p class="blog-desc">
+      <span class="text-cn">一念空灭，无处可逃；心无放逸，众善不失。</span>
+      <span class="text-en">A digital garden for thoughts, notes, and fragments.</span>
+    </p>
   </header>
   
-  <!-- ★ 确保 main 和 content 正确 -->
   <main>
     <div class="content">
       <h2 class="section-title">Most recent posts</h2>
@@ -54,7 +56,6 @@ function formatDate(dateStr: string) {
 </Layout>
 
 <style>
-  /* 顶部居中 */
   .site-header { 
     text-align: center; 
     padding: 3rem 0 2rem; 
@@ -67,26 +68,52 @@ function formatDate(dateStr: string) {
     margin-bottom: 0.8rem; 
     letter-spacing: -0.5px;
   }
+  
+  /* ★ 悬停切换效果 */
   .blog-desc { 
     color: #565f89; 
     font-size: 0.95rem; 
     font-style: italic; 
     max-width: 500px;
     margin: 0 auto;
-    line-height: 1.6; 
+    line-height: 1.6;
+    position: relative;
+    cursor: pointer;
   }
   
-  /* ★ 关键：main 和 content 布局 */
+  .blog-desc .text-cn,
+  .blog-desc .text-en {
+    display: block;
+    transition: opacity 0.3s ease;
+  }
+  
+  .blog-desc .text-en {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .blog-desc:hover .text-cn {
+    opacity: 0;
+  }
+  
+  .blog-desc:hover .text-en {
+    opacity: 1;
+  }
+  
   main {
     display: flex;
-    justify-content: center;  /* 水平居中 */
+    justify-content: center;
     width: 100%;
     padding: 0 16px;
   }
   
   .content {
     width: 100%;
-    max-width: 720px;  /* 限制最大宽度 */
+    max-width: 720px;
     padding: 0;
   }
   
@@ -99,7 +126,6 @@ function formatDate(dateStr: string) {
     border-bottom: 1px dashed #292e42; 
   }
   
-  /* 文章列表 */
   .post-list { 
     list-style: none; 
     padding: 0; 
@@ -148,7 +174,6 @@ function formatDate(dateStr: string) {
     color: #7aa2f7; 
   }
   
-  /* 标签居中 */
   .tags-section { 
     margin-top: 3rem; 
     padding-top: 2rem; 
