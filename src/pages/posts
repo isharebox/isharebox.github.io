@@ -1,0 +1,358 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getPageList } from "./api/post/list";
+import config from "urodele.config";
+
+const POSTS_PER_PAGE = 20;
+
+// 获取当前页码
+const url = new URL(Astro.request.url);
+const currentPage = parseInt(url.searchParams.get('page') || '1');
+const allPosts = await getPageList();
+
+// 计算分页
+const totalPosts = allPosts.length;
+const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+const endIndex = startIndex + POSTS_PER_PAGE;
+const posts = allPosts.slice(startIndex, endIndex);
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toISOString().split('T')[0];
+}
+
+// 生成分页链接
+function getPageUrl(page: number) {
+  return page === 1 ? '/posts' : `/posts?page=${page}`;
+}
+---
+
+<Layout title={`Posts | ${config.head.brand}`}>
+  <main>
+    <div class="content">
+      <!-- 页面标题 -->
+      <header class="page-header">
+        <h1 class="page-title">All Posts</h1>
+        <p class="page-desc">{totalPosts} articles in total</p>
+      </header>
+
+      <!-- 搜索框 -->
+      <div class="search-box" id="search-box">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input 
+          type="search" 
+          id="search-input" 
+          class="search-input" 
+          placeholder="Search all posts..."
+          autocomplete="off"
+        />
+      </div>
+
+      <!-- 文章列表 -->
+      <ul class="post-list" id="post-list">
+        {posts.map((item) => (
+          <li class="post-item" data-title={item.title.toLowerCase()} data-intro={(item.intro || '').toLowerCase()}>
+            <time class="post-date">{formatDate(item.createTime)}</time>
+            <a href={`/post/${item.id}`} class="post-title">{item.title}</a>
+          </li>
+        ))}
+      </ul>
+
+      <!-- 无结果提示（搜索时显示） -->
+      <div class="no-results" id="no-results" style="display: none;">
+        No posts found
+      </div>
+
+      <!-- 分页 -->
+      <nav class="pagination" id="pagination" aria-label="Pagination">
+        <!-- 上一页 -->
+        {currentPage > 1 ? (
+          <a href={getPageUrl(currentPage - 1)} class="page-btn prev">← Prev</a>
+        ) : (
+          <span class="page-btn prev disabled">← Prev</span>
+        )}
+
+        <!-- 页码 -->
+        <div class="page-numbers">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
+            // 显示当前页附近和首尾页
+            const shouldShow = 
+              pageNum === 1 || 
+              pageNum === totalPages || 
+              Math.abs(pageNum - currentPage) <= 2;
+            
+            const isCurrent = pageNum === currentPage;
+            
+            if (!shouldShow) {
+              // 省略号
+              if (pageNum === 2 || pageNum === totalPages - 1) {
+                return <span class="page-ellipsis">...</span>;
+              }
+              return null;
+            }
+
+            return isCurrent ? (
+              <span class="page-num current">{pageNum}</span>
+            ) : (
+              <a href={getPageUrl(pageNum)} class="page-num">{pageNum}</a>
+            );
+          })}
+        </div>
+
+        <!-- 下一页 -->
+        {currentPage < totalPages ? (
+          <a href={getPageUrl(currentPage + 1)} class="page-btn next">Next →</a>
+        ) : (
+          <span class="page-btn next disabled">Next →</span>
+        )}
+      </nav>
+
+      <!-- 搜索时隐藏分页的提示 -->
+      <div class="search-hint" id="search-hint" style="display: none;">
+        <a href="/posts" class="back-link">← Clear search to see all posts</a>
+      </div>
+
+      <a href="/" class="back-link home-link">← Back to Home</a>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const searchInput = document.getElementById('search-input');
+  const postItems = document.querySelectorAll('.post-item');
+  const noResults = document.getElementById('no-results');
+  const pagination = document.getElementById('pagination');
+  const searchHint = document.getElementById('search-hint');
+  const searchBox = document.getElementById('search-box');
+
+  // 客户端搜索（搜索全部文章，不只是当前页）
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.trim().toLowerCase();
+    
+    if (!query) {
+      // 清空搜索，显示分页
+      postItems.forEach(item => item.style.display = 'flex');
+      noResults.style.display = 'none';
+      pagination.style.display = 'flex';
+      searchHint.style.display = 'none';
+      return;
+    }
+
+    // 搜索模式：隐藏分页，显示所有匹配结果
+    pagination.style.display = 'none';
+    searchHint.style.display = 'block';
+    
+    let visibleCount = 0;
+    postItems.forEach(item => {
+      const title = item.dataset.title || '';
+      const intro = item.dataset.intro || '';
+      const isMatch = title.includes(query) || intro.includes(query);
+      
+      item.style.display = isMatch ? 'flex' : 'none';
+      if (isMatch) visibleCount++;
+    });
+
+    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+  });
+</script>
+
+<style>
+  main {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 16px;
+  }
+
+  .content {
+    width: 100%;
+    max-width: 720px;
+    padding: 2rem 0;
+  }
+
+  .page-header {
+    text-align: center;
+    padding: 2rem 0 1.5rem;
+    border-bottom: 1px dashed #292e42;
+    margin-bottom: 1.5rem;
+  }
+
+  .page-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #c8d3f5;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-desc {
+    color: #565f89;
+    font-size: 0.9rem;
+  }
+
+  /* 搜索框 */
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: #2a2e45;
+    border: 1px solid #3b4261;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-icon {
+    color: #565f89;
+    flex-shrink: 0;
+  }
+
+  .search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #c8d3f5;
+    font-size: 0.95rem;
+    outline: none;
+  }
+
+  .search-input::placeholder {
+    color: #565f89;
+  }
+
+  /* 紧凑列表 */
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .post-item {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 0.35rem 0;
+    transition: background 0.15s;
+  }
+
+  .post-item:hover {
+    background: rgba(74, 158, 255, 0.05);
+  }
+
+  .post-date {
+    font-family: "SF Mono", Monaco, monospace;
+    font-size: 0.8rem;
+    color: #565f89;
+    min-width: 90px;
+    flex-shrink: 0;
+  }
+
+  .post-title {
+    color: #7aa2f7;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .post-title:hover {
+    color: #c8d3f5;
+    text-decoration: underline;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 3rem;
+    color: #565f89;
+    font-size: 0.95rem;
+  }
+
+  /* 分页 */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed #292e42;
+  }
+
+  .page-btn {
+    padding: 0.5rem 1rem;
+    color: #7aa2f7;
+    text-decoration: none;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  .page-btn:hover:not(.disabled) {
+    background: rgba(74, 158, 255, 0.1);
+  }
+
+  .page-btn.disabled {
+    color: #565f89;
+    cursor: not-allowed;
+  }
+
+  .page-numbers {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .page-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0 0.5rem;
+    color: #7aa2f7;
+    text-decoration: none;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  .page-num:hover {
+    background: rgba(74, 158, 255, 0.1);
+  }
+
+  .page-num.current {
+    background: rgba(74, 158, 255, 0.2);
+    color: #c8d3f5;
+    font-weight: 500;
+  }
+
+  .page-ellipsis {
+    color: #565f89;
+    padding: 0 0.5rem;
+  }
+
+  .search-hint {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed #292e42;
+  }
+
+  .back-link {
+    color: #565f89;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover {
+    color: #7aa2f7;
+  }
+
+  .home-link {
+    display: block;
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+</style>
