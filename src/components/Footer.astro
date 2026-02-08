@@ -1,9 +1,103 @@
 ---
 import config from "urodele.config";
+
+const navLinks = [
+  { name: 'Home', url: '/' },
+  { name: 'Now', url: '/now' },
+  { name: 'Projects', url: '/projects' },
+  { name: 'Posts', url: '/post' },
+  { name: 'About', url: '/about' },
+];
 ---
 
-<footer class="mt-8 flex justify-center">
-  <small class="w-full max-w-[720px] min-h-12 flex justify-center items-center opacity-80">
-    <a href={config.footer.copyrightUrl} target="_blank">{config.footer.copyright}</a>
-  </small>
+<footer class="site-footer">
+  <!-- 导航链接 -->
+  <nav class="footer-nav">
+    {navLinks.map((link, index) => (
+      <>
+        <a href={link.url} class="footer-link">{link.name}</a>
+        {index < navLinks.length - 1 && <span class="nav-dot">·</span>}
+      </>
+    ))}
+  </nav>
+  
+  <!-- 分割线 -->
+  <div class="footer-divider"></div>
+  
+  <!-- 版权信息 -->
+  <div class="footer-copyright">
+    {config.footer.copyright}
+  </div>
 </footer>
+
+<style>
+  .site-footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 2rem;
+  }
+
+  /* 导航链接 */
+  .footer-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-link {
+    color: #565f89;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .footer-link:hover {
+    color: #7aa2f7;
+  }
+
+  .nav-dot {
+    color: #3b4261;
+    font-size: 0.6rem;
+    opacity: 0.6;
+  }
+
+  /* ★ 有质感的分割线 - 渐变虚线 */
+  .footer-divider {
+    width: 120px;
+    height: 1px;
+    margin: 0 auto 1.5rem;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      #3b4261 20%,
+      #7aa2f7 50%,
+      #3b4261 80%,
+      transparent 100%
+    );
+    opacity: 0.6;
+    position: relative;
+  }
+
+  /* 中间光点 */
+  .footer-divider::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px;
+    height: 4px;
+    background: #7aa2f7;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #7aa2f7;
+  }
+
+  /* 版权信息 */
+  .footer-copyright {
+    color: #565f89;
+    font-size: 0.85rem;
+  }
+</style>
