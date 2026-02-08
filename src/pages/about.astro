@@ -9,36 +9,27 @@ import config from "urodele.config";
       <h1 class="page-title">About</h1>
       
       <div class="about-content">
-        <p>Hi，I'm 2kindlebox。</p>
+        <p>Hi, I'm 2kindlebox.</p>
         
-        <p>A Rolling Minimalist: </p>
+        <p>A Rolling Minimalist:</p>
 
-        <p>Two wheels. Paperbacks with creased spines. Leonard Cohen on loop. </p> 
+        <p>Two wheels. Paperbacks with creased spines. Leonard Cohen on loop.</p> 
         <p>Building a life light enough to carry to an island someday—with her.</p>
         
-        <p>      
-        <p>
-<p id="hitokoto">
-  <a href="#" id="hitokoto_text">:D 获取中...</a>
-</p>
-<script>
-  fetch('https://v1.hitokoto.cn')
-    .then(response => response.json())
-    .then(data => {
-      const hitokoto = document.querySelector('#hitokoto_text')
-      hitokoto.href = `https://hitokoto.cn/?uuid=${data.uuid}`
-      hitokoto.innerText = data.hitokoto
-    })
-    .catch(console.error)
-</script>
-<style>
-  #hitokoto_text {
-    text-shadow: 1px 0px 10px #757575; font-weight: bold; color: #000000; letter-spacing: 3pt; word-spacing: 3pt; font-size: 20px; text-align: left; font-family: trebuchet ms; line-height: 1; margin: 26px; padding: 5px;
-    color: #9336B4;
-    font-size: 16px;
-  }
-</style>
-</p>
+        <p id="hitokoto">
+          <a href="#" id="hitokoto_text">:D 获取中...</a>
+        </p>
+        
+        <script>
+          fetch('https://v1.hitokoto.cn')
+            .then(response => response.json())
+            .then(data => {
+              const hitokoto = document.querySelector('#hitokoto_text')
+              hitokoto.href = `https://hitokoto.cn/?uuid=${data.uuid}`
+              hitokoto.innerText = data.hitokoto
+            })
+            .catch(console.error)
+        </script>
       </div>
       
       <a href="/" class="back-link">← Back to Home</a>
@@ -58,6 +49,8 @@ import config from "urodele.config";
     width: 100%;
     max-width: 720px;
     padding: 2rem 0;
+    margin: 0 auto;              /* ← ADD THIS: ensures centering */
+    text-align: center;          /* ← ADD THIS: centers all text content */
   }
 
   .page-title {
@@ -79,32 +72,29 @@ import config from "urodele.config";
     margin-bottom: 1rem;
   }
 
-  .about-content ul {
-    margin: 1rem 0;
-    padding-left: 1.5rem;
-    color: #8ab3b3;
-  }
-
-  .about-content li {
-    margin-bottom: 0.5rem;
-  }
-
-  .about-content code {
-    background: #2a2e45;
-    padding: 0.2rem 0.4rem;
-    border-radius: 4px;
-    font-family: monospace;
-    font-size: 0.9em;
-    color: #7aa2f7;
-  }
-
   .back-link {
+    display: inline-block;       /* ← ADD THIS: allows centering to work */
     color: #565f89;
     font-size: 0.9rem;
     text-decoration: none;
+    margin-top: 1rem;
   }
 
   .back-link:hover {
     color: #7aa2f7;
+  }
+
+  #hitokoto_text {
+    text-shadow: 1px 0px 10px #757575; 
+    font-weight: bold; 
+    color: #9336B4;
+    letter-spacing: 3pt; 
+    word-spacing: 3pt; 
+    font-size: 16px; 
+    text-align: center;          /* ← CHANGED: was left, now center */
+    font-family: trebuchet ms; 
+    line-height: 1; 
+    margin: 26px; 
+    padding: 5px;
   }
 </style>
