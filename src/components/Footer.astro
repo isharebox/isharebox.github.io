@@ -5,7 +5,7 @@ const navLinks = [
   { name: 'Home', url: '/' },
   { name: 'Projects', url: '/tag/projects' },
   { name: 'Notes', url: '/tools' },
-  { name: 'Chatbox', url: 'https://web.chatboxai.app/' },
+  { name: 'Chatbox', url: 'https://web.chatboxai.app/', external: true },
   { name: 'About', url: '/about' },
 ];
 ---
@@ -15,7 +15,14 @@ const navLinks = [
   <nav class="footer-nav">
     {navLinks.map((link, index) => (
       <>
-        <a href={link.url} class="footer-link">{link.name}</a>
+        <a 
+          href={link.url} 
+          class="footer-link"
+          target={link.external ? '_blank' : undefined}
+          rel={link.external ? 'noopener noreferrer' : undefined}
+        >
+          {link.name}
+        </a>
         {index < navLinks.length - 1 && <span class="nav-dot">·</span>}
       </>
     ))}
@@ -26,7 +33,7 @@ const navLinks = [
   
   <!-- 版权信息 -->
   <div class="footer-copyright">
-    <a href={config.footer.copyrightUrl} target="_blank">{config.footer.copyright}</a>
+    <a href={config.footer.copyrightUrl}>{config.footer.copyright}</a>
   </div>
 </footer>
 
