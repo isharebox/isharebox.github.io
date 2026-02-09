@@ -1,0 +1,53 @@
+<!DOCTYPE html> <html lang="zh-CN" class="dark"> <head><meta charset="UTF-8"><link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="isharebox"><meta name="msapplication-TileColor" content="#1e2030"><meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"><meta name="description" content="通过本地模型部署 OpenClaw，实现真正 100% 本地运行的 AI 助手。整个过程无需付费、无需任何 API Key，并且在完全断网的情况下依然可以正常使用。更关键的是，OpenClaw 不仅支持部署，还支持自由切换不同的本地大模型——无论是 20B / 120B 的 GPT-OSS 开源模型，还是目前主流的 Qwen 3、GLM 4.7，甚至 Kimi 等模型，都可以在同一套环境中灵活使用。"><link rel="icon" href="/favicon.ico"><title>本地 openclaw | isharebox</title><link rel="stylesheet" href="/_astro/_page_.DiEIQy_x.css">
+<style>.outlines a[data-anchor-tag=H1]{margin-left:0}.outlines a[data-anchor-tag=H2]{margin-left:12px}.outlines a[data-anchor-tag=H3]{margin-left:24px}.outlines a[data-anchor-tag=H4]{margin-left:36px}.outlines a[data-anchor-tag=H5]{margin-left:48px}.outlines a[data-anchor-tag=H6]{margin-left:60px}
+._tabset_selm3_1 ._tab-panel_selm3_1{display:none}._tabset_selm3_1 ._tab-panels_selm3_4{display:flex}._tabset_selm3_1 input[data-tab-name=direct]{display:none}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=direct]{display:block}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-labels_selm3_13 label[data-tab-name=direct]{border-bottom:2px solid red}._tabset_selm3_1 input[data-tab-name=app]{display:none}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=app]{display:block}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-labels_selm3_13 label[data-tab-name=app]{border-bottom:2px solid red}
+</style>
+<link rel="stylesheet" href="/_astro/_page_.ChTWOvcN.css">
+<link rel="stylesheet" href="/_astro/_id_.CdoHgwyN.css"><script type="module" src="/_astro/hoisted.D_gz7ZLf.js"></script></head> <body class="min-h-screen"> <header class="flex justify-between items-center px-4 py-3 border-b" style="border-color: #292e42;"> <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity" style="color: #c8d3f5;"> isharebox </a> <div class="flex items-center gap-3">   <div id="auth"></div> </div> </header>  <main> <div class="content"> <div class="w-full flex gap-2 pb-2">  <a href="/tag/ai" class="rounded hover:bg-gray-200 dark:hover:bg-modal px-3 py-1 cursor-pointer">
+#ai </a><a href="/tag/openclaw" class="rounded hover:bg-gray-200 dark:hover:bg-modal px-3 py-1 cursor-pointer">
+#openclaw </a> </div> <div class="ud-root read-only flex-1"><h1 level="1" id="本地-openclaw">本地 openclaw</h1><h1 level="1" id="Ollama--OpenClaw-真正本地部署完全免费断网可用多模型切换">Ollama + OpenClaw 真正本地部署：完全免费、断网可用、多模型切换！</h1><p>通过本地模型部署 OpenClaw，实现真正 100% 本地运行的 AI 助手。整个过程无需付费、无需任何 API Key，并且在完全断网的情况下依然可以正常使用。更关键的是，OpenClaw 不仅支持部署，还支持自由切换不同的本地大模型——无论是 20B / 120B 的 GPT-OSS 开源模型，还是目前主流的 Qwen 3、GLM 4.7，甚至 Kimi 等模型，都可以在同一套环境中灵活使用。</p><p></p><img src="https://www.freedidi.com/wp-content/uploads/2026/02/20260208_1770540945-scaled.webp" alt=""><p>&nbsp;</p><p> 通过 Ollama + OpenClaw 本地 AI 实战：免费、断网可用、多模型切换！支持 GPT-OSS / Qwen 3 / GLM 4.7等主流大模型！</p><p>&nbsp;</p><p></p><img src="https://www.freedidi.com/wp-content/uploads/2026/02/20260208_1770541017.webp" alt=""><p>&nbsp;</p><h2 level="2" id="前期环境准备"><strong>前期环境准备</strong></h2><p>1、安装Git ，以管理员身份打开Powershell，执行下方的安装命令，或者你可以直接去<a target="_blank" rel="noopener noreferrer nofollow" href="https://git-scm.com/">官网下载</a>安装包</p><p>winget install git.git</p><p>&nbsp;</p><p>如果你执行命令后出现任何错误，可以通过下方的命令进行解决</p><p>&nbsp;</p><p>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</p><p>Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass</p><p>&nbsp;</p><p>2、安装最新版 Ollama 客户端</p><p>【<a target="_blank" rel="noopener noreferrer nofollow" href="https://ollama.com/"><strong>点击下载</strong></a>】</p><p>最新版 Ollama 已经完全适配运行OpenClaw</p><p>&nbsp;</p><p></p><img src="https://www.freedidi.com/wp-content/uploads/2026/02/20260208_1770541228.webp" alt=""><p>&nbsp;</p><h2 level="2" id="3官方推荐的本地模型"><strong>3、官方推荐的本地模型</strong></h2><h3 level="3" id="推荐型号">推荐型号</h3><p>OpenClaw 需要更大的上下文长度才能完成任务。建议使用至少 64k 个 token 的上下文长度。</p><p>以下是一些与 OpenClaw 兼容性良好的模型：</p><p>模型 描述 <a target="_blank" rel="noopener noreferrer nofollow" href="https://ollama.com/library/qwen3-coder">qwen3-coder</a> 针对编码任务进行了优化 <a target="_blank" rel="noopener noreferrer nofollow" href="https://ollama.com/library/glm-4.7">glm-4.7</a> 强大的通用模型 <a target="_blank" rel="noopener noreferrer nofollow" href="https://ollama.com/library/glm-4.7-flash">glm-4.7-flash</a> 性能与速度兼顾 <a target="_blank" rel="noopener noreferrer nofollow" href="https://ollama.com/library/gpt-oss:20b">gpt-oss:20b</a> 性能与速度兼顾 <a target="_blank" rel="noopener noreferrer nofollow" href="https://ollama.com/library/gpt-oss:120b">gpt-oss:120b</a> 能力提升</p><p>&nbsp;</p><p>模型下载命令：</p><p>ollama run gpt-oss:20b</p><p>&nbsp;</p><p>&nbsp;</p><h2 level="2" id="4安装最新版-OpenClaw"><strong>4、安装最新版 OpenClaw</strong></h2><p>&nbsp;</p><p>通用安装命令：</p><p>curl -fsSL <a target="_blank" rel="noopener noreferrer nofollow" href="https://openclaw.ai/install.sh">https://openclaw.ai/install.sh</a> | bash</p><p>&nbsp;</p><p>Windows 版安装命令：</p><p>iwr -useb <a target="_blank" rel="noopener noreferrer nofollow" href="https://openclaw.ai/install.ps1">https://openclaw.ai/install.ps1</a> | iex</p><p>&nbsp;</p><p>安装完成后，您可以使用 Ollama 直接启动 OpenClaw 来连接本地模型：</p><p>&nbsp;</p><p>ollama launch openclaw</p><p>如果您想配置 OpenClaw 而不立即启动服务：</p><div class="llt-code readonly"><div class="language">arduino</div><div class="wrapper"><pre><code>ollama launch openclaw --config
+
+如果网关已经在运行，它将自动重新加载
+
+</code></pre></div></div><img src="https://www.freedidi.com/wp-content/uploads/2026/02/20260208_1770541657.webp" alt=""><h3 level="3" id=""></h3><p><strong>五、对接 Telegarm 电报机器人</strong></p><p>打开你的 Telegram，搜索 @BotFather，发送 /newbot，来创建一个新的机器人，按提示设置：</p><p>给 Bot 起个名字，比如我设置为 lingduopenclaw</p><p>设置用户名（必须以 bot 结尾，比如 lingduopenclawbot&nbsp; ）</p><p>最后会给你一串 Token：</p><p>8123121125:AAExamegv-0FQCfhfbazmp4405V0XAJCKfk</p><p></p><img src="https://www.freedidi.com/wp-content/uploads/2026/01/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2026-01-30-210735.webp" alt=""><p>输入 token 进行对接，并进入到刚才创建的机器人里，第一次打开会显示还未正式对接，但是会在里面提供配对码，比如我的是 Pairing code: DLW7HQ69</p><p>&nbsp;</p><p></p><img src="https://www.freedidi.com/wp-content/uploads/2026/01/2026-01-30-15-46-06.00_08_34_08.Still013-scaled.webp" alt=""><p>现在只需重新打开一个新的 Powershell 窗口，然后在里面输入配对命令即可</p><p>openclaw pairing approve telegram 这里填写你的配对码</p><p>&nbsp;</p><p>当你看到这个界面的话说明已经和Telegram配对成功了！</p><p></p><img src="https://www.freedidi.com/wp-content/uploads/2026/01/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2026-01-30-211237.webp" alt=""><p>&nbsp;</p><h3 level="3" id=""></h3><h3 level="3" id="重启后启动的命令"><strong>重启后启动的命令：</strong></h3><p>ollama launch openclaw</p><script type="module">const injectHtml = (root, html) => {
+  const iframe = document.createElement("iframe");
+  const htmlContent = `<html><head></head><body>${html}</body></html>`;
+  iframe.style.width = "100%";
+  iframe.style.height = "100%";
+  iframe.onload = () => {
+    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+    if (!doc) {
+      return;
+    }
+    doc.open();
+    doc.write(htmlContent);
+    doc.close();
+  };
+  root.replaceChildren(iframe);
+}
+  document.querySelectorAll('.playground')?.forEach(el=>{
+    const html = el.getAttribute('data-html');
+    if (html) {
+      injectHtml(el,html);
+    }
+    const indicator = document.createElement("div");
+    indicator.className = "indicator";
+    const showCode = document.createElement("div");
+    showCode.className = "show-code";
+    showCode.innerText = "code";
+    showCode.onclick = () => {
+      el.parentElement.classList.remove("preview-only");
+    };
+    const showPreview = document.createElement("div");
+    showPreview.className = "show-preview";
+    showPreview.innerText = "preview";
+    showPreview.onclick = () => {
+      el.parentElement.classList.add("preview-only");
+    };
+    indicator.appendChild(showCode);
+    indicator.appendChild(showPreview);
+    el.parentElement.appendChild(indicator);
+    if (window.screen.width < 768) {
+      showPreview.click();
+    }
+  });</script></div> <div data-page-id="本地-openclaw" class="navigator flex justify-between items-center mt-4 py-4"> <a href="/post/安装OpenClaw并接入飞书让AI在聊天软件里帮你干活" class="flex items-center gap-1 text-blue cursor-pointer flex-[45%]"> <div class="i-ri:arrow-left-double-line w-5 h-5 flex-shrink-0"></div> <div class="text-start">安装OpenClaw并接入飞书，让AI在聊天软件里帮你干活</div> </a> <div></div> </div> </div> <div class="outline-wrapper"></div> </main>  <footer class="site-footer" data-astro-cid-sz7xmlte> <!-- 导航链接 --> <nav class="footer-nav" data-astro-cid-sz7xmlte>  <a href="/" class="footer-link" data-astro-cid-sz7xmlte> Home </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/tag/projects" class="footer-link" data-astro-cid-sz7xmlte> Projects </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/tools" class="footer-link" data-astro-cid-sz7xmlte> Notes </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="https://web.chatboxai.app/" class="footer-link" target="_blank" rel="noopener noreferrer" data-astro-cid-sz7xmlte> Chatbox </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/about" class="footer-link" data-astro-cid-sz7xmlte> About </a>  </nav> <!-- 分割线 --> <div class="footer-divider" data-astro-cid-sz7xmlte></div> <!-- 版权信息 --> <div class="footer-copyright" data-astro-cid-sz7xmlte> <a href="https://isharebox.github.io" data-astro-cid-sz7xmlte>©  isharebox  ·  since 2026  </a> </div> </footer>  <!-- ★ 添加回到顶部按钮组件 --> <button id="back-to-top" class="back-to-top" aria-label="Back to top" data-astro-cid-wlspcwf4> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-wlspcwf4> <path d="M18 15l-6-6-6 6" data-astro-cid-wlspcwf4></path> </svg> </button>   </body></html>
