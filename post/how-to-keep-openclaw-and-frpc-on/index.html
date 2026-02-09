@@ -1,0 +1,275 @@
+<!DOCTYPE html> <html lang="zh-CN" class="dark"> <head><meta charset="UTF-8"><link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="isharebox"><meta name="msapplication-TileColor" content="#1e2030"><meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"><meta name="description" content="在 Android 设备上运行 frpc（内网穿透客户端）和 OpenClaw 时，面临以下挑战："><link rel="icon" href="/favicon.ico"><title>how to keep openclaw and frpc on | isharebox</title><link rel="stylesheet" href="/_astro/_page_.DiEIQy_x.css">
+<style>.outlines a[data-anchor-tag=H1]{margin-left:0}.outlines a[data-anchor-tag=H2]{margin-left:12px}.outlines a[data-anchor-tag=H3]{margin-left:24px}.outlines a[data-anchor-tag=H4]{margin-left:36px}.outlines a[data-anchor-tag=H5]{margin-left:48px}.outlines a[data-anchor-tag=H6]{margin-left:60px}
+._tabset_selm3_1 ._tab-panel_selm3_1{display:none}._tabset_selm3_1 ._tab-panels_selm3_4{display:flex}._tabset_selm3_1 input[data-tab-name=direct]{display:none}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=direct]{display:block}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-labels_selm3_13 label[data-tab-name=direct]{border-bottom:2px solid red}._tabset_selm3_1 input[data-tab-name=app]{display:none}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=app]{display:block}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-labels_selm3_13 label[data-tab-name=app]{border-bottom:2px solid red}
+</style>
+<link rel="stylesheet" href="/_astro/_page_.Cyki7rTw.css">
+<link rel="stylesheet" href="/_astro/_id_.CdoHgwyN.css"><script type="module" src="/_astro/hoisted.CGo3QqUB.js"></script></head> <body class="min-h-screen"> <header class="flex justify-between items-center px-4 py-3 border-b" style="border-color: #292e42;"> <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity" style="color: #c8d3f5;"> isharebox </a> <div class="flex items-center gap-3">   <div id="auth"></div> </div> </header>  <main> <div class="content"> <div class="w-full flex gap-2 pb-2">   </div> <div class="ud-root read-only flex-1"><h1 level="1" id="how-to-keep-openclaw-and-frpc-on">how to keep openclaw and frpc on</h1><h3 level="3" id="问题场景">问题场景</h3><p>在 Android 设备上运行 frpc（内网穿透客户端）和 OpenClaw 时，面临以下挑战：</p><ol><li><p><strong>手机重启后服务不自动启动</strong><br>Android 系统不会自动运行 Termux 中的后台服务</p></li><li><p><strong>进程崩溃后不会重启</strong><br>frpc 或 OpenClaw 可能因网络波动、内存不足等原因崩溃，需要手动介入</p></li><li><p><strong>无法方便地查看日志</strong><br>后台运行的进程没有会话管理，调试困难</p></li></ol><h3 level="3" id="需求">需求</h3><ul><li><p>✅ 手机开机后 frpc + OpenClaw 自动启动</p></li><li><p>✅ 进程崩溃后自动检测并重启</p></li><li><p>✅ 方便查看运行日志</p></li><li><p>✅ 低资源占用（不频繁检测）</p></li></ul><hr><h2 level="2" id="方案概述">方案概述</h2><p>利用 Termux 生态中的三个工具组合：</p><p>工具 作用 <strong>termux:boot</strong> 开机时自动执行脚本 <strong>termux-wake-lock</strong> 防止系统休眠杀死进程 <strong>tmux</strong> 会话管理（保持进程运行、方便查看日志） <strong>cron</strong> 定时任务（每5分钟检测进程存活）</p><h3 level="3" id="架构图">架构图</h3><div class="llt-code readonly"><div class="language">csharp</div><div class="wrapper"><pre><code>┌─────────────────────────────────────────────────────────────┐
+│                        Android 系统                          │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │                  Termux 环境                         │   │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌──────────────┐ │   │
+│  │  │ termux:boot │→ │ frpc-start │→ │ frpc        │ │   │
+│  │  │ (开机执行)   │→ │ (wake <span class="hljs-keyword" class="hljs-keyword">lock</span>) │  │ openclaw    │ │   │
+│  │  └─────────────┘  └─────────────┘  └──────────────┘ │   │
+│  │                                                  │     │   │
+│  │  ┌─────────────┐  ┌────────────────────────────┐  │     │   │
+│  │  │    cron     │→ │ monitor.sh (每<span class="hljs-number" class="hljs-number">5</span>分钟执行)   │  │     │   │
+│  │  │ (定时检测)   │  │ 检测进程是否存在 → 重启    │  │     │   │
+│  │  └─────────────┘  └────────────────────────────┘  │     │   │
+│  └─────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+</code></pre></div></div><hr><h2 level="2" id="依赖安装">依赖安装</h2><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code><span class="hljs-comment" class="hljs-comment"># 安装 tmux（会话管理）</span>
+pkg install tmux
+
+<span class="hljs-comment" class="hljs-comment"># 安装 cron（定时任务）</span>
+pkg install crontab
+
+<span class="hljs-comment" class="hljs-comment"># 安装 termux:boot（开机自启）</span>
+pkg install termux-boot
+</code></pre></div></div><blockquote><p><strong>termux:boot 安装后需要在 Android 设置中授权自启动权限</strong></p></blockquote><hr><h2 level="2" id="️-关键经验教训">⚠️ 关键经验教训</h2><ol><li><p><strong>termux:boot 只在开机时执行一次</strong>，杀进程后不会自动重启</p></li><li><p><strong>boot 脚本不能用环境变量</strong>，必须硬编码 token 和 port</p></li><li><p><strong>crond 必须加入 boot 脚本</strong>，否则进程监控不生效</p></li><li><p><strong>monitor.sh 用绝对路径</strong>，cron 环境下 $PREFIX 不生效</p></li><li><p><strong>frpc 用 exec 启动</strong>，确保 wake lock 正确持有，防止休眠被杀死</p></li><li><p><strong>monitor.sh 添加日志</strong>，便于追踪重启历史和调试</p></li></ol><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code>LOG_FILE=<span class="hljs-variable" class="hljs-variable">$HOME</span>/monitor.log
+<span class="hljs-function" class="hljs-function"><span class="hljs-title" class="hljs-title">log</span></span>() {
+    <span class="hljs-built_in" class="hljs-built_in">echo</span> <span class="hljs-string" class="hljs-string">&quot;[<span class="hljs-subst" class="hljs-subst">$(date)</span>] <span class="hljs-variable" class="hljs-variable">$1</span>&quot;</span> &gt;&gt; <span class="hljs-string" class="hljs-string">&quot;<span class="hljs-variable" class="hljs-variable">$LOG_FILE</span>&quot;</span>
+}
+</code></pre></div></div><hr><h2 level="2" id="脚本内容">脚本内容</h2><h3 level="3" id="1-OpenClaw-启动脚本-openclaw-runsh">1. OpenClaw 启动脚本 (<code>~/openclaw-run.sh</code>)</h3><p>负责清理旧进程、重新启动 OpenClaw：</p><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code><span class="hljs-meta" class="hljs-meta">#!/data/data/com.termux/files/usr/bin/bash</span>
+<span class="hljs-comment" class="hljs-comment"># OpenClaw 启动脚本</span>
+
+<span class="hljs-comment" class="hljs-comment"># 杀掉旧进程</span>
+pkill -9 -f <span class="hljs-string" class="hljs-string">&apos;openclaw&apos;</span> 2&gt;/dev/null
+tmux kill-session -t openclaw 2&gt;/dev/null
+
+<span class="hljs-comment" class="hljs-comment"># 等待资源释放</span>
+<span class="hljs-built_in" class="hljs-built_in">sleep</span> 1
+
+<span class="hljs-comment" class="hljs-comment"># 创建新 tmux 会话</span>
+tmux new -d -s openclaw
+
+<span class="hljs-comment" class="hljs-comment"># 等待会话就绪</span>
+<span class="hljs-built_in" class="hljs-built_in">sleep</span> 1
+
+<span class="hljs-comment" class="hljs-comment"># 发送启动命令到 tmux 会话</span>
+tmux send-keys -t openclaw <span class="hljs-string" class="hljs-string">&quot;export PATH=<span class="hljs-variable" class="hljs-variable">$NPM_BIN</span>:\$PATH TMPDIR=\$HOME/tmp; export OPENCLAW_GATEWAY_TOKEN=<span class="hljs-variable" class="hljs-variable">$TOKEN</span>; openclaw gateway --bind lan --port <span class="hljs-variable" class="hljs-variable">$PORT</span> --token \$OPENCLAW_GATEWAY_TOKEN --allow-unconfigured&quot;</span> C-m
+</code></pre></div></div><h3 level="3" id="2-开机启动脚本-termuxbootservicessh">2. 开机启动脚本 (<code>~/.termux/boot/services.sh</code>)</h3><p>手机开机时自动启动 crond、frpc 和 OpenClaw：</p><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code><span class="hljs-meta" class="hljs-meta">#!/data/data/com.termux/files/usr/bin/bash</span>
+<span class="hljs-comment" class="hljs-comment"># termux:boot services - 开机会话启动</span>
+
+<span class="hljs-comment" class="hljs-comment"># 启动 crond（关键）</span>
+crond
+
+<span class="hljs-comment" class="hljs-comment"># 启动 frpc（使用独立脚本，包含 wake lock）</span>
+bash ~/.termux/boot/frpc-start.sh &amp;
+
+<span class="hljs-comment" class="hljs-comment"># 清理旧 OpenClaw 进程后启动</span>
+pkill -9 -f <span class="hljs-string" class="hljs-string">&apos;openclaw&apos;</span> 2&gt;/dev/null
+tmux kill-session -t openclaw 2&gt;/dev/null
+<span class="hljs-built_in" class="hljs-built_in">sleep</span> 1
+tmux new -d -s openclaw
+<span class="hljs-built_in" class="hljs-built_in">sleep</span> 1
+<span class="hljs-comment" class="hljs-comment"># 注意：这里必须用硬编码的参数，不能用环境变量</span>
+tmux send-keys -t openclaw <span class="hljs-string" class="hljs-string">&quot;export PATH=/data/data/com.termux/files/home/.npm-global/bin:\$PATH TMPDIR=\$HOME/tmp; export OPENCLAW_GATEWAY_TOKEN=tokenac27a3d5; openclaw gateway --bind lan --port 18789 --token \$OPENCLAW_GATEWAY_TOKEN --allow-unconfigured&quot;</span> C-m
+</code></pre></div></div><h3 level="3" id="3-frpc-启动脚本-termuxbootfrpc-startsh">3. frpc 启动脚本 (<code>~/.termux/boot/frpc-start.sh</code>)</h3><p>负责启动 frpc 并持有 wake lock，防止系统休眠导致进程被杀死：</p><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code><span class="hljs-meta" class="hljs-meta">#!/data/data/com.termux/files/usr/bin/bash</span>
+termux-wake-lock
+/data/data/com.termux/files/usr/bin/frpc -c /data/data/com.termux/files/usr/etc/frp/frpc.ini
+</code></pre></div></div><h3 level="3" id="4-进程监控脚本-monitorsh">4. 进程监控脚本 (<code>~/monitor.sh</code>)</h3><p>每5分钟检测一次，崩溃则重启：</p><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code><span class="hljs-meta" class="hljs-meta">#!/data/data/com.termux/files/usr/bin/bash</span>
+<span class="hljs-comment" class="hljs-comment"># 进程监控脚本 - 每5分钟检测并重启崩溃的服务</span>
+
+LOG_FILE=<span class="hljs-variable" class="hljs-variable">$HOME</span>/monitor.log
+MAX_LOG_LINES=1000  <span class="hljs-comment" class="hljs-comment"># 日志最大行数</span>
+
+<span class="hljs-function" class="hljs-function"><span class="hljs-title" class="hljs-title">log</span></span>() {
+    <span class="hljs-built_in" class="hljs-built_in">echo</span> <span class="hljs-string" class="hljs-string">&quot;[<span class="hljs-subst" class="hljs-subst">$(date &apos;+%Y-%m-%d %H:%M:%S&apos;)</span>] <span class="hljs-variable" class="hljs-variable">$1</span>&quot;</span> &gt;&gt; <span class="hljs-string" class="hljs-string">&quot;<span class="hljs-variable" class="hljs-variable">$LOG_FILE</span>&quot;</span>
+}
+
+<span class="hljs-function" class="hljs-function"><span class="hljs-title" class="hljs-title">trim_log</span></span>() {
+    <span class="hljs-comment" class="hljs-comment"># 保留最后 MAX_LOG_LINES 行</span>
+    <span class="hljs-built_in" class="hljs-built_in">local</span> lines=$(<span class="hljs-built_in" class="hljs-built_in">wc</span> -l &lt; <span class="hljs-string" class="hljs-string">&quot;<span class="hljs-variable" class="hljs-variable">$LOG_FILE</span>&quot;</span> 2&gt;/dev/null || <span class="hljs-built_in" class="hljs-built_in">echo</span> 0)
+    <span class="hljs-keyword" class="hljs-keyword">if</span> [ <span class="hljs-string" class="hljs-string">&quot;<span class="hljs-variable" class="hljs-variable">$lines</span>&quot;</span> -gt <span class="hljs-string" class="hljs-string">&quot;<span class="hljs-variable" class="hljs-variable">$MAX_LOG_LINES</span>&quot;</span> ]; <span class="hljs-keyword" class="hljs-keyword">then</span>
+        <span class="hljs-built_in" class="hljs-built_in">tail</span> -n <span class="hljs-string" class="hljs-string">&quot;<span class="hljs-variable" class="hljs-variable">$MAX_LOG_LINES</span>&quot;</span> <span class="hljs-string" class="hljs-string">&quot;<span class="hljs-variable" class="hljs-variable">$LOG_FILE</span>&quot;</span> &gt; <span class="hljs-string" class="hljs-string">&quot;<span class="hljs-variable" class="hljs-variable">$LOG_FILE</span>.tmp&quot;</span>
+        <span class="hljs-built_in" class="hljs-built_in">mv</span> <span class="hljs-string" class="hljs-string">&quot;<span class="hljs-variable" class="hljs-variable">$LOG_FILE</span>.tmp&quot;</span> <span class="hljs-string" class="hljs-string">&quot;<span class="hljs-variable" class="hljs-variable">$LOG_FILE</span>&quot;</span>
+    <span class="hljs-keyword" class="hljs-keyword">fi</span>
+}
+
+<span class="hljs-built_in" class="hljs-built_in">log</span> <span class="hljs-string" class="hljs-string">&quot;========== Monitor started ==========&quot;</span>
+
+<span class="hljs-comment" class="hljs-comment"># frpc 检测</span>
+<span class="hljs-keyword" class="hljs-keyword">if</span> ! pgrep -f <span class="hljs-string" class="hljs-string">&quot;frpc&quot;</span> &gt; /dev/null; <span class="hljs-keyword" class="hljs-keyword">then</span>
+    <span class="hljs-built_in" class="hljs-built_in">log</span> <span class="hljs-string" class="hljs-string">&quot;frpc 进程不存在，准备重启...&quot;</span>
+    tmux kill-session -t frpc 2&gt;/dev/null
+    <span class="hljs-built_in" class="hljs-built_in">sleep</span> 1
+    <span class="hljs-comment" class="hljs-comment"># 用 exec 确保 wake lock 正确持有</span>
+    tmux new-session -d -s frpc <span class="hljs-string" class="hljs-string">&quot;exec /data/data/com.termux/files/usr/bin/frpc -c /data/data/com.termux/files/usr/etc/frp/frpc.ini&quot;</span>
+    <span class="hljs-built_in" class="hljs-built_in">log</span> <span class="hljs-string" class="hljs-string">&quot;frpc 重启命令已发送&quot;</span>
+<span class="hljs-keyword" class="hljs-keyword">else</span>
+    <span class="hljs-built_in" class="hljs-built_in">log</span> <span class="hljs-string" class="hljs-string">&quot;frpc 运行正常&quot;</span>
+<span class="hljs-keyword" class="hljs-keyword">fi</span>
+
+<span class="hljs-comment" class="hljs-comment"># OpenClaw 检测</span>
+<span class="hljs-keyword" class="hljs-keyword">if</span> ! pgrep -f <span class="hljs-string" class="hljs-string">&quot;openclaw.*gateway&quot;</span> &gt; /dev/null; <span class="hljs-keyword" class="hljs-keyword">then</span>
+    <span class="hljs-built_in" class="hljs-built_in">log</span> <span class="hljs-string" class="hljs-string">&quot;OpenClaw 进程不存在，准备重启...&quot;</span>
+    tmux kill-session -t openclaw 2&gt;/dev/null
+    <span class="hljs-built_in" class="hljs-built_in">sleep</span> 2  <span class="hljs-comment" class="hljs-comment"># 等待端口释放</span>
+    bash ~/openclaw-run.sh
+    <span class="hljs-built_in" class="hljs-built_in">log</span> <span class="hljs-string" class="hljs-string">&quot;OpenClaw 重启命令已发送&quot;</span>
+<span class="hljs-keyword" class="hljs-keyword">else</span>
+    <span class="hljs-built_in" class="hljs-built_in">log</span> <span class="hljs-string" class="hljs-string">&quot;OpenClaw 运行正常&quot;</span>
+<span class="hljs-keyword" class="hljs-keyword">fi</span>
+
+<span class="hljs-comment" class="hljs-comment"># 清理日志</span>
+trim_log
+
+<span class="hljs-built_in" class="hljs-built_in">log</span> <span class="hljs-string" class="hljs-string">&quot;========== Monitor finished ==========&quot;</span>
+</code></pre></div></div><hr><h2 level="2" id="操作步骤">操作步骤</h2><h3 level="3" id="第一步安装依赖">第一步：安装依赖</h3><div class="llt-code readonly"><div class="language">sql</div><div class="wrapper"><pre><code>pkg <span class="hljs-keyword" class="hljs-keyword">update</span> <span class="hljs-operator" class="hljs-operator">&amp;&amp;</span> pkg install tmux crontab termux<span class="hljs-operator" class="hljs-operator">-</span>api
+crond
+</code></pre></div></div><h3 level="3" id="第二步创建脚本文件">第二步：创建脚本文件</h3><h4 level="4" id="创建目录">创建目录</h4><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code><span class="hljs-built_in" class="hljs-built_in">mkdir</span> -p ~/.termux/boot
+</code></pre></div></div><h4 level="4" id="创建-openclaw-runsh">创建 <code>~/openclaw-run.sh</code></h4><p>（将下方内容写入文件，<strong>注意：参数必须硬编码</strong>）</p><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code><span class="hljs-meta" class="hljs-meta">#!/data/data/com.termux/files/usr/bin/bash</span>
+<span class="hljs-comment" class="hljs-comment"># OpenClaw 启动脚本 - 硬编码参数</span>
+
+<span class="hljs-comment" class="hljs-comment"># 杀掉旧进程</span>
+pkill -9 -f <span class="hljs-string" class="hljs-string">&apos;openclaw&apos;</span> 2&gt;/dev/null
+tmux kill-session -t openclaw 2&gt;/dev/null
+
+<span class="hljs-comment" class="hljs-comment"># 等待资源释放（增加等待时间）</span>
+<span class="hljs-built_in" class="hljs-built_in">sleep</span> 2
+
+<span class="hljs-comment" class="hljs-comment"># 创建新 tmux 会话</span>
+tmux new -d -s openclaw
+
+<span class="hljs-comment" class="hljs-comment"># 等待会话就绪</span>
+<span class="hljs-built_in" class="hljs-built_in">sleep</span> 1
+
+<span class="hljs-comment" class="hljs-comment"># 发送启动命令（硬编码所有参数）</span>
+tmux send-keys -t openclaw <span class="hljs-string" class="hljs-string">&quot;export PATH=/data/data/com.termux/files/home/.npm-global/bin:\$PATH TMPDIR=\$HOME/tmp; export OPENCLAW_GATEWAY_TOKEN=tokenac27a3d5; openclaw gateway --bind lan --port 18789 --token \$OPENCLAW_GATEWAY_TOKEN --allow-unconfigured&quot;</span> C-m
+</code></pre></div></div><h4 level="4" id="创建-termuxbootservicessh">创建 <code>~/.termux/boot/services.sh</code></h4><p>（将下方内容写入文件，<strong>注意：参数必须硬编码</strong>）</p><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code><span class="hljs-meta" class="hljs-meta">#!/data/data/com.termux/files/usr/bin/bash</span>
+<span class="hljs-comment" class="hljs-comment"># termux:boot services - 开机会话启动</span>
+
+<span class="hljs-comment" class="hljs-comment"># 1. 清理旧会话</span>
+tmux kill-session -t frpc 2&gt;/dev/null
+tmux kill-session -t openclaw 2&gt;/dev/null
+<span class="hljs-built_in" class="hljs-built_in">sleep</span> 1
+
+<span class="hljs-comment" class="hljs-comment"># 2. 启动 crond（关键）</span>
+crond
+
+<span class="hljs-comment" class="hljs-comment"># 3. 启动 frpc（持有 wake lock）</span>
+tmux new-session -d -s frpc <span class="hljs-string" class="hljs-string">&quot;exec /data/data/com.termux/files/usr/bin/frpc -c /data/data/com.termux/files/usr/etc/frp/frpc.ini&quot;</span>
+
+<span class="hljs-comment" class="hljs-comment"># 4. 启动 OpenClaw</span>
+tmux new -d -s openclaw
+<span class="hljs-built_in" class="hljs-built_in">sleep</span> 1
+tmux send-keys -t openclaw <span class="hljs-string" class="hljs-string">&quot;export PATH=/data/data/com.termux/files/home/.npm-global/bin:\$PATH TMPDIR=\$HOME/tmp; export OPENCLAW_GATEWAY_TOKEN=tokenac27a3d5; openclaw gateway --bind lan --port 18789 --token \$OPENCLAW_GATEWAY_TOKEN --allow-unconfigured&quot;</span> C-m
+
+<span class="hljs-built_in" class="hljs-built_in">log</span> <span class="hljs-string" class="hljs-string">&quot;Services started at <span class="hljs-subst" class="hljs-subst">$(date)</span>&quot;</span> &gt;&gt; ~/boot.log 2&gt;/dev/null || <span class="hljs-literal" class="hljs-literal">true</span>
+</code></pre></div></div><h4 level="4" id="创建-termuxbootfrpc-startsh">创建 <code>~/.termux/boot/frpc-start.sh</code></h4><p>（将下方内容写入文件，包含 wake lock 防止休眠）</p><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code><span class="hljs-meta" class="hljs-meta">#!/data/data/com.termux/files/usr/bin/bash</span>
+termux-wake-lock
+/data/data/com.termux/files/usr/bin/frpc -c /data/data/com.termux/files/usr/etc/frp/frpc.ini
+</code></pre></div></div><h4 level="4" id="创建-monitorsh">创建 <code>~/monitor.sh</code></h4><p>（将下方内容写入文件，<strong>注意：用 tmux 管理 frpc</strong>）</p><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code><span class="hljs-meta" class="hljs-meta">#!/data/data/com.termux/files/usr/bin/bash</span>
+<span class="hljs-comment" class="hljs-comment"># frpc 检测</span>
+<span class="hljs-keyword" class="hljs-keyword">if</span> ! pgrep -f <span class="hljs-string" class="hljs-string">&quot;frpc&quot;</span> &gt; /dev/null; <span class="hljs-keyword" class="hljs-keyword">then</span>
+    tmux new-session -d -s frpc <span class="hljs-string" class="hljs-string">&quot;frpc -c /data/data/com.termux/files/usr/etc/frp/frpc.ini&quot;</span>
+<span class="hljs-keyword" class="hljs-keyword">fi</span>
+
+<span class="hljs-comment" class="hljs-comment"># OpenClaw 检测</span>
+<span class="hljs-keyword" class="hljs-keyword">if</span> ! pgrep -f <span class="hljs-string" class="hljs-string">&quot;openclaw.*gateway&quot;</span> &gt; /dev/null; <span class="hljs-keyword" class="hljs-keyword">then</span>
+    tmux kill-session -t openclaw 2&gt;/dev/null
+    bash ~/openclaw-run.sh
+<span class="hljs-keyword" class="hljs-keyword">fi</span>
+</code></pre></div></div><h3 level="3" id="第三步设置权限">第三步：设置权限</h3><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code><span class="hljs-built_in" class="hljs-built_in">chmod</span> +x ~/.termux/boot/services.sh ~/.termux/boot/frpc-start.sh ~/openclaw-run.sh ~/monitor.sh
+</code></pre></div></div><h3 level="3" id="第四步配置-cron">第四步：配置 cron</h3><div class="llt-code readonly"><div class="language">ruby</div><div class="wrapper"><pre><code><span class="hljs-comment" class="hljs-comment"># 编辑 crontab</span>
+crontab -e
+
+<span class="hljs-comment" class="hljs-comment"># 添加以下内容（每5分钟检测一次）</span>
+*<span class="hljs-regexp" class="hljs-regexp">/5 * * * * /data</span><span class="hljs-regexp" class="hljs-regexp">/data/com</span>.termux/files/home/monitor.sh
+
+<span class="hljs-comment" class="hljs-comment"># 保存退出后，启动 cron 服务（这一步也可以放到 boot 脚本里自动执行）</span>
+crond
+</code></pre></div></div><h3 level="3" id="第五步测试">第五步：测试</h3><div class="llt-code readonly"><div class="language">perl</div><div class="wrapper"><pre><code><span class="hljs-comment" class="hljs-comment"># 手动启动 boot 脚本测试</span>
+bash ~<span class="hljs-regexp" class="hljs-regexp">/.termux/</span>boot/services.sh
+
+<span class="hljs-comment" class="hljs-comment"># 查看 tmux 会话</span>
+tmux ls
+
+<span class="hljs-comment" class="hljs-comment"># 查看进程是否运行</span>
+ps aux | <span class="hljs-keyword" class="hljs-keyword">grep</span> -E <span class="hljs-string" class="hljs-string">&quot;crond|frpc|openclaw&quot;</span> | <span class="hljs-keyword" class="hljs-keyword">grep</span> -v <span class="hljs-keyword" class="hljs-keyword">grep</span>
+
+<span class="hljs-comment" class="hljs-comment"># 查看 crond 是否运行（验证 boot 脚本是否成功执行）</span>
+ps aux | <span class="hljs-keyword" class="hljs-keyword">grep</span> crond | <span class="hljs-keyword" class="hljs-keyword">grep</span> -v <span class="hljs-keyword" class="hljs-keyword">grep</span>
+
+<span class="hljs-comment" class="hljs-comment"># 手动测试检测脚本</span>
+bash ~/monitor.sh
+</code></pre></div></div><h3 level="3" id="第六步验证开机自启动">第六步：验证开机自启动</h3><div class="llt-code readonly"><div class="language">perl</div><div class="wrapper"><pre><code><span class="hljs-comment" class="hljs-comment"># 重启手机，验证以下进程是否自动启动：</span>
+<span class="hljs-comment" class="hljs-comment"># 1. crond - 进程监控依赖它</span>
+<span class="hljs-comment" class="hljs-comment"># 2. frpc - 内网穿透</span>
+<span class="hljs-comment" class="hljs-comment"># 3. OpenClaw - 主服务</span>
+
+ps aux | <span class="hljs-keyword" class="hljs-keyword">grep</span> -E <span class="hljs-string" class="hljs-string">&quot;crond|frpc|openclaw&quot;</span> | <span class="hljs-keyword" class="hljs-keyword">grep</span> -v <span class="hljs-keyword" class="hljs-keyword">grep</span>
+</code></pre></div></div><hr><h2 level="2" id="常用命令">常用命令</h2><p>操作 命令 查看 tmux 会话 <code>tmux ls</code> 查看 frpc 日志 <code>tmux attach -t frpc</code>（Ctrl+B 然后 D 退出） 查看 OpenClaw 日志 <code>tmux attach -t openclaw</code> 强制退出日志视图 <code>Ctrl+B 然后 D</code> 杀掉 tmux 会话 <code>tmux kill-session -t frpc/openclaw</code> 手动执行检测 <code>bash /data/data/com.termux/files/home/monitor.sh</code> 查看监控日志 <code>tail -f ~/monitor.log</code> 查看启动日志 <code>tail -f ~/boot.log</code> 查看 cron 日志 <code>logcat -s crond</code></p><hr><h2 level="2" id="常见问题">常见问题</h2><h3 level="3" id="Q1-检测频率会影响电池吗">Q1: 检测频率会影响电池吗？</h3><p>不会。<code>pgrep</code> 进程检查是非常轻量的系统调用，比手机待机功耗低几个数量级。每5分钟一次完全可接受。</p><h3 level="3" id="Q2-为什么用-tmux-而不是-nohup">Q2: 为什么用 tmux 而不是 nohup？</h3><ul><li><p>tmux 可以方便地查看实时日志</p></li><li><p>tmux 保持会话不中断</p></li><li><p>可以随时手动连接查看状态</p></li></ul><h3 level="3" id="Q3-termuxboot-没生效">Q3: termux:boot 没生效？</h3><p>检查： 1. Android 设置中允许 Termux 自启动 2. 脚本权限正确（<code>chmod +x</code>） 3. <strong>boot 脚本里用了硬编码的路径和参数？</strong> 4. 重启手机测试，不只是重启 Termux app</p><h3 level="3" id="Q4-手机重启后-frpcOpenClaw-没启动">Q4: 手机重启后 frpc/OpenClaw 没启动？</h3><p>可能原因： 1. <strong>crond 没在 boot 脚本里启动</strong> → monitor.sh 不会运行 2. <strong>boot 脚本用了环境变量</strong> → 开机时 $TOKEN、$PORT 为空 3. <strong>boot 脚本语法错误</strong> → 检查日志：<code>logcat -s termux:boot</code></p><h3 level="3" id="Q5-进程崩溃后没自动重启">Q5: 进程崩溃后没自动重启？</h3><p>可能原因： 1. <strong>crond 没运行</strong> → <code>ps aux | grep crond</code> 2. <strong>monitor.sh 路径错误</strong> → crontab 里用绝对路径 <code>/data/data/com.termux/files/home/monitor.sh</code> 3. <strong>monitor.sh 里用了 $PREFIX</strong> → 改成绝对路径</p><h3 level="3" id="Q6-如何调整检测频率">Q6: 如何调整检测频率？</h3><p>编辑 crontab：</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><ul><li><p>每1分钟：<code>* * * * * /data/data/com.termux/files/home/monitor.sh</code></p></li><li><p>每5分钟：<code>*/5 * * * * /data/data/com.termux/files/home/monitor.sh</code></p></li><li><p>每10分钟：<code>*/10 * * * * /data/data/com.termux/files/home/monitor.sh</code></p></li></ul><h3 level="3" id="Q7-boot-脚本执行了但进程没起来">Q7: boot 脚本执行了但进程没起来？</h3><p>调试方法：</p><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code><span class="hljs-comment" class="hljs-comment"># 手动执行 boot 脚本看报错</span>
+bash -x ~/.termux/boot/services.sh
+
+<span class="hljs-comment" class="hljs-comment"># 查看 termux:boot 日志</span>
+logcat -s termux:boot
+
+<span class="hljs-comment" class="hljs-comment"># 检查环境变量是否存在</span>
+<span class="hljs-built_in" class="hljs-built_in">echo</span> <span class="hljs-variable" class="hljs-variable">$TOKEN</span> <span class="hljs-variable" class="hljs-variable">$PORT</span> <span class="hljs-variable" class="hljs-variable">$PREFIX</span>
+</code></pre></div></div><h3 level="3" id="Q8-如何查看日志">Q8: 如何查看日志？</h3><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code><span class="hljs-comment" class="hljs-comment"># 查看监控日志（进程重启记录）</span>
+<span class="hljs-built_in" class="hljs-built_in">tail</span> -f ~/monitor.log
+
+<span class="hljs-comment" class="hljs-comment"># 查看启动日志</span>
+<span class="hljs-built_in" class="hljs-built_in">tail</span> -f ~/boot.log
+
+<span class="hljs-comment" class="hljs-comment"># 查看 tmux 会话日志</span>
+tmux attach -t openclaw
+tmux attach -t frpc
+</code></pre></div></div><hr><h2 level="2" id="效果">效果</h2><ul><li><p><strong>手机重启</strong> → crond + frpc + OpenClaw <strong>全部自动启动</strong></p></li><li><p><strong>进程崩溃</strong> → 5分钟内自动检测并重启</p></li><li><p><strong>随时查看日志</strong> → <code>tmux attach -t openclaw</code></p></li></ul><hr><h2 level="2" id="完整启动链路手机开机后">完整启动链路（手机开机后）</h2><div class="llt-code readonly"><div class="language">csharp</div><div class="wrapper"><pre><code>手机开机
+    ↓
+termux:boot 自动触发
+    ↓
+services.sh 执行：
+  <span class="hljs-number" class="hljs-number">1.</span> crond（关键！进程监控依赖它）
+  <span class="hljs-number" class="hljs-number">2.</span> frpc-start.sh（持有 wake <span class="hljs-keyword" class="hljs-keyword">lock</span>）
+  <span class="hljs-number" class="hljs-number">3.</span> OpenClaw（主服务）
+    ↓
+frpc 持有 termux-wake-<span class="hljs-keyword" class="hljs-keyword">lock</span>，防止系统休眠
+    ↓
+crond 每<span class="hljs-number" class="hljs-number">5</span>分钟运行 monitor.sh
+    ↓
+检测到进程挂了 → 自动重启
+</code></pre></div></div><hr><h2 level="2" id="参考资源">参考资源</h2><ul><li><p><a target="_blank" rel="noopener noreferrer nofollow" href="https://wiki.termux.com/wiki/Termux:Boot">Termux Wiki - Boot</a></p></li><li><p><a target="_blank" rel="noopener noreferrer nofollow" href="https://wiki.termux.com/wiki/Cron">Termux Wiki - Cron</a></p></li><li><p><a target="_blank" rel="noopener noreferrer nofollow" href="https://tmuxcheatsheet.com/">Tmux 常用命令</a></p></li></ul><script type="module">const injectHtml = (root, html) => {
+  const iframe = document.createElement("iframe");
+  const htmlContent = `<html><head></head><body>${html}</body></html>`;
+  iframe.style.width = "100%";
+  iframe.style.height = "100%";
+  iframe.onload = () => {
+    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+    if (!doc) {
+      return;
+    }
+    doc.open();
+    doc.write(htmlContent);
+    doc.close();
+  };
+  root.replaceChildren(iframe);
+}
+  document.querySelectorAll('.playground')?.forEach(el=>{
+    const html = el.getAttribute('data-html');
+    if (html) {
+      injectHtml(el,html);
+    }
+    const indicator = document.createElement("div");
+    indicator.className = "indicator";
+    const showCode = document.createElement("div");
+    showCode.className = "show-code";
+    showCode.innerText = "code";
+    showCode.onclick = () => {
+      el.parentElement.classList.remove("preview-only");
+    };
+    const showPreview = document.createElement("div");
+    showPreview.className = "show-preview";
+    showPreview.innerText = "preview";
+    showPreview.onclick = () => {
+      el.parentElement.classList.add("preview-only");
+    };
+    indicator.appendChild(showCode);
+    indicator.appendChild(showPreview);
+    el.parentElement.appendChild(indicator);
+    if (window.screen.width < 768) {
+      showPreview.click();
+    }
+  });</script></div> <div data-page-id="how-to-keep-openclaw-and-frpc-on" class="navigator flex justify-between items-center mt-4 py-4"> <a href="/post/Think-in-English" class="flex items-center gap-1 text-blue cursor-pointer flex-[45%]"> <div class="i-ri:arrow-left-double-line w-5 h-5 flex-shrink-0"></div> <div class="text-start">Think in English</div> </a> <a href="/post/claude-code-skills" class="flex items-center justify-end gap-1 text-blue cursor-pointer flex-[45%]"> <div class="text-end">claude code skills</div> <div class="i-ri:arrow-right-double-line w-5 h-5 flex-shrink-0"></div> </a> </div> </div> <div class="outline-wrapper"></div> </main>  <footer class="site-footer" data-astro-cid-sz7xmlte> <!-- 导航链接 --> <nav class="footer-nav" data-astro-cid-sz7xmlte>  <a href="/" class="footer-link" data-astro-cid-sz7xmlte>Home</a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/tag/projects" class="footer-link" data-astro-cid-sz7xmlte>Projects</a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/tools" class="footer-link" data-astro-cid-sz7xmlte>Notes</a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="https://web.chatboxai.app/" class="footer-link" data-astro-cid-sz7xmlte>Chatbox</a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/about" class="footer-link" data-astro-cid-sz7xmlte>About</a>  </nav> <!-- 分割线 --> <div class="footer-divider" data-astro-cid-sz7xmlte></div> <!-- 版权信息 --> <div class="footer-copyright" data-astro-cid-sz7xmlte> <a href="https://isharebox.github.io" target="_blank" data-astro-cid-sz7xmlte>©  isharebox  ·  since 2026  </a> </div> </footer>  </body></html>
