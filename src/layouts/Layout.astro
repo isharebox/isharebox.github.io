@@ -2,6 +2,7 @@
 import "@/index.scss";
 import Auth from "@/components/Auth/index.astro";
 import Footer from "@/components/Footer.astro";
+import BackToTop from "@/components/BackToTop.astro";  // ★ 引入组件
 import config from "urodele.config";
 
 interface Props {
@@ -45,6 +46,9 @@ const { title, description, footer = true } = Astro.props;
     <slot />
     
     {footer && <Footer />}
+    
+    <!-- ★ 添加回到顶部按钮组件 -->
+    <BackToTop />
   </body>
 </html>
 
