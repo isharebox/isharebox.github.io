@@ -11,7 +11,7 @@ import config from "urodele.config";
       
       <div class="about-content">
         <blockquote class="quote-block">
-        <p>「Why join the navy if you can be a pirate.」 </p>
+          <p>「Why join the navy if you can be a pirate.」</p>
         </blockquote>
         <p>Two wheels. Paperbacks with creased spines. Leonard Cohen on loop.</p> 
         <p>Building a life light enough to carry to an island someday—with her.</p>
@@ -30,8 +30,13 @@ import config from "urodele.config";
             })
             .catch(console.error)
         </script>
+        
         <Curve color="#7aa2f7" width="8rem" />
-       <img src="https://dataphoto.sibnet.ru/upload/imggreat/1770693757991494611.jpg" alt="small cabin by the sea" />
+      </div>
+      
+      <!-- 图片移到 about-content 外部，独立居中 -->
+      <div class="image-wrapper">
+        <img src="https://dataphoto.sibnet.ru/upload/imggreat/1770693757991494611.jpg" alt="small cabin by the sea" />
       </div>
     </div>
   </main>
@@ -49,8 +54,8 @@ import config from "urodele.config";
     width: 100%;
     max-width: 720px;
     padding: 2rem 0;
-    margin: 0 auto;              /* ← ADD THIS: ensures centering */
-    text-align: center;          /* ← ADD THIS: centers all text content */
+    margin: 0 auto;
+    text-align: center;
   }
 
   .page-title {
@@ -73,7 +78,7 @@ import config from "urodele.config";
   }
 
   .back-link {
-    display: inline-block;       /* ← ADD THIS: allows centering to work */
+    display: inline-block;
     color: #565f89;
     font-size: 0.9rem;
     text-decoration: none;
@@ -83,95 +88,107 @@ import config from "urodele.config";
   .back-link:hover {
     color: #7aa2f7;
   }
-   /* ★ Quote Block - 宽度自适应，不撑满 */
+
   .quote-block {
-    margin: 2rem auto;           /* 上下间距，左右居中 */
+    margin: 2rem auto;
     padding: 1rem 1.5rem;
     border-left: 3px solid #7aa2f7;
     background: rgba(122, 162, 247, 0.05);
     color: #b0d4d4;
     font-style: italic;
     border-radius: 0 8px 8px 0;
-    display: inline-block;       /* ★ 宽度自适应内容 */
-    width: fit-content; 
-    max-width: 100%;             /* 不超过父容器 */
+    display: inline-block;
+    width: fit-content;
+    max-width: 100%;
   }
+
   #hitokoto_text {
-    text-shadow: 1px 0px 10px #757575; 
-    font-weight: bold; 
+    text-shadow: 1px 0px 10px #757575;
+    font-weight: bold;
     color: #9336B4;
-    letter-spacing: 3pt; 
-    word-spacing: 3pt; 
-    font-size: 16px; 
-    text-align: center;          /* ← CHANGED: was left, now center */
-    font-family: trebuchet ms; 
-    line-height: 1; 
-    margin: 26px; 
+    letter-spacing: 3pt;
+    word-spacing: 3pt;
+    font-size: 16px;
+    text-align: center;
+    font-family: trebuchet ms;
+    line-height: 1;
+    margin: 26px;
     padding: 5px;
   }
 
-/* 给段落呼吸空间 */
-p {
-  margin-block: 1.2em;
-}
+  p {
+    margin-block: 1.2em;
+  }
 
-/* 标题更清晰的节奏 */
-h1, h2, h3, h4, h5, h6 {
-  margin-block: 1.6rem 0.5rem;
-  line-height: 1.3;
-}
+  h1, h2, h3, h4, h5, h6 {
+    margin-block: 1.6rem 0.5rem;
+    line-height: 1.3;
+  }
 
-/* 分隔元素有呼吸空间 */
-hr, img, blockquote {
-  margin-block: 1.6em;
-}
+  hr, img, blockquote {
+    margin-block: 1.6em;
+  }
 
-.curve {
-  display: block;
-  width: 8rem;
-  height: 0.5rem;
-  margin-block: 1.6em;
-  margin-inline: auto;
-  background-color: var(--curve-color);  /* ← FIXED: was var(--accent) */
-  opacity: 0.7;
-  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8'><path d='M0 4 Q30 0 60 4 T120 4' fill='none' stroke='black' stroke-width='2'/></svg>") center / contain no-repeat;
-}
+  /* ★ 图片居中容器 */
+  .image-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
 
-/* 图片说明（图片后的斜体段落） */
-main p:has(> img) + p > em {
-  display: block;
-  margin-block: -0.5rem 1.6rem;
-  font-size: 0.9em;
-  opacity: 0.8;
-  text-align: center;
-}
+  .image-wrapper img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
 
-.note {
-  display: block;
-  padding: 1em 1.2em;
-  margin-block: 1.8rem;
-  font-size: 0.9em;
-  border-left: 2px solid #7aa2f7;
-  background: rgba(122, 162, 247, 0.05);
-}
+  .curve {
+    display: block;
+    width: 8rem;
+    height: 0.5rem;
+    margin-block: 1.6em;
+    margin-inline: auto;
+    background-color: var(--curve-color);
+    opacity: 0.7;
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8'><path d='M0 4 Q30 0 60 4 T120 4' fill='none' stroke='black' stroke-width='2'/></svg>") center / contain no-repeat;
+  }
 
-.note::before {
-  content: "Note";
-  display: block;
-  font-weight: bold;
-  font-size: 0.8em;
-  text-transform: uppercase;
-  margin-bottom: 0.4em;
-  opacity: 0.8;
-}
+  main p:has(> img) + p > em {
+    display: block;
+    margin-block: -0.5rem 1.6rem;
+    font-size: 0.9em;
+    opacity: 0.8;
+    text-align: center;
+  }
 
-.pullquote {
-  font-size: 1.4em;
-  line-height: 1.3;
-  color: #c8d3f5;
-  text-align: center;
-  margin-block: 2rem;
-  padding-inline: 10%;
-  border: none;
-  font-style: italic;
-}
+  .note {
+    display: block;
+    padding: 1em 1.2em;
+    margin-block: 1.8rem;
+    font-size: 0.9em;
+    border-left: 2px solid #7aa2f7;
+    background: rgba(122, 162, 247, 0.05);
+  }
+
+  .note::before {
+    content: "Note";
+    display: block;
+    font-weight: bold;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    margin-bottom: 0.4em;
+    opacity: 0.8;
+  }
+
+  .pullquote {
+    font-size: 1.4em;
+    line-height: 1.3;
+    color: #c8d3f5;
+    text-align: center;
+    margin-block: 2rem;
+    padding-inline: 10%;
+    border: none;
+    font-style: italic;
+  }
+</style>
