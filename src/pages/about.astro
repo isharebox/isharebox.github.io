@@ -29,6 +29,8 @@ import config from "urodele.config";
             })
             .catch(console.error)
         </script>
+        <p class="curve"></p>
+        <p class="note">Live light by the sea </p>
       </div>
       
     </div>
@@ -124,3 +126,52 @@ hr, img, blockquote {
   margin-block: 1.6em;
 }
 
+.curve {
+  display: block;
+  width: 8rem;
+  height: 0.5rem;
+  margin-block: 1.6em;
+  margin-inline: auto;
+  background-color: var(--accent);
+  opacity: 0.7;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8'><path d='M0 4 Q30 0 60 4 T120 4' fill='none' stroke='black' stroke-width='2'/></svg>") center / contain no-repeat;
+}
+
+/* 图片说明（图片后的斜体段落） */
+main p:has(> img) + p > em {
+  display: block;
+  margin-block: -0.5rem 1.6rem;
+  font-size: 0.9em;
+  opacity: 0.8;
+  text-align: center;
+}
+
+.note {
+  display: block;
+  padding: 1em 1.2em;
+  margin-block: 1.8rem;
+  font-size: 0.9em;
+  border-left: 2px solid #7aa2f7;
+  background: rgba(122, 162, 247, 0.05);
+}
+
+.note::before {
+  content: "Note";
+  display: block;
+  font-weight: bold;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  margin-bottom: 0.4em;
+  opacity: 0.8;
+}
+
+.pullquote {
+  font-size: 1.4em;
+  line-height: 1.3;
+  color: #c8d3f5;
+  text-align: center;
+  margin-block: 2rem;
+  padding-inline: 10%;
+  border: none;
+  font-style: italic;
+}
