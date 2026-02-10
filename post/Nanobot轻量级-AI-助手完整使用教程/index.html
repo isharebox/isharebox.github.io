@@ -1,0 +1,121 @@
+<!DOCTYPE html> <html lang="zh-CN" class="dark"> <head><meta charset="UTF-8"><link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="isharebox"><meta name="msapplication-TileColor" content="#1e2030"><meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"><meta name="description" content="Nanobot是由香港大学数据智能实验室开发的开源AI助手框架，仅约4000行代码，是OpenClaw代码量的1%，但保留了核心功能，适合普通用户和研究者快速部署个人AI助手。"><link rel="icon" href="/favicon.ico"><title>Nanobot：轻量级 AI 助手完整使用教程 | isharebox</title><link rel="stylesheet" href="/_astro/_page_.CZUu6W6-.css">
+<style>.outlines a[data-anchor-tag=H1]{margin-left:0}.outlines a[data-anchor-tag=H2]{margin-left:12px}.outlines a[data-anchor-tag=H3]{margin-left:24px}.outlines a[data-anchor-tag=H4]{margin-left:36px}.outlines a[data-anchor-tag=H5]{margin-left:48px}.outlines a[data-anchor-tag=H6]{margin-left:60px}
+._tabset_selm3_1 ._tab-panel_selm3_1{display:none}._tabset_selm3_1 ._tab-panels_selm3_4{display:flex}._tabset_selm3_1 input[data-tab-name=direct]{display:none}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=direct]{display:block}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-labels_selm3_13 label[data-tab-name=direct]{border-bottom:2px solid red}._tabset_selm3_1 input[data-tab-name=app]{display:none}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=app]{display:block}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-labels_selm3_13 label[data-tab-name=app]{border-bottom:2px solid red}
+</style>
+<link rel="stylesheet" href="/_astro/_page_.ChTWOvcN.css">
+<link rel="stylesheet" href="/_astro/_id_.CdoHgwyN.css"><script type="module" src="/_astro/hoisted.3obGyCuB.js"></script></head> <body class="min-h-screen"> <header class="flex justify-between items-center px-4 py-3 border-b" style="border-color: #292e42;"> <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity" style="color: #c8d3f5;"> isharebox </a> <div class="flex items-center gap-3">   <div id="auth"></div> </div> </header>  <main> <div class="content"> <div class="w-full flex gap-2 pb-2">  <a href="/tag/openclaw" class="rounded hover:bg-gray-200 dark:hover:bg-modal px-3 py-1 cursor-pointer">
+#openclaw </a><a href="/tag/nanobot" class="rounded hover:bg-gray-200 dark:hover:bg-modal px-3 py-1 cursor-pointer">
+#nanobot </a> </div> <div class="ud-root read-only flex-1"><h1 level="1" id="Nanobot轻量级-AI-助手完整使用教程"><strong>Nanobot：轻量级 AI 助手完整使用教程</strong></h1><p>Nanobot是由香港大学数据智能实验室开发的开源AI助手框架，仅约4000行代码，是OpenClaw代码量的1%，但保留了核心功能，适合普通用户和研究者快速部署个人AI助手。</p><h2 level="2" id="Nanobot与OpenClaw对比"><strong>Nanobot与OpenClaw对比</strong></h2><p>代码量对比：Nanobot约4000行，OpenClaw约43万行</p><p>启动速度：Nanobot只需3秒左右，OpenClaw需要30秒</p><p>内存占用：Nanobot低于100MB，OpenClaw约1GB</p><p>架构设计：Nanobot采用<a target="_blank" rel="noopener noreferrer nofollow" class="RichContent-EntityWord css-b7erz1" href="https://zhida.zhihu.com/search?content_id=270031056&amp;content_type=Article&amp;match_order=1&amp;q=%E5%BE%AE%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E5%8C%96%E6%9E%B6%E6%9E%84&amp;zhida_source=entity">微内核模块化架构</a>，OpenClaw是单体架构</p><p>部署难度：Nanobot非常简单，OpenClaw相对复杂</p><p>适用人群：Nanobot适合普通用户和研究者，OpenClaw更适合高级开发者</p><p></p><h2 level="2" id="快速部署指南5分钟搞定"><strong>快速部署指南（5分钟搞定）</strong></h2><h3 level="3" id="第一步安装"><strong>第一步：安装</strong></h3><p>方式A：pip直接安装（最简单）</p><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text">pip install nanobot-ai</code></pre></div></div><p>方式B：使用uv安装（更快）</p><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text">uv tool install nanobot-ai</code></pre></div></div><p>方式C：源码安装（想二次开发选这个）</p><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text">git clone https://github.com/HKUDS/nanobot.git
+cd nanobot
+pip install -e .</code></pre></div></div><h3 level="3" id="第二步初始化配置"><strong>第二步：初始化配置</strong></h3><p>运行初始化命令，创建配置文件：</p><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text">nanobot onboard</code></pre></div></div><p>这会在你的用户目录下创建 ~/.nanobot/ 文件夹，包含配置文件和工作目录。</p><h3 level="3" id="第三步配置API密钥"><strong>第三步：配置API密钥</strong></h3><p>编辑配置文件 ~/.nanobot/config.json：</p><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text">{
+  &quot;providers&quot;: {
+    &quot;openrouter&quot;: {
+      &quot;apiKey&quot;: &quot;sk-or-v1-xxx&quot;
+    }
+  },
+  &quot;agents&quot;: {
+    &quot;defaults&quot;: {
+      &quot;model&quot;: &quot;anthropic/claude-opus-4-5&quot;
+    }
+  },
+  &quot;webSearch&quot;: {
+    &quot;apiKey&quot;: &quot;BSA-xxx&quot;
+  }
+}</code></pre></div></div><p>配置说明：</p><ul><li><p><a target="_blank" rel="noopener noreferrer nofollow" class="RichContent-EntityWord css-b7erz1" href="https://zhida.zhihu.com/search?content_id=270031056&amp;content_type=Article&amp;match_order=1&amp;q=OpenRouter&amp;zhida_source=entity">OpenRouter</a>：推荐，一个API key可调用<a target="_blank" rel="noopener noreferrer nofollow" class="RichContent-EntityWord css-b7erz1" href="https://zhida.zhihu.com/search?content_id=270031056&amp;content_type=Article&amp;match_order=1&amp;q=Claude&amp;zhida_source=entity">Claude</a>、<a target="_blank" rel="noopener noreferrer nofollow" class="RichContent-EntityWord css-b7erz1" href="https://zhida.zhihu.com/search?content_id=270031056&amp;content_type=Article&amp;match_order=1&amp;q=GPT&amp;zhida_source=entity">GPT</a>、<a target="_blank" rel="noopener noreferrer nofollow" class="RichContent-EntityWord css-b7erz1" href="https://zhida.zhihu.com/search?content_id=270031056&amp;content_type=Article&amp;match_order=1&amp;q=Gemini&amp;zhida_source=entity">Gemini</a>等多个模型</p></li></ul><p></p><ul><li><p>免费模型：可用 openrouter/free（OpenRouter提供的免费模型）</p></li><li><p>Brave Search：用于联网搜索功能（可选）</p></li></ul><p>获取API Key：</p><ul><li><p>OpenRouter:&nbsp;<a target="_blank" rel="noopener noreferrer nofollow" href="https://openrouter.ai">https://openrouter.ai</a></p></li></ul><p></p><ul><li><p>Brave Search:&nbsp;<a target="_blank" rel="noopener noreferrer nofollow" href="https://brave.com/search/api">https://brave.com/search/api</a></p></li></ul><h3 level="3" id="第四步开始使用"><strong>第四步：开始使用</strong></h3><p>基础对话（命令行模式）：</p><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text">nanobot agent -m &quot;2+2是多少？&quot;</code></pre></div></div><p>进入交互模式：</p><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text">nanobot</code></pre></div></div><h2 level="2" id="连接聊天平台"><strong>连接聊天平台</strong></h2><h3 level="3" id="Telegram推荐最简单"><a target="_blank" rel="noopener noreferrer nofollow" class="RichContent-EntityWord css-b7erz1" href="https://zhida.zhihu.com/search?content_id=270031056&amp;content_type=Article&amp;match_order=1&amp;q=Telegram&amp;zhida_source=entity"><strong>Telegram</strong></a><strong>（推荐，最简单）</strong></h3><ol><li><p>创建机器人</p></li></ol><ul><li><p></p></li></ul><ul><li><p>在Telegram搜索 @BotFather</p></li><li><p>发送 /newbot，按提示设置名称</p></li><li><p>复制获得的Token（格式：123456789:ABCdef...）</p></li></ul><ol><li><p>配置 ~/.nanobot/config.json：</p></li></ol><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text">{
+  &quot;channels&quot;: {
+    &quot;telegram&quot;: {
+      &quot;enabled&quot;: true,
+      &quot;token&quot;: &quot;YOUR_BOT_TOKEN&quot;,
+      &quot;allowFrom&quot;: [&quot;YOUR_USER_ID&quot;]
+    }
+  }
+}</code></pre></div></div><ol><li><p>获取你的User ID</p></li></ol><ul><li><p></p></li></ul><ul><li><p>搜索 @userinfobot，它会告诉你自己的ID</p></li></ul><ol><li><p>启动网关：</p></li></ol><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text">nanobot gateway</code></pre></div></div><p>现在你可以在Telegram里直接和AI助手聊天了！</p><h3 level="3" id="WhatsApp需要Nodejs"><a target="_blank" rel="noopener noreferrer nofollow" class="RichContent-EntityWord css-b7erz1" href="https://zhida.zhihu.com/search?content_id=270031056&amp;content_type=Article&amp;match_order=1&amp;q=WhatsApp&amp;zhida_source=entity"><strong>WhatsApp</strong></a><strong>（需要Node.js）</strong></h3><p>前置要求：Node.js ≥ 18</p><ol><li><p>登录配对</p></li></ol><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text">nanobot channels login
+# 扫描QR码（在WhatsApp → 设置 → 关联设备中扫描）</code></pre></div></div><ol><li><p>配置白名单：</p></li></ol><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text">{
+  &quot;channels&quot;: {
+    &quot;whatsapp&quot;: {
+      &quot;enabled&quot;: true,
+      &quot;allowFrom&quot;: [&quot;+8613800138000&quot;]
+    }
+  }
+}</code></pre></div></div><ol><li><p>运行（需要两个终端）：</p></li></ol><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text"># 终端1：保持登录状态
+nanobot channels login
+
+# 终端2：启动网关
+nanobot gateway</code></pre></div></div><h3 level="3" id="微信支持情况"><strong>微信支持情况</strong></h3><p>目前Nanobot官方主要支持Telegram和WhatsApp。微信集成相对复杂，因为微信对Bot限制较多。如果你需要微信接入，可能需要：</p><ul><li><p>使用第三方微信Bot框架（如<a target="_blank" rel="noopener noreferrer nofollow" class="RichContent-EntityWord css-b7erz1" href="https://zhida.zhihu.com/search?content_id=270031056&amp;content_type=Article&amp;match_order=1&amp;q=itchat&amp;zhida_source=entity">itchat</a>、<a target="_blank" rel="noopener noreferrer nofollow" class="RichContent-EntityWord css-b7erz1" href="https://zhida.zhihu.com/search?content_id=270031056&amp;content_type=Article&amp;match_order=1&amp;q=wechaty&amp;zhida_source=entity">wechaty</a>）作为桥接</p></li></ul><p></p><ul><li><p>或等待社区贡献微信适配器</p></li></ul><h2 level="2" id="核心功能详解"><strong>核心功能详解</strong></h2><h3 level="3" id="1-持久化记忆系统"><strong>1. 持久化记忆系统</strong></h3><p>Nanobot的记忆分为两层：</p><p>短期记忆（每日笔记）：</p><ul><li><p>自动保存当天的对话记录</p></li></ul><p></p><ul><li><p>存储在 ~/.nanobot/notes/<a target="_blank" rel="noopener noreferrer nofollow" href="http://2026-02-05.md">2026-02-05.md</a></p></li></ul><p>长期记忆：</p><ul><li><p>主动保存重要信息</p></li></ul><p></p><ul><li><p>通过关键词检索召回</p></li><li><p>存储在 ~/.nanobot/memory/ 目录</p></li></ul><p>使用示例：</p><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text">用户：记住我的邮箱是 chen@example.com
+AI：已保存。
+用户：我邮箱是什么？
+AI：你的邮箱是 chen@example.com</code></pre></div></div><h3 level="3" id="2-定时任务Cron"><strong>2. 定时任务（Cron）</strong></h3><p>配置 ~/.nanobot/config.json：</p><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text">{
+  &quot;agents&quot;: {
+    &quot;researcher&quot;: {
+      &quot;system_prompt&quot;: &quot;你是研究助手...&quot;,
+      &quot;tools&quot;: [&quot;web_search&quot;, &quot;web_fetch&quot;],
+      &quot;schedule&quot;: &quot;0 */4 * * *&quot;
+    }
+  }
+}</code></pre></div></div><p>这会让AI每4小时自动执行一次任务（比如市场分析、新闻摘要）。</p><h3 level="3" id="3-技能系统Skills"><strong>3. 技能系统（Skills）</strong></h3><p>内置技能包括：</p><ul><li><p>web_search：联网搜索（需Brave API）</p></li></ul><p></p><ul><li><p>github：管理GitHub仓库</p></li><li><p>weather：天气查询</p></li></ul><p></p><ul><li><p>tmux：终端会话管理</p></li></ul><p>自定义技能：</p><p>在 ~/.nanobot/skills/ 目录下创建Python文件即可扩展功能。</p><h3 level="3" id="4-子代理Sub-agent"><strong>4. 子代理（Sub-agent）</strong></h3><p>复杂任务可以分解给多个专业代理：</p><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text">@tool
+async def spawn(task: str, context: str) -&gt; str:
+    &quot;&quot;&quot;生成子代理来执行任务&quot;&quot;&quot;
+    sub_agent = SubAgent(
+        system_prompt=f&quot;你是专业代理。{context}&quot;,
+        tools=self.tools.get_subset_for_task(task)
+    )
+    return await sub_agent.execute(task)</code></pre></div></div><h2 level="2" id="Docker部署推荐长期运行"><strong>Docker部署（推荐长期运行）</strong></h2><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text"># 构建镜像
+docker build -t nanobot .
+
+# 初始化配置（只需一次）
+docker run -v ~/.nanobot:/root/.nanobot --rm nanobot onboard
+
+# 编辑宿主机上的配置文件
+vim ~/.nanobot/config.json
+
+# 运行网关（Telegram/WhatsApp）
+docker run -v ~/.nanobot:/root/.nanobot -p 18790:18790 nanobot gateway
+
+# 或执行单次命令
+docker run -v ~/.nanobot:/root/.nanobot --rm nanobot agent -m &quot;Hello&quot;</code></pre></div></div><h2 level="2" id="实用场景示例"><strong>实用场景示例</strong></h2><p>场景1：7×24小时市场分析助手</p><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text"># nanobot.yaml
+agents:
+  market_analyst:
+    system_prompt: &quot;你是金融分析师，每日分析美股走势...&quot;
+    tools: [web_search, web_fetch]
+    schedule: &quot;0 9 * * *&quot;  # 每天早上9点</code></pre></div></div><p>AI会自动搜索市场信息，分析后发送到你的Telegram。</p><p>场景2：个人知识库</p><ul><li><p>随时通过Telegram语音/文字记录想法</p></li></ul><p></p><ul><li><p>AI自动转录（支持Groq Whisper）并分类保存</p></li><li><p>随时提问&quot;我上周关于AI的想法是什么？&quot;</p></li></ul><p>场景3：开发助手</p><div class="llt-code readonly"><div class="language">text</div><div class="wrapper"><pre><code class="language-text">nanobot agent -m &quot;帮我写个Python脚本，批量重命名当前目录下的图片文件&quot;</code></pre></div></div><h2 level="2" id="注意事项"><strong>注意事项</strong></h2><ol><li><p>安全性：使用 allowFrom 白名单限制访问，防止他人使用你的Bot</p></li></ol><p></p><ol><li><p>API费用：OpenRouter按量计费，但可用免费模型；本地部署需vLLM支持</p></li><li><p>微信限制：个人微信Bot存在封号风险，建议先用Telegram测试</p></li></ol><p></p><ol><li><p>文档：项目较新，高级功能可能需要看源码</p></li></ol><h2 level="2" id="相关资源"><strong>相关资源</strong></h2><ul><li><p>GitHub仓库：<a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/HKUDS/nanobot">https://github.com/HKUDS/nanobot</a></p></li></ul><p></p><ul><li><p>OpenRouter（推荐API聚合）：<a target="_blank" rel="noopener noreferrer nofollow" href="https://openrouter.ai">https://openrouter.ai</a></p></li><li><p>Brave Search API：<a target="_blank" rel="noopener noreferrer nofollow" href="https://brave.com/search/api">https://brave.com/search/api</a></p></li></ul><p>Nanobot的核心优势就是极简——你可以在1小时内读完所有代码，理解它的工作原理，并根据自己的需求修改。如果你只是想要一个&quot;能用的AI助手&quot;而不是&quot;全能的自动化平台&quot;，这绝对是比OpenClaw更适合的选择。</p><script type="module">const injectHtml = (root, html) => {
+  const iframe = document.createElement("iframe");
+  const htmlContent = `<html><head></head><body>${html}</body></html>`;
+  iframe.style.width = "100%";
+  iframe.style.height = "100%";
+  iframe.onload = () => {
+    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+    if (!doc) {
+      return;
+    }
+    doc.open();
+    doc.write(htmlContent);
+    doc.close();
+  };
+  root.replaceChildren(iframe);
+}
+  document.querySelectorAll('.playground')?.forEach(el=>{
+    const html = el.getAttribute('data-html');
+    if (html) {
+      injectHtml(el,html);
+    }
+    const indicator = document.createElement("div");
+    indicator.className = "indicator";
+    const showCode = document.createElement("div");
+    showCode.className = "show-code";
+    showCode.innerText = "code";
+    showCode.onclick = () => {
+      el.parentElement.classList.remove("preview-only");
+    };
+    const showPreview = document.createElement("div");
+    showPreview.className = "show-preview";
+    showPreview.innerText = "preview";
+    showPreview.onclick = () => {
+      el.parentElement.classList.add("preview-only");
+    };
+    indicator.appendChild(showCode);
+    indicator.appendChild(showPreview);
+    el.parentElement.appendChild(indicator);
+    if (window.screen.width < 768) {
+      showPreview.click();
+    }
+  });</script></div> <div data-page-id="Nanobot轻量级-AI-助手完整使用教程" class="navigator flex justify-between items-center mt-4 py-4"> <a href="/post/nanobot---Minimal-OpenClaw-Alternative" class="flex items-center gap-1 text-blue cursor-pointer flex-[45%]"> <div class="i-ri:arrow-left-double-line w-5 h-5 flex-shrink-0"></div> <div class="text-start">nanobot - Minimal OpenClaw Alternative</div> </a> <div></div> </div> </div> <div class="outline-wrapper"></div> </main>  <footer class="site-footer" data-astro-cid-sz7xmlte> <!-- 导航链接 --> <nav class="footer-nav" data-astro-cid-sz7xmlte>  <a href="/" class="footer-link" data-astro-cid-sz7xmlte> Home </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/tag/projects" class="footer-link" data-astro-cid-sz7xmlte> Projects </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/tools" class="footer-link" data-astro-cid-sz7xmlte> Notes </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="https://web.chatboxai.app/" class="footer-link" target="_blank" rel="noopener noreferrer" data-astro-cid-sz7xmlte> Chatbox </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/about" class="footer-link" data-astro-cid-sz7xmlte> About </a>  </nav> <!-- 分割线 --> <div class="footer-divider" data-astro-cid-sz7xmlte></div> <!-- 版权信息 --> <div class="footer-copyright" data-astro-cid-sz7xmlte> <a href="https://isharebox.github.io" data-astro-cid-sz7xmlte>©  isharebox  ·  since 2026  </a> </div> </footer>  <!-- ★ 添加回到顶部按钮组件 --> <button id="back-to-top" class="back-to-top" aria-label="Back to top" data-astro-cid-wlspcwf4> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-wlspcwf4> <path d="M18 15l-6-6-6 6" data-astro-cid-wlspcwf4></path> </svg> </button>   </body></html>

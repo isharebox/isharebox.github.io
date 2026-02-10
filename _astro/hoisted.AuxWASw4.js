@@ -1,0 +1,1 @@
+import"./hoisted.Cx_qm-KO.js";import"./auth.C8RHWUSr.js";const t=document.querySelector(".embed-frame"),e=document.getElementById("loading");t.addEventListener("load",()=>{e.style.display="none"});setTimeout(()=>{e.style.display="none"},5e3);
