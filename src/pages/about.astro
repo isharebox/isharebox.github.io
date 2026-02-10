@@ -1,5 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import Curve from '@/components/Curve.astro';
 import config from "urodele.config";
 ---
 
@@ -29,7 +30,7 @@ import config from "urodele.config";
             })
             .catch(console.error)
         </script>
-        <span class="curve"></span>
+        <span class="curve curve-default" style="--curve-color: #7aa2f7; --curve-width: 8rem;"></span>
       </div>
     </div>
   </main>
