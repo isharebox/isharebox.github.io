@@ -1,0 +1,81 @@
+---
+interface Props {
+  variant?: 'default' | 'thick' | 'dashed' | 'double' | 'dots';
+  color?: string;
+  width?: string;
+}
+
+const { 
+  variant = 'default',
+  color = '#7aa2f7',
+  width = '8rem'
+} = Astro.props;
+
+const variantClass = `curve-${variant}`;
+---
+
+<span class={`curve ${variantClass}`} style={`--curve-color: ${color}; --curve-width: ${width};`}></span>
+
+<style>
+  .curve {
+    display: block;
+    margin: 1.6em auto;
+    width: var(--curve-width, 8rem);
+  }
+
+  /* 默认波浪线 */
+  .curve-default {
+    height: 0.5rem;
+    background-color: var(--curve-color, #7aa2f7);
+    opacity: 0.7;
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8'><path d='M0 4 Q30 0 60 4 T120 4' fill='none' stroke='black' stroke-width='2'/></svg>") center / contain no-repeat;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8'><path d='M0 4 Q30 0 60 4 T120 4' fill='none' stroke='black' stroke-width='2'/></svg>") center / contain no-repeat;
+  }
+
+  /* 粗线 */
+  .curve-thick {
+    height: 0.8rem;
+    background-color: var(--curve-color, #7aa2f7);
+    opacity: 0.5;
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8'><path d='M0 4 Q30 0 60 4 T120 4' fill='none' stroke='black' stroke-width='3'/></svg>") center / contain no-repeat;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8'><path d='M0 4 Q30 0 60 4 T120 4' fill='none' stroke='black' stroke-width='3'/></svg>") center / contain no-repeat;
+  }
+
+  /* 虚线 */
+  .curve-dashed {
+    height: 2px;
+    background: transparent;
+    border-bottom: 2px dashed var(--curve-color, #7aa2f7);
+    opacity: 0.6;
+  }
+
+  /* 双线 */
+  .curve-double {
+    height: 0.5rem;
+    position: relative;
+    background: transparent;
+  }
+
+  .curve-double::before,
+  .curve-double::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--curve-color, #7aa2f7);
+    opacity: 0.6;
+  }
+
+  .curve-double::before { top: 0; }
+  .curve-double::after { bottom: 0; }
+
+  /* 点线 */
+  .curve-dots {
+    height: 4px;
+    background: radial-gradient(circle, var(--curve-color, #7aa2f7) 2px, transparent 2px);
+    background-size: 12px 4px;
+    background-position: center;
+    opacity: 0.6;
+  }
+</style>
