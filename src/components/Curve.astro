@@ -21,6 +21,7 @@ const variantClass = `curve-${variant}`;
     display: block;
     margin: 1.6em auto;
     width: var(--curve-width, 8rem);
+    background-color: transparent; /* ← ADD: prevents inheritance issues */
   }
 
   /* 默认波浪线 */
