@@ -36,7 +36,10 @@ import config from "urodele.config";
       
       <!-- 图片移到 about-content 外部，独立居中 -->
       <div class="image-wrapper">
-        <img src="https://dataphoto.sibnet.ru/upload/imggreat/1770693757991494611.jpg" alt="small cabin by the sea" />
+        <figure>
+          <img src="https://dataphoto.sibnet.ru/upload/imggreat/1770693757991494611.jpg" alt="small cabin by the sea" />
+          <figcaption>Small cabin by the sea</figcaption>
+        </figure>
       </div>
     </div>
   </main>
@@ -136,11 +139,40 @@ import config from "urodele.config";
     margin-top: 2rem;
   }
 
+  .image-wrapper figure {
+    margin: 0;
+  }
+
+  /* ★ 改进的图片悬浮效果 - 蓝色光晕 */
   .image-wrapper img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(122, 162, 247, 0.3);
+    box-shadow: 
+      0 0 0 1px rgba(122, 162, 247, 0.1),
+      0 4px 20px rgba(0, 0, 0, 0.5),
+      0 0 30px rgba(122, 162, 247, 0.15);
+    transition: all 0.3s ease;
+  }
+
+  /* ★ 悬浮效果 - 增强光晕 */
+  .image-wrapper img:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+      0 0 0 1px rgba(122, 162, 247, 0.2),
+      0 8px 30px rgba(0, 0, 0, 0.6),
+      0 0 50px rgba(122, 162, 247, 0.25);
+    border-color: rgba(122, 162, 247, 0.5);
+  }
+
+  /* ★ 图片说明 */
+  .image-wrapper figcaption {
+    margin-top: 0.8rem;
+    font-size: 0.9em;
+    color: #565f89;
+    font-style: italic;
+    text-align: center;
   }
 
   .curve {
@@ -154,6 +186,7 @@ import config from "urodele.config";
     mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8'><path d='M0 4 Q30 0 60 4 T120 4' fill='none' stroke='black' stroke-width='2'/></svg>") center / contain no-repeat;
   }
 
+  /* 保留：Markdown 图片后的斜体段落说明 */
   main p:has(> img) + p > em {
     display: block;
     margin-block: -0.5rem 1.6rem;
