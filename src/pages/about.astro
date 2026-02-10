@@ -143,27 +143,27 @@ import config from "urodele.config";
     margin: 0;
   }
 
-  /* ★ 改进的图片悬浮效果 - 蓝色光晕 */
+ /* ★ 新效果：白色边框 + 内发光，深色背景清晰可见 */
   .image-wrapper img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
-    border: 1px solid rgba(122, 162, 247, 0.3);
+    border: 2px solid rgba(200, 211, 245, 0.6);
     box-shadow: 
-      0 0 0 1px rgba(122, 162, 247, 0.1),
-      0 4px 20px rgba(0, 0, 0, 0.5),
-      0 0 30px rgba(122, 162, 247, 0.15);
+      inset 0 0 20px rgba(122, 162, 247, 0.3),
+      0 0 0 1px rgba(122, 162, 247, 0.2),
+      0 4px 15px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
   }
 
-  /* ★ 悬浮效果 - 增强光晕 */
+  /* ★ 悬浮：边框变亮 + 外发光增强 */
   .image-wrapper img:hover {
-    transform: translateY(-4px);
+    border-color: rgba(200, 211, 245, 0.9);
     box-shadow: 
-      0 0 0 1px rgba(122, 162, 247, 0.2),
-      0 8px 30px rgba(0, 0, 0, 0.6),
-      0 0 50px rgba(122, 162, 247, 0.25);
-    border-color: rgba(122, 162, 247, 0.5);
+      inset 0 0 30px rgba(122, 162, 247, 0.4),
+      0 0 20px rgba(122, 162, 247, 0.4),
+      0 8px 25px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
   }
 
   /* ★ 图片说明 */
