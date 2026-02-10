@@ -1,0 +1,99 @@
+<!DOCTYPE html> <html lang="zh-CN" class="dark"> <head><meta charset="UTF-8"><link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="isharebox"><meta name="msapplication-TileColor" content="#1e2030"><meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"><meta name="description" content="开发者会同时使用多个 GitHub 账号（比如工作账号、个人账号），如果直接共用一套 SSH 密钥，会导致权限混乱、代码提交身份错误等问题。本文将从原理到实操，教你如何为多个 GitHub 账号配置独立的 SSH 密钥，以及如何正确拉取对应账号的代码。"><link rel="icon" href="/favicon.ico"><title>同一电脑配置多github帐号 | isharebox</title><link rel="stylesheet" href="/_astro/_page_.m1rPkfGw.css">
+<style>.outlines a[data-anchor-tag=H1]{margin-left:0}.outlines a[data-anchor-tag=H2]{margin-left:12px}.outlines a[data-anchor-tag=H3]{margin-left:24px}.outlines a[data-anchor-tag=H4]{margin-left:36px}.outlines a[data-anchor-tag=H5]{margin-left:48px}.outlines a[data-anchor-tag=H6]{margin-left:60px}
+._tabset_selm3_1 ._tab-panel_selm3_1{display:none}._tabset_selm3_1 ._tab-panels_selm3_4{display:flex}._tabset_selm3_1 input[data-tab-name=direct]{display:none}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=direct]{display:block}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-labels_selm3_13 label[data-tab-name=direct]{border-bottom:2px solid red}._tabset_selm3_1 input[data-tab-name=app]{display:none}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=app]{display:block}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-labels_selm3_13 label[data-tab-name=app]{border-bottom:2px solid red}
+</style>
+<link rel="stylesheet" href="/_astro/_page_.ChTWOvcN.css">
+<link rel="stylesheet" href="/_astro/_id_.CdoHgwyN.css"><script type="module" src="/_astro/hoisted.3obGyCuB.js"></script></head> <body class="min-h-screen"> <header class="flex justify-between items-center px-4 py-3 border-b" style="border-color: #292e42;"> <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity" style="color: #c8d3f5;"> isharebox </a> <div class="flex items-center gap-3">   <div id="auth"></div> </div> </header>  <main> <div class="content"> <div class="w-full flex gap-2 pb-2">  <a href="/tag/others" class="rounded hover:bg-gray-200 dark:hover:bg-modal px-3 py-1 cursor-pointer">
+#others </a><a href="/tag/github" class="rounded hover:bg-gray-200 dark:hover:bg-modal px-3 py-1 cursor-pointer">
+#github </a> </div> <div class="ud-root read-only flex-1"><h1 level="1" id="同一电脑配置多github帐号">同一电脑配置多github帐号</h1><p>开发者会同时使用多个 GitHub 账号（比如工作账号、个人账号），如果直接共用一套 SSH 密钥，会导致权限混乱、代码提交身份错误等问题。本文将从原理到实操，教你如何为多个 GitHub 账号配置独立的 SSH 密钥，以及如何正确拉取对应账号的代码。</p><h2 level="2" id="一核心原理">一、核心原理</h2><p>SSH 密钥是本地与 GitHub 认证的 “身份证”，每个 GitHub 账号可绑定独立的 SSH 密钥。单台电脑区分多账号的关键是：</p><ol><li><p>为每个 GitHub 账号生成<strong>独立的 SSH 密钥文件</strong>；</p></li><li><p>通过 <code>config</code> 配置文件建立 “别名 - 密钥 - 账号” 的对应关系；</p></li><li><p>拉取 / 推送代码时，用自定义别名替代默认的 <code>github.com</code>，让 Git 自动匹配对应密钥</p></li></ol><h2 level="2" id="二前置准备">二、前置准备</h2><ol><li><p>已安装 Git（Windows/macOS/Linux 均可）；</p></li><li><p>拥有两个及以上 GitHub 账号；</p></li><li><p>知晓本地家目录路径（Windows：<code>C:\Users\你的用户名</code>；macOS/Linux：<code>/Users/你的用户名</code> 或 <code>/home/你的用户名</code>）。</p></li></ol><h2 level="2" id="三实操步骤以-2-个-GitHub-账号为例">三、实操步骤（以 2 个 GitHub 账号为例）</h2><h3 level="3" id="步骤-1为不同-GitHub-账号生成独立-SSH-密钥">步骤 1：为不同 GitHub 账号生成独立 SSH 密钥</h3><p>打开终端（Windows 用 Git Bash/CMD，macOS/Linux 用终端），分别为两个账号生成密钥（文件名需区分，比如 <code>github_rsa_work</code>（工作）、<code>github_rsa_personal</code>（个人））。</p><h4 level="4" id="命令格式">命令格式</h4><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash"><span class="hljs-comment" class="hljs-comment"># 生成工作账号密钥（替换为工作账号邮箱）</span>
+ssh-keygen -t ed25519 -C <span class="hljs-string" class="hljs-string">&quot;work@example.com&quot;</span> -f <span class="hljs-variable" class="hljs-variable">$HOME</span>/.ssh/github_rsa_work
+
+<span class="hljs-comment" class="hljs-comment"># 生成个人账号密钥（替换为个人账号邮箱）</span>
+ssh-keygen -t ed25519 -C <span class="hljs-string" class="hljs-string">&quot;personal@example.com&quot;</span> -f <span class="hljs-variable" class="hljs-variable">$HOME</span>/.ssh/github_rsa_personal
+</code></pre></div></div><h4 level="4" id="执行交互">执行交互</h4><p>命令执行后会提示输入 “密码短语（passphrase）”，建议直接按回车留空（方便日常使用；若设置密码，每次拉 / 推代码需验证）：</p><p>plaintext</p><div class="llt-code readonly"><div class="language">yaml</div><div class="wrapper"><pre><code class="language-yaml"><span class="hljs-attr" class="hljs-attr">Enter passphrase (empty for no passphrase):</span>  <span class="hljs-comment" class="hljs-comment"># 回车</span>
+<span class="hljs-attr" class="hljs-attr">Enter same passphrase again:</span>  <span class="hljs-comment" class="hljs-comment"># 再次回车</span>
+</code></pre></div></div><h4 level="4" id="验证生成结果">验证生成结果</h4><p>执行后会在 <code>~/.ssh</code> 目录下生成 4 个文件：</p><ul><li><p>工作账号：<code>github_rsa_work</code>（私钥）、<code>github_rsa_work.pub</code>（公钥）；</p></li><li><p>个人账号：<code>github_rsa_personal</code>（私钥）、<code>github_rsa_personal.pub</code>（公钥）。</p></li></ul><h3 level="3" id="步骤-2将公钥分别添加到对应-GitHub-账号">步骤 2：将公钥分别添加到对应 GitHub 账号</h3><p>SSH 密钥分 “公钥” 和 “私钥”，需将公钥上传到 GitHub 账号，私钥保存在本地。</p><h4 level="4" id="1-复制公钥内容">1. 复制公钥内容</h4><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash"><span class="hljs-comment" class="hljs-comment"># 复制工作账号公钥（Windows 用 type 替代 cat）</span>
+<span class="hljs-built_in" class="hljs-built_in">cat</span> ~/.ssh/github_rsa_work.pub
+
+<span class="hljs-comment" class="hljs-comment"># 复制个人账号公钥</span>
+<span class="hljs-built_in" class="hljs-built_in">cat</span> ~/.ssh/github_rsa_personal.pub
+</code></pre></div></div><p>复制终端输出的完整内容（以 <code>ssh-ed25519</code> 开头，邮箱结尾）。</p><h4 level="4" id="2-上传公钥到-GitHub">2. 上传公钥到 GitHub</h4><p>以工作账号为例，操作流程：</p><ol><li><p>登录工作 GitHub 账号 → 点击右上角头像 → <code>Settings</code>；</p></li><li><p>左侧菜单选择 <code>SSH and GPG keys</code> → 点击 <code>New SSH key</code>；</p></li><li><p><code>Title</code>：填备注（如 <code>Mac-work-github</code>），便于识别；</p></li><li><p><code>Key</code>：粘贴复制的公钥内容 → 点击 <code>Add SSH key</code>；</p></li><li><p>重复上述步骤，将个人账号的公钥上传到个人 GitHub 账号。</p></li></ol><h3 level="3" id="步骤-3配置-SSH-config-文件核心">步骤 3：配置 SSH config 文件（核心）</h3><p><code>config</code> 文件是 Git 识别不同账号密钥的 “规则表”，需在 <code>.ssh</code> 目录下创建 / 编辑该文件。</p><h4 level="4" id="1-打开-config-文件">1. 打开 config 文件</h4><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash"><span class="hljs-comment" class="hljs-comment"># Windows/macOS/Linux 通用（无文件则新建）</span>
+vim ~/.ssh/config
+</code></pre></div></div><h4 level="4" id="2-写入配置内容">2. 写入配置内容</h4><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash"><span class="hljs-comment" class="hljs-comment"># 工作 GitHub 账号配置</span>
+Host github-work  <span class="hljs-comment" class="hljs-comment"># 自定义别名（可任意命名，如 github-work）</span>
+    HostName github.com  <span class="hljs-comment" class="hljs-comment"># 固定为 github.com，不可改</span>
+    User git  <span class="hljs-comment" class="hljs-comment"># 固定为 git，不是你的 GitHub 用户名</span>
+    IdentityFile ~/.ssh/github_rsa_work  <span class="hljs-comment" class="hljs-comment"># 绑定工作账号私钥</span>
+    PreferredAuthentications publickey
+
+<span class="hljs-comment" class="hljs-comment"># 个人 GitHub 账号配置</span>
+Host github-personal  <span class="hljs-comment" class="hljs-comment"># 自定义别名（如 github-personal）</span>
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/github_rsa_personal  <span class="hljs-comment" class="hljs-comment"># 绑定个人账号私钥</span>
+    PreferredAuthentications publickey
+</code></pre></div></div><h4 level="4" id="3-保存并设置权限">3. 保存并设置权限</h4><ul><li><p>vim 中按 <code>Esc</code> → 输入 <code>:wq</code> → 回车保存；</p></li><li><p>设置文件权限（避免 SSH 认证失败，macOS/Linux 必做，Windows 可选）：</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div></li></ul><ul><li><p></p></li></ul><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash"><span class="hljs-comment" class="hljs-comment"># 设置 config 文件权限</span>
+<span class="hljs-built_in" class="hljs-built_in">chmod</span> 600 ~/.ssh/config
+<span class="hljs-comment" class="hljs-comment"># 设置私钥权限</span>
+<span class="hljs-built_in" class="hljs-built_in">chmod</span> 600 ~/.ssh/github_rsa_work
+<span class="hljs-built_in" class="hljs-built_in">chmod</span> 600 ~/.ssh/github_rsa_personal
+</code></pre></div></div><h3 level="3" id="步骤-4测试-SSH-连接">步骤 4：测试 SSH 连接</h3><p>验证每个账号是否能正常认证：</p><div class="llt-code readonly"><div class="language">perl</div><div class="wrapper"><pre><code class="language-perl"><span class="hljs-comment" class="hljs-comment"># 测试工作账号</span>
+ssh -T git<span class="hljs-variable" class="hljs-variable">@github</span>-work
+
+<span class="hljs-comment" class="hljs-comment"># 测试个人账号</span>
+ssh -T git<span class="hljs-variable" class="hljs-variable">@github</span>-personal
+</code></pre></div></div><p>若返回 <code>Hi [你的账号名]! You&apos;ve successfully authenticated...</code>，说明配置生效。</p><h2 level="2" id="四拉取对应账号的代码实操">四、拉取对应账号的代码（实操）</h2><p>配置完成后，拉取代码的核心是<strong>用自定义别名替换仓库地址中的 </strong><code>github.com</code>。</p><h3 level="3" id="场景-1克隆新仓库">场景 1：克隆新仓库</h3><h4 level="4" id="1-复制仓库-SSH-地址">1. 复制仓库 SSH 地址</h4><p>登录对应 GitHub 账号 → 打开仓库 → 点击 <code>Code</code> → <code>SSH</code> → 复制地址（如 <code>git@github.com:work-account/project.git</code>）。</p><h4 level="4" id="2-替换别名并克隆">2. 替换别名并克隆</h4><ul><li><p>工作仓库：将 <code>github.com</code> 替换为 <code>github-work</code></p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div></li></ul><ul><li><p></p></li></ul><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash">git <span class="hljs-built_in" class="hljs-built_in">clone</span> git@github-work:work-account/project.git
+</code></pre></div></div><ul><li><p>个人仓库：将 <code>github.com</code> 替换为 <code>github-personal</code></p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div></li></ul><ul><li><p></p></li></ul><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash">git <span class="hljs-built_in" class="hljs-built_in">clone</span> git@github-personal:personal-account/notes.git
+</code></pre></div></div><h3 level="3" id="场景-2修改已克隆仓库的远程地址">场景 2：修改已克隆仓库的远程地址</h3><p>若仓库已克隆（默认用 <code>github.com</code> 地址），需修改远程地址匹配对应账号：</p><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash"><span class="hljs-comment" class="hljs-comment"># 进入仓库目录</span>
+<span class="hljs-built_in" class="hljs-built_in">cd</span> project
+<span class="hljs-comment" class="hljs-comment"># 修改为工作账号地址</span>
+git remote set-url origin git@github-work:work-account/project.git
+</code></pre></div></div><h3 level="3" id="补充设置提交身份避免信息混淆">补充：设置提交身份（避免信息混淆）</h3><p>SSH 解决 “认证” 问题，而提交代码的身份由 <code>user.name</code>/<code>user.email</code> 决定，需为每个仓库单独设置：</p><div class="llt-code readonly"><div class="language">arduino</div><div class="wrapper"><pre><code class="language-arduino"># 进入工作仓库，设置工作账号信息
+git config user.name <span class="hljs-string" class="hljs-string">&quot;WorkName&quot;</span>
+git config user.email <span class="hljs-string" class="hljs-string">&quot;work@example.com&quot;</span>
+
+# 进入个人仓库，设置个人账号信息
+git config user.name <span class="hljs-string" class="hljs-string">&quot;PersonalName&quot;</span>
+git config user.email <span class="hljs-string" class="hljs-string">&quot;personal@example.com&quot;</span>
+</code></pre></div></div><p>⚠️ 不要用 <code>git config --global</code> 全局设置，否则会导致所有仓库提交信息混乱。</p><h2 level="2" id="五常见问题排查">五、常见问题排查</h2><ol><li><p><strong>Permission denied (publickey)</strong> ：</p><ul><li><p>检查 <code>config</code> 文件中私钥路径是否正确；</p></li><li><p>确认公钥已上传到对应 GitHub 账号；</p></li><li><p>验证私钥 /<code>config</code> 文件权限是否为 600（macOS/Linux）。</p></li></ul></li><li><p><strong>拉取代码时提示 “仓库不存在”</strong> ：</p><ul><li><p>检查别名是否正确（如把 <code>github-work</code> 写成 <code>github-work1</code>）；</p></li><li><p>确认仓库地址中的账号名、项目名无误。</p></li></ul></li><li><p><strong>提交代码后身份错误</strong>：</p><ul><li><p>未为仓库单独设置 <code>user.name</code>/<code>user.email</code>，需补充设置。</p></li></ul></li></ol><h2 level="2" id="六扩展添加更多-GitHub-账号">六、扩展：添加更多 GitHub 账号</h2><p>若需配置第三个及以上账号，只需重复以下步骤：</p><ol><li><p>生成新密钥：<code>ssh-keygen -t ed25519 -C &quot;new@example.com&quot; -f ~/.ssh/github_rsa_new</code>；</p></li><li><p>上传新公钥到对应 GitHub 账号；</p></li><li><p>在 <code>config</code> 文件中新增一段配置（自定义新别名，绑定新私钥）；</p></li><li><p>拉取代码时用新别名替换 <code>github.com</code>。</p></li></ol><h2 level="2" id="总结">总结</h2><ol><li><p>多 GitHub 账号配置的核心是 “独立密钥 + config 别名绑定”；</p></li><li><p>拉取代码的关键是用自定义别名替代 <code>github.com</code>；</p></li><li><p>提交代码时需为仓库单独设置 <code>user.name</code>/<code>user.email</code>，避免身份混淆。通过以上配置，单台电脑可无缝切换多个 GitHub 账号，既保证了权限隔离，又能高效管理不同账号的代码仓库。</p></li></ol><script type="module">const injectHtml = (root, html) => {
+  const iframe = document.createElement("iframe");
+  const htmlContent = `<html><head></head><body>${html}</body></html>`;
+  iframe.style.width = "100%";
+  iframe.style.height = "100%";
+  iframe.onload = () => {
+    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+    if (!doc) {
+      return;
+    }
+    doc.open();
+    doc.write(htmlContent);
+    doc.close();
+  };
+  root.replaceChildren(iframe);
+}
+  document.querySelectorAll('.playground')?.forEach(el=>{
+    const html = el.getAttribute('data-html');
+    if (html) {
+      injectHtml(el,html);
+    }
+    const indicator = document.createElement("div");
+    indicator.className = "indicator";
+    const showCode = document.createElement("div");
+    showCode.className = "show-code";
+    showCode.innerText = "code";
+    showCode.onclick = () => {
+      el.parentElement.classList.remove("preview-only");
+    };
+    const showPreview = document.createElement("div");
+    showPreview.className = "show-preview";
+    showPreview.innerText = "preview";
+    showPreview.onclick = () => {
+      el.parentElement.classList.add("preview-only");
+    };
+    indicator.appendChild(showCode);
+    indicator.appendChild(showPreview);
+    el.parentElement.appendChild(indicator);
+    if (window.screen.width < 768) {
+      showPreview.click();
+    }
+  });</script></div> <div data-page-id="同一电脑配置多github帐号" class="navigator flex justify-between items-center mt-4 py-4"> <a href="/post/llm-in-browser-在浏览器里跑-Qwen25" class="flex items-center gap-1 text-blue cursor-pointer flex-[45%]"> <div class="i-ri:arrow-left-double-line w-5 h-5 flex-shrink-0"></div> <div class="text-start">llm in browser 在浏览器里跑 Qwen2.5</div> </a> <div></div> </div> </div> <div class="outline-wrapper"></div> </main>  <footer class="site-footer" data-astro-cid-sz7xmlte> <!-- 导航链接 --> <nav class="footer-nav" data-astro-cid-sz7xmlte>  <a href="/" class="footer-link" data-astro-cid-sz7xmlte> Home </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/tag/projects" class="footer-link" data-astro-cid-sz7xmlte> Projects </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/tools" class="footer-link" data-astro-cid-sz7xmlte> Notes </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="https://web.chatboxai.app/" class="footer-link" target="_blank" rel="noopener noreferrer" data-astro-cid-sz7xmlte> Chatbox </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/about" class="footer-link" data-astro-cid-sz7xmlte> About </a>  </nav> <!-- 分割线 --> <div class="footer-divider" data-astro-cid-sz7xmlte></div> <!-- 版权信息 --> <div class="footer-copyright" data-astro-cid-sz7xmlte> <a href="https://isharebox.github.io" data-astro-cid-sz7xmlte>©  isharebox  ·  since 2026  </a> </div> </footer>  <!-- ★ 添加回到顶部按钮组件 --> <button id="back-to-top" class="back-to-top" aria-label="Back to top" data-astro-cid-wlspcwf4> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-wlspcwf4> <path d="M18 15l-6-6-6 6" data-astro-cid-wlspcwf4></path> </svg> </button>   </body></html>
