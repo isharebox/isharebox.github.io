@@ -1,0 +1,198 @@
+<!DOCTYPE html> <html lang="zh-CN" class="dark"> <head><meta charset="UTF-8"><link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="isharebox"><meta name="msapplication-TileColor" content="#1e2030"><meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"><meta name="description" content="如果你在做 AI 应用开发，大概率遇到过这些问题："><link rel="icon" href="/favicon.ico"><title>用 Python 5 分钟搭一个多模型 AI API 网关（附完整代码） | isharebox</title><link rel="stylesheet" href="/_astro/_page_.m1rPkfGw.css">
+<style>.outlines a[data-anchor-tag=H1]{margin-left:0}.outlines a[data-anchor-tag=H2]{margin-left:12px}.outlines a[data-anchor-tag=H3]{margin-left:24px}.outlines a[data-anchor-tag=H4]{margin-left:36px}.outlines a[data-anchor-tag=H5]{margin-left:48px}.outlines a[data-anchor-tag=H6]{margin-left:60px}
+._tabset_selm3_1 ._tab-panel_selm3_1{display:none}._tabset_selm3_1 ._tab-panels_selm3_4{display:flex}._tabset_selm3_1 input[data-tab-name=direct]{display:none}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=direct]{display:block}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-labels_selm3_13 label[data-tab-name=direct]{border-bottom:2px solid red}._tabset_selm3_1 input[data-tab-name=app]{display:none}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=app]{display:block}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-labels_selm3_13 label[data-tab-name=app]{border-bottom:2px solid red}
+</style>
+<link rel="stylesheet" href="/_astro/_page_.ChTWOvcN.css">
+<link rel="stylesheet" href="/_astro/_id_.CdoHgwyN.css"><script type="module" src="/_astro/hoisted.D_gz7ZLf.js"></script></head> <body class="min-h-screen"> <header class="flex justify-between items-center px-4 py-3 border-b" style="border-color: #292e42;"> <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity" style="color: #c8d3f5;"> isharebox </a> <div class="flex items-center gap-3">   <div id="auth"></div> </div> </header>  <main> <div class="content"> <div class="w-full flex gap-2 pb-2">  <a href="/tag/ai" class="rounded hover:bg-gray-200 dark:hover:bg-modal px-3 py-1 cursor-pointer">
+#ai </a><a href="/tag/python" class="rounded hover:bg-gray-200 dark:hover:bg-modal px-3 py-1 cursor-pointer">
+#python </a> </div> <div class="ud-root read-only flex-1"><h1 level="1" id="用-Python-5-分钟搭一个多模型-AI-API-网关附完整代码">用 Python 5 分钟搭一个多模型 AI API 网关（附完整代码）</h1><blockquote><p>还在手动切换 OpenAI、Claude、DeepSeek 的 API？太蠢了。本文教你用 Python 搭一个统一的 AI 网关，一个接口调所有模型，自动故障转移，代码不到 100 行。</p></blockquote><h2 level="2" id="为什么需要-AI-API-网关">为什么需要 AI API 网关？</h2><p>如果你在做 AI 应用开发，大概率遇到过这些问题：</p><ul><li><p>OpenAI 抽风了，服务挂了 2 小时，你的应用跟着挂</p></li><li><p>DeepSeek 发布新版本，API 过载，请求全超时</p></li><li><p>老板突然说&quot;我们试试 Claude&quot;，你得改一堆代码</p></li><li><p>不同模型的 API 格式不一样，适配起来头疼</p></li></ul><p><strong>这些问题的本质是：你的应用直接耦合了某个具体的模型 API。</strong></p><p>解决方案很简单——在你的应用和模型之间加一层网关，统一接口、自动路由、故障转移。</p><h2 level="2" id="完整代码100-行的-AI-网关">完整代码：100 行的 AI 网关</h2><p>直接上代码，Python + FastAPI，能跑的那种。</p><div class="llt-code readonly"><div class="language">python</div><div class="wrapper"><pre><code><span class="hljs-keyword" class="hljs-keyword">import</span> os
+<span class="hljs-keyword" class="hljs-keyword">import</span> time
+<span class="hljs-keyword" class="hljs-keyword">import</span> httpx
+<span class="hljs-keyword" class="hljs-keyword">import</span> asyncio
+<span class="hljs-keyword" class="hljs-keyword">from</span> fastapi <span class="hljs-keyword" class="hljs-keyword">import</span> FastAPI, Request
+<span class="hljs-keyword" class="hljs-keyword">from</span> fastapi.responses <span class="hljs-keyword" class="hljs-keyword">import</span> JSONResponse
+
+app = FastAPI(title=<span class="hljs-string" class="hljs-string">&quot;AI API Gateway&quot;</span>)
+
+<span class="hljs-comment" class="hljs-comment"># 模型配置：按优先级排列</span>
+MODEL_PROVIDERS = [
+    {
+        <span class="hljs-string" class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string" class="hljs-string">&quot;deepseek&quot;</span>,
+        <span class="hljs-string" class="hljs-string">&quot;base_url&quot;</span>: <span class="hljs-string" class="hljs-string">&quot;https://api.deepseek.com/v1&quot;</span>,
+        <span class="hljs-string" class="hljs-string">&quot;api_key&quot;</span>: os.getenv(<span class="hljs-string" class="hljs-string">&quot;DEEPSEEK_API_KEY&quot;</span>, <span class="hljs-string" class="hljs-string">&quot;&quot;</span>),
+        <span class="hljs-string" class="hljs-string">&quot;model&quot;</span>: <span class="hljs-string" class="hljs-string">&quot;deepseek-chat&quot;</span>,
+        <span class="hljs-string" class="hljs-string">&quot;timeout&quot;</span>: <span class="hljs-number" class="hljs-number">30</span>,
+        <span class="hljs-string" class="hljs-string">&quot;max_retries&quot;</span>: <span class="hljs-number" class="hljs-number">2</span>,
+    },
+    {
+        <span class="hljs-string" class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string" class="hljs-string">&quot;openai&quot;</span>,
+        <span class="hljs-string" class="hljs-string">&quot;base_url&quot;</span>: <span class="hljs-string" class="hljs-string">&quot;https://api.openai.com/v1&quot;</span>,
+        <span class="hljs-string" class="hljs-string">&quot;api_key&quot;</span>: os.getenv(<span class="hljs-string" class="hljs-string">&quot;OPENAI_API_KEY&quot;</span>, <span class="hljs-string" class="hljs-string">&quot;&quot;</span>),
+        <span class="hljs-string" class="hljs-string">&quot;model&quot;</span>: <span class="hljs-string" class="hljs-string">&quot;gpt-4o-mini&quot;</span>,
+        <span class="hljs-string" class="hljs-string">&quot;timeout&quot;</span>: <span class="hljs-number" class="hljs-number">30</span>,
+        <span class="hljs-string" class="hljs-string">&quot;max_retries&quot;</span>: <span class="hljs-number" class="hljs-number">1</span>,
+    },
+    {
+        <span class="hljs-string" class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string" class="hljs-string">&quot;anthropic&quot;</span>,
+        <span class="hljs-string" class="hljs-string">&quot;base_url&quot;</span>: <span class="hljs-string" class="hljs-string">&quot;https://api.anthropic.com/v1&quot;</span>,
+        <span class="hljs-string" class="hljs-string">&quot;api_key&quot;</span>: os.getenv(<span class="hljs-string" class="hljs-string">&quot;ANTHROPIC_API_KEY&quot;</span>, <span class="hljs-string" class="hljs-string">&quot;&quot;</span>),
+        <span class="hljs-string" class="hljs-string">&quot;model&quot;</span>: <span class="hljs-string" class="hljs-string">&quot;claude-3-5-sonnet-20241022&quot;</span>,
+        <span class="hljs-string" class="hljs-string">&quot;timeout&quot;</span>: <span class="hljs-number" class="hljs-number">30</span>,
+        <span class="hljs-string" class="hljs-string">&quot;max_retries&quot;</span>: <span class="hljs-number" class="hljs-number">1</span>,
+    },
+]
+
+<span class="hljs-comment" class="hljs-comment"># 健康状态追踪</span>
+provider_health = {p[<span class="hljs-string" class="hljs-string">&quot;name&quot;</span>]: {<span class="hljs-string" class="hljs-string">&quot;healthy&quot;</span>: <span class="hljs-literal" class="hljs-literal">True</span>, <span class="hljs-string" class="hljs-string">&quot;last_fail&quot;</span>: <span class="hljs-number" class="hljs-number">0</span>} <span class="hljs-keyword" class="hljs-keyword">for</span> p <span class="hljs-keyword" class="hljs-keyword">in</span> MODEL_PROVIDERS}
+COOLDOWN_SECONDS = <span class="hljs-number" class="hljs-number">60</span>  <span class="hljs-comment" class="hljs-comment"># 故障冷却时间</span>
+
+
+<span class="hljs-keyword" class="hljs-keyword">async</span> <span class="hljs-keyword" class="hljs-keyword">def</span> <span class="hljs-title,function_" class="hljs-title,function_">call_provider</span>(<span class="hljs-params" class="hljs-params">provider: <span class="hljs-built_in" class="hljs-built_in">dict</span>, messages: <span class="hljs-built_in" class="hljs-built_in">list</span></span>) -&gt; <span class="hljs-built_in" class="hljs-built_in">dict</span>:
+    <span class="hljs-string" class="hljs-string">&quot;&quot;&quot;调用单个模型供应商&quot;&quot;&quot;</span>
+    headers = {
+        <span class="hljs-string" class="hljs-string">&quot;Authorization&quot;</span>: <span class="hljs-string" class="hljs-string">f&quot;Bearer <span class="hljs-subst" class="hljs-subst">{provider[<span class="hljs-string" class="hljs-string">&apos;api_key&apos;</span>]}</span>&quot;</span>,
+        <span class="hljs-string" class="hljs-string">&quot;Content-Type&quot;</span>: <span class="hljs-string" class="hljs-string">&quot;application/json&quot;</span>,
+    }
+
+    <span class="hljs-comment" class="hljs-comment"># Anthropic 的 API 格式略有不同</span>
+    <span class="hljs-keyword" class="hljs-keyword">if</span> provider[<span class="hljs-string" class="hljs-string">&quot;name&quot;</span>] == <span class="hljs-string" class="hljs-string">&quot;anthropic&quot;</span>:
+        headers = {
+            <span class="hljs-string" class="hljs-string">&quot;x-api-key&quot;</span>: provider[<span class="hljs-string" class="hljs-string">&quot;api_key&quot;</span>],
+            <span class="hljs-string" class="hljs-string">&quot;anthropic-version&quot;</span>: <span class="hljs-string" class="hljs-string">&quot;2023-06-01&quot;</span>,
+            <span class="hljs-string" class="hljs-string">&quot;Content-Type&quot;</span>: <span class="hljs-string" class="hljs-string">&quot;application/json&quot;</span>,
+        }
+        payload = {
+            <span class="hljs-string" class="hljs-string">&quot;model&quot;</span>: provider[<span class="hljs-string" class="hljs-string">&quot;model&quot;</span>],
+            <span class="hljs-string" class="hljs-string">&quot;max_tokens&quot;</span>: <span class="hljs-number" class="hljs-number">4096</span>,
+            <span class="hljs-string" class="hljs-string">&quot;messages&quot;</span>: messages,
+        }
+        url = <span class="hljs-string" class="hljs-string">f&quot;<span class="hljs-subst" class="hljs-subst">{provider[<span class="hljs-string" class="hljs-string">&apos;base_url&apos;</span>]}</span>/messages&quot;</span>
+    <span class="hljs-keyword" class="hljs-keyword">else</span>:
+        payload = {
+            <span class="hljs-string" class="hljs-string">&quot;model&quot;</span>: provider[<span class="hljs-string" class="hljs-string">&quot;model&quot;</span>],
+            <span class="hljs-string" class="hljs-string">&quot;messages&quot;</span>: messages,
+            <span class="hljs-string" class="hljs-string">&quot;max_tokens&quot;</span>: <span class="hljs-number" class="hljs-number">4096</span>,
+        }
+        url = <span class="hljs-string" class="hljs-string">f&quot;<span class="hljs-subst" class="hljs-subst">{provider[<span class="hljs-string" class="hljs-string">&apos;base_url&apos;</span>]}</span>/chat/completions&quot;</span>
+
+    <span class="hljs-keyword" class="hljs-keyword">async</span> <span class="hljs-keyword" class="hljs-keyword">with</span> httpx.AsyncClient(timeout=provider[<span class="hljs-string" class="hljs-string">&quot;timeout&quot;</span>]) <span class="hljs-keyword" class="hljs-keyword">as</span> client:
+        resp = <span class="hljs-keyword" class="hljs-keyword">await</span> client.post(url, json=payload, headers=headers)
+        resp.raise_for_status()
+        <span class="hljs-keyword" class="hljs-keyword">return</span> resp.json()
+
+
+<span class="hljs-keyword" class="hljs-keyword">def</span> <span class="hljs-title,function_" class="hljs-title,function_">normalize_response</span>(<span class="hljs-params" class="hljs-params">provider_name: <span class="hljs-built_in" class="hljs-built_in">str</span>, raw: <span class="hljs-built_in" class="hljs-built_in">dict</span></span>) -&gt; <span class="hljs-built_in" class="hljs-built_in">dict</span>:
+    <span class="hljs-string" class="hljs-string">&quot;&quot;&quot;统一不同供应商的响应格式&quot;&quot;&quot;</span>
+    <span class="hljs-keyword" class="hljs-keyword">if</span> provider_name == <span class="hljs-string" class="hljs-string">&quot;anthropic&quot;</span>:
+        content = raw.get(<span class="hljs-string" class="hljs-string">&quot;content&quot;</span>, [{}])[<span class="hljs-number" class="hljs-number">0</span>].get(<span class="hljs-string" class="hljs-string">&quot;text&quot;</span>, <span class="hljs-string" class="hljs-string">&quot;&quot;</span>)
+        model = raw.get(<span class="hljs-string" class="hljs-string">&quot;model&quot;</span>, <span class="hljs-string" class="hljs-string">&quot;&quot;</span>)
+    <span class="hljs-keyword" class="hljs-keyword">else</span>:
+        content = raw[<span class="hljs-string" class="hljs-string">&quot;choices&quot;</span>][<span class="hljs-number" class="hljs-number">0</span>][<span class="hljs-string" class="hljs-string">&quot;message&quot;</span>][<span class="hljs-string" class="hljs-string">&quot;content&quot;</span>]
+        model = raw.get(<span class="hljs-string" class="hljs-string">&quot;model&quot;</span>, <span class="hljs-string" class="hljs-string">&quot;&quot;</span>)
+
+    <span class="hljs-keyword" class="hljs-keyword">return</span> {
+        <span class="hljs-string" class="hljs-string">&quot;content&quot;</span>: content,
+        <span class="hljs-string" class="hljs-string">&quot;model&quot;</span>: model,
+        <span class="hljs-string" class="hljs-string">&quot;provider&quot;</span>: provider_name,
+    }
+
+
+<span class="hljs-meta" class="hljs-meta">@app.post(<span class="hljs-params" class="hljs-params"><span class="hljs-string" class="hljs-string">&quot;/v1/chat&quot;</span></span>)</span>
+<span class="hljs-keyword" class="hljs-keyword">async</span> <span class="hljs-keyword" class="hljs-keyword">def</span> <span class="hljs-title,function_" class="hljs-title,function_">chat</span>(<span class="hljs-params" class="hljs-params">request: Request</span>):
+    <span class="hljs-string" class="hljs-string">&quot;&quot;&quot;统一聊天接口——自动路由到可用的模型&quot;&quot;&quot;</span>
+    body = <span class="hljs-keyword" class="hljs-keyword">await</span> request.json()
+    messages = body.get(<span class="hljs-string" class="hljs-string">&quot;messages&quot;</span>, [])
+    preferred = body.get(<span class="hljs-string" class="hljs-string">&quot;provider&quot;</span>, <span class="hljs-literal" class="hljs-literal">None</span>)  <span class="hljs-comment" class="hljs-comment"># 可选：指定供应商</span>
+
+    errors = []
+
+    <span class="hljs-keyword" class="hljs-keyword">for</span> provider <span class="hljs-keyword" class="hljs-keyword">in</span> MODEL_PROVIDERS:
+        name = provider[<span class="hljs-string" class="hljs-string">&quot;name&quot;</span>]
+        health = provider_health[name]
+
+        <span class="hljs-comment" class="hljs-comment"># 跳过指定供应商以外的</span>
+        <span class="hljs-keyword" class="hljs-keyword">if</span> preferred <span class="hljs-keyword" class="hljs-keyword">and</span> name != preferred:
+            <span class="hljs-keyword" class="hljs-keyword">continue</span>
+
+        <span class="hljs-comment" class="hljs-comment"># 跳过冷却中的供应商</span>
+        <span class="hljs-keyword" class="hljs-keyword">if</span> <span class="hljs-keyword" class="hljs-keyword">not</span> health[<span class="hljs-string" class="hljs-string">&quot;healthy&quot;</span>] <span class="hljs-keyword" class="hljs-keyword">and</span> time.time() - health[<span class="hljs-string" class="hljs-string">&quot;last_fail&quot;</span>] &lt; COOLDOWN_SECONDS:
+            <span class="hljs-keyword" class="hljs-keyword">continue</span>
+
+        <span class="hljs-keyword" class="hljs-keyword">try</span>:
+            raw = <span class="hljs-keyword" class="hljs-keyword">await</span> call_provider(provider, messages)
+            provider_health[name][<span class="hljs-string" class="hljs-string">&quot;healthy&quot;</span>] = <span class="hljs-literal" class="hljs-literal">True</span>
+            <span class="hljs-keyword" class="hljs-keyword">return</span> JSONResponse(normalize_response(name, raw))
+
+        <span class="hljs-keyword" class="hljs-keyword">except</span> Exception <span class="hljs-keyword" class="hljs-keyword">as</span> e:
+            provider_health[name] = {<span class="hljs-string" class="hljs-string">&quot;healthy&quot;</span>: <span class="hljs-literal" class="hljs-literal">False</span>, <span class="hljs-string" class="hljs-string">&quot;last_fail&quot;</span>: time.time()}
+            errors.append(<span class="hljs-string" class="hljs-string">f&quot;<span class="hljs-subst" class="hljs-subst">{name}</span>: <span class="hljs-subst" class="hljs-subst">{<span class="hljs-built_in" class="hljs-built_in">str</span>(e)}</span>&quot;</span>)
+            <span class="hljs-keyword" class="hljs-keyword">continue</span>
+
+    <span class="hljs-keyword" class="hljs-keyword">return</span> JSONResponse(
+        {<span class="hljs-string" class="hljs-string">&quot;error&quot;</span>: <span class="hljs-string" class="hljs-string">&quot;All providers failed&quot;</span>, <span class="hljs-string" class="hljs-string">&quot;details&quot;</span>: errors},
+        status_code=<span class="hljs-number" class="hljs-number">503</span>,
+    )
+
+
+<span class="hljs-meta" class="hljs-meta">@app.get(<span class="hljs-params" class="hljs-params"><span class="hljs-string" class="hljs-string">&quot;/health&quot;</span></span>)</span>
+<span class="hljs-keyword" class="hljs-keyword">async</span> <span class="hljs-keyword" class="hljs-keyword">def</span> <span class="hljs-title,function_" class="hljs-title,function_">health</span>():
+    <span class="hljs-string" class="hljs-string">&quot;&quot;&quot;查看各供应商健康状态&quot;&quot;&quot;</span>
+    <span class="hljs-keyword" class="hljs-keyword">return</span> {name: info <span class="hljs-keyword" class="hljs-keyword">for</span> name, info <span class="hljs-keyword" class="hljs-keyword">in</span> provider_health.items()}
+</code></pre></div></div><h2 level="2" id="怎么用">怎么用</h2><h3 level="3" id="1-安装依赖">1. 安装依赖</h3><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><h3 level="3" id="2-设置-API-Key">2. 设置 API Key</h3><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash"><span class="hljs-built_in" class="hljs-built_in">export</span> DEEPSEEK_API_KEY=<span class="hljs-string" class="hljs-string">&quot;sk-xxx&quot;</span>
+<span class="hljs-built_in" class="hljs-built_in">export</span> OPENAI_API_KEY=<span class="hljs-string" class="hljs-string">&quot;sk-xxx&quot;</span>
+<span class="hljs-built_in" class="hljs-built_in">export</span> ANTHROPIC_API_KEY=<span class="hljs-string" class="hljs-string">&quot;sk-xxx&quot;</span>
+</code></pre></div></div><h3 level="3" id="3-启动">3. 启动</h3><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash">uvicorn gateway:app --port 8000
+</code></pre></div></div><h3 level="3" id="4-调用">4. 调用</h3><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash"><span class="hljs-comment" class="hljs-comment"># 自动路由（优先 DeepSeek，失败自动切换）</span>
+curl -X POST http://localhost:8000/v1/chat \
+  -H <span class="hljs-string" class="hljs-string">&quot;Content-Type: application/json&quot;</span> \
+  -d <span class="hljs-string" class="hljs-string">&apos;{&quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;你好&quot;}]}&apos;</span>
+
+<span class="hljs-comment" class="hljs-comment"># 指定供应商</span>
+curl -X POST http://localhost:8000/v1/chat \
+  -H <span class="hljs-string" class="hljs-string">&quot;Content-Type: application/json&quot;</span> \
+  -d <span class="hljs-string" class="hljs-string">&apos;{&quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;你好&quot;}], &quot;provider&quot;: &quot;openai&quot;}&apos;</span>
+
+<span class="hljs-comment" class="hljs-comment"># 查看健康状态</span>
+curl http://localhost:8000/health
+</code></pre></div></div><h2 level="2" id="核心设计思路">核心设计思路</h2><h3 level="3" id="1-优先级路由">1. 优先级路由</h3><p><code>MODEL_PROVIDERS</code> 数组的顺序就是优先级。DeepSeek 排第一是因为性价比最高，OpenAI 和 Claude 作为备用。</p><h3 level="3" id="2-自动故障转移">2. 自动故障转移</h3><p>某个供应商报错后，标记为&quot;不健康&quot;并进入 60 秒冷却期。在此期间跳过该供应商，直接尝试下一个。冷却结束后自动恢复。</p><h3 level="3" id="3-响应格式统一">3. 响应格式统一</h3><p>不管后端用的是哪个模型，返回格式都是统一的 <code>{content, model, provider}</code>，调用方完全不需要关心底层用的是谁。</p><h2 level="2" id="进阶优化方向">进阶优化方向</h2><p>这个 100 行版本是最小可用版。生产环境中你可能还需要：</p><p>功能说明流式响应SSE 支持，实现打字机效果请求日志记录每次请求的模型、耗时、token 数成本追踪按 token 计费，统计各模型花费负载均衡多个 API Key 轮询，避免单 Key 限流缓存层相同请求命中缓存，省钱又快鉴权给网关加 API Key，防止滥用</p><p>如果你不想自己造轮子，市面上也有现成的模型聚合方案：</p><ul><li><p><strong>OpenRouter</strong>：国外主流，模型多，但国内访问不稳定</p></li><li><p><a target="_blank" rel="noopener noreferrer nofollow" href="http://Ofox.ai"><strong>Ofox.ai</strong></a>：国内可直接用，支持主流模型，适合国内开发者</p></li><li><p><strong>One-API / New-API</strong>：开源自建方案，需要自己部署维护</p></li></ul><h2 level="2" id="总结">总结</h2><p>搭一个 AI API 网关并不难，核心就三件事：<strong>统一接口、自动路由、故障转移</strong>。</p><p>100 行代码就能解决 90% 的场景。剩下的 10%（流式、缓存、监控），要么自己加，要么用现成的聚合平台。</p><p>重点是：<strong>别让你的应用跟任何一个模型供应商绑死</strong>。今天 DeepSeek 最强，明天可能是别人。保持灵活，才能永远用上最好的。</p><script type="module">const injectHtml = (root, html) => {
+  const iframe = document.createElement("iframe");
+  const htmlContent = `<html><head></head><body>${html}</body></html>`;
+  iframe.style.width = "100%";
+  iframe.style.height = "100%";
+  iframe.onload = () => {
+    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+    if (!doc) {
+      return;
+    }
+    doc.open();
+    doc.write(htmlContent);
+    doc.close();
+  };
+  root.replaceChildren(iframe);
+}
+  document.querySelectorAll('.playground')?.forEach(el=>{
+    const html = el.getAttribute('data-html');
+    if (html) {
+      injectHtml(el,html);
+    }
+    const indicator = document.createElement("div");
+    indicator.className = "indicator";
+    const showCode = document.createElement("div");
+    showCode.className = "show-code";
+    showCode.innerText = "code";
+    showCode.onclick = () => {
+      el.parentElement.classList.remove("preview-only");
+    };
+    const showPreview = document.createElement("div");
+    showPreview.className = "show-preview";
+    showPreview.innerText = "preview";
+    showPreview.onclick = () => {
+      el.parentElement.classList.add("preview-only");
+    };
+    indicator.appendChild(showCode);
+    indicator.appendChild(showPreview);
+    el.parentElement.appendChild(indicator);
+    if (window.screen.width < 768) {
+      showPreview.click();
+    }
+  });</script></div> <div data-page-id="用-Python-5-分钟搭一个多模型-AI-API-网关附完整代码" class="navigator flex justify-between items-center mt-4 py-4"> <a href="/post/Token-消耗降低-90OpenClaw-性能调优与降本实战指南" class="flex items-center gap-1 text-blue cursor-pointer flex-[45%]"> <div class="i-ri:arrow-left-double-line w-5 h-5 flex-shrink-0"></div> <div class="text-start">Token 消耗降低 90%：OpenClaw 性能调优与降本实战指南</div> </a> <div></div> </div> </div> <div class="outline-wrapper"></div> </main>  <footer class="site-footer" data-astro-cid-sz7xmlte> <!-- 导航链接 --> <nav class="footer-nav" data-astro-cid-sz7xmlte>  <a href="/" class="footer-link" data-astro-cid-sz7xmlte> Home </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/tag/projects" class="footer-link" data-astro-cid-sz7xmlte> Projects </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/tools" class="footer-link" data-astro-cid-sz7xmlte> Notes </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="https://web.chatboxai.app/" class="footer-link" target="_blank" rel="noopener noreferrer" data-astro-cid-sz7xmlte> Chatbox </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/about" class="footer-link" data-astro-cid-sz7xmlte> About </a>  </nav> <!-- 分割线 --> <div class="footer-divider" data-astro-cid-sz7xmlte></div> <!-- 版权信息 --> <div class="footer-copyright" data-astro-cid-sz7xmlte> <a href="https://isharebox.github.io" data-astro-cid-sz7xmlte>©  isharebox  ·  since 2026  </a> </div> </footer>  <!-- ★ 添加回到顶部按钮组件 --> <button id="back-to-top" class="back-to-top" aria-label="Back to top" data-astro-cid-wlspcwf4> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-wlspcwf4> <path d="M18 15l-6-6-6 6" data-astro-cid-wlspcwf4></path> </svg> </button>   </body></html>
