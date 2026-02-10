@@ -130,18 +130,3 @@ div[data-modal-loading="false"] {
   color: #c8d3f5;  // ★ 改：#e0e0e0 → #c8d3f5
 }
 
-/* 给段落呼吸空间 */
-p {
-  margin-block: 1.2em;
-}
-
-/* 标题更清晰的节奏 */
-h1, h2, h3, h4, h5, h6 {
-  margin-block: 1.6rem 0.5rem;
-  line-height: 1.3;
-}
-
-/* 分隔元素有呼吸空间 */
-hr, img, blockquote {
-  margin-block: 1.6em;
-}
