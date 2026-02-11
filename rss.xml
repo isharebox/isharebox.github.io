@@ -1,1 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><error>No posts found. Files checked: /src/content/posts/*.json</error>
+<?xml version="1.0" encoding="UTF-8"?>
+        <error>
+          <message>No JSON files found</message>
+          <debug>CWD: /home/runner/work/isharebox.github.io/isharebox.github.io
+Contents: .astro, .git, .github, .gitignore, .vscode, README.md, astro.config.mjs, dist, eslint.config.js, node_modules, package-lock.json, package.json, pnpm-lock.yaml, posts, public, src, tsconfig.json, uno.config.ts, urodele.config.ts
+src: adapter, components, editor, env.d.ts, global.css, index.scss, layouts, pages, shared, utils
+</debug>
+          <checked>/home/runner/work/isharebox.github.io/isharebox.github.io/src/content/posts, /home/runner/work/isharebox.github.io/isharebox.github.io/dist/src/content/posts, /src/content/posts, ./src/content/posts</checked>
+        </error>
