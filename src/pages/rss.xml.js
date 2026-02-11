@@ -24,58 +24,10 @@ function extractText(content, maxLength = 200) {
 
 export async function GET(context) {
   try {
-    // 尝试多个可能的路径
-    const possiblePaths = [
-      path.join(process.cwd(), 'src', 'content', 'posts'),
-      path.join(process.cwd(), 'dist', 'src', 'content', 'posts'),
-      '/src/content/posts',
-      './src/content/posts',
-    ];
+    // JSON 文件在根目录的 posts/ 文件夹
+    const postsDir = path.join(process.cwd(), 'posts');
     
-    let postsDir = null;
-    let files = [];
-    
-    for (const dir of possiblePaths) {
-      try {
-        if (fs.existsSync(dir)) {
-          const dirFiles = fs.readdirSync(dir).filter(f => f.endsWith('.json'));
-          if (dirFiles.length > 0) {
-            postsDir = dir;
-            files = dirFiles;
-            break;
-          }
-        }
-      } catch (e) {
-        continue;
-      }
-    }
-    
-    if (!postsDir || files.length === 0) {
-      // 列出当前目录结构用于调试
-      let debugInfo = '';
-      try {
-        debugInfo = `CWD: ${process.cwd()}\n`;
-        debugInfo += `Contents: ${fs.readdirSync(process.cwd()).join(', ')}\n`;
-        if (fs.existsSync('./src')) {
-          debugInfo += `src: ${fs.readdirSync('./src').join(', ')}\n`;
-        }
-      } catch (e) {
-        debugInfo = `Error listing: ${e.message}`;
-      }
-      
-      return new Response(
-        `<?xml version="1.0" encoding="UTF-8"?>
-        <error>
-          <message>No JSON files found</message>
-          <debug>${debugInfo}</debug>
-          <checked>${possiblePaths.join(', ')}</checked>
-        </error>`, 
-        { 
-          status: 200,
-          headers: { 'Content-Type': 'application/xml' }
-        }
-      );
-    }
+    const files = fs.readdirSync(postsDir).filter(f => f.endsWith('.json'));
 
     const posts = files
       .map((file) => {
@@ -117,7 +69,7 @@ export async function GET(context) {
 
   } catch (error) {
     return new Response(
-      `<?xml version="1.0" encoding="UTF-8"?><error>${error.message}\n${error.stack}</error>`, 
+      `<?xml version="1.0" encoding="UTF-8"?><error>${error.message}</error>`, 
       { 
         status: 200,
         headers: { 'Content-Type': 'application/xml' }
