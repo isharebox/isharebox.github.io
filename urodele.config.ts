@@ -11,7 +11,7 @@ export const config = {
     description: "Less is more",
   },
   footer: {
-    copyright: "©  isharebox  ·  since 2026  ",
+    copyright: "©  isharebox  ·  since 2026  · ",
     copyrightUrl: "https://isharebox.github.io",
   },
   pagination: {
