@@ -1,7 +1,5 @@
-// src/pages/rss.xml.js
 import rss from '@astrojs/rss';
 
-// 提取纯文本
 function extractText(content, maxLength = 200) {
   if (!content || !Array.isArray(content)) return '';
   
@@ -24,14 +22,17 @@ function extractText(content, maxLength = 200) {
 
 export async function GET(context) {
   try {
-    // 使用相对路径，更可靠
-    const files = import.meta.glob('../content/posts/*.json', { eager: true });
+    // 关键修复：路径必须以 /src/ 开头
+    const files = import.meta.glob('/src/content/posts/*.json', { eager: true });
     const fileKeys = Object.keys(files);
     
     if (fileKeys.length === 0) {
       return new Response(
-        `No posts found. Checked: ../content/posts/*.json`, 
-        { status: 500 }
+        `<?xml version="1.0" encoding="UTF-8"?><error>No posts found. Files checked: /src/content/posts/*.json</error>`, 
+        { 
+          status: 200,
+          headers: { 'Content-Type': 'application/xml' }
+        }
       );
     }
 
@@ -74,8 +75,11 @@ export async function GET(context) {
 
   } catch (error) {
     return new Response(
-      `RSS Error: ${error.message}\n\nStack: ${error.stack}`, 
-      { status: 500 }
+      `<?xml version="1.0" encoding="UTF-8"?><error>${error.message}</error>`, 
+      { 
+        status: 200,
+        headers: { 'Content-Type': 'application/xml' }
+      }
     );
   }
 }
