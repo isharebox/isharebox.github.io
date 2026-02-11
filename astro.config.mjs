@@ -1,10 +1,10 @@
-// @ts-check
-import { defineConfig } from "astro/config";
-import { fileURLToPath } from "url";
-import UnoCSS from "unocss/astro";
+import { defineConfig } from 'astro/config';
+import UnoCSS from 'unocss/astro';
+import { fileURLToPath } from 'url';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://isharebox.github.io',
   output: import.meta.env.DEV ? 'server' : 'static',
   integrations: [UnoCSS({ injectReset: true })],
   server: {
