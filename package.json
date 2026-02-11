@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
+    "@astrojs/rss": "^4.0.15",
     "@tiptap/core": "^2.6.5",
     "@tiptap/extension-bubble-menu": "^2.6.5",
     "@tiptap/extension-code-block-lowlight": "^2.6.6",
