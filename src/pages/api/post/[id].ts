@@ -11,7 +11,9 @@ export const GET: APIRoute = async ({ params }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getPageList(false);
-  return posts.map((p) => ({
+  return posts
+    .filter((p) => p.id && p.id.length > 0)
+    .map((p) => ({
     params: {
       id: p.id,
     },
