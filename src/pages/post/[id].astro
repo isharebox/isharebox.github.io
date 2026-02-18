@@ -14,7 +14,9 @@ const next = allPosts[curIndex - 1];
 
 export const getStaticPaths = async () => {
   const posts = await getPageList(false);
-  return posts.map((p) => ({
+  return posts
+    .filter((p) => p.id && p.id.length > 0)
+    .map((p) => ({
     params: {
       id: p.id,
     },
