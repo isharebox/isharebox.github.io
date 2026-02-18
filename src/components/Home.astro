@@ -1,16 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Pagination from "../components/Pagination.astro";
 import type { ShortPageData } from "../shared/type";
 import config from "urodele.config";
 
 interface Props {
   posts: ShortPageData[];
-  page: number;
-  pages: number;
 }
 
-const { posts, page, pages } = Astro.props;
+const { posts } = Astro.props;
 const tags = ['index', 'ai', 'vibecoding', 'travel', 'offgrid', 'book', 'music', 'movie', 'blogmarks', 'aiskills'];
 
 function formatDate(dateStr: string) {
@@ -42,9 +39,9 @@ function formatDate(dateStr: string) {
         }
       </ul>
       
-      <a href="/stream" class="view-more">查看更多碎片思考，请前往 Stream →</a>
+      <a href="/archive" class="view-more">View all posts →</a>
       
-      <Pagination page={page} pages={pages} />
+      <a href="/stream" class="view-more">查看更多碎片思考，请前往 Stream →</a>
       
       <section class="tags-section">
         <div class="tags">
