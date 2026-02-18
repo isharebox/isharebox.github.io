@@ -1,0 +1,150 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { sortByPin } from "@/shared/tag";
+import { getPageList } from "@/pages/api/post/list";
+import config from "urodele.config";
+
+const allPosts = sortByPin(await getPageList());
+
+// 按年份分组
+const groupedByYear = allPosts.reduce((acc, post) => {
+  const date = new Date(post.createTime);
+  const year = date.getFullYear();
+  if (!acc[year]) {
+    acc[year] = [];
+  }
+  acc[year].push(post);
+  return acc;
+}, {} as Record<number, any[]>);
+
+// 按年份倒序排序
+const sortedYears = Object.keys(groupedByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toISOString().split('T')[0];
+}
+---
+
+<Layout title="Archive - All Posts">
+  <header class="archive-header">
+    <h1>Archive</h1>
+    <p>All posts organized by year</p>
+  </header>
+  
+  <main>
+    <div class="content">
+      <a href="/" class="back-link">← Back to Home</a>
+      
+      {sortedYears.map(year => (
+        <section class="year-section">
+          <h2 class="year-title">{year}</h2>
+          <ul class="post-list">
+            {groupedByYear[year].map(post => (
+              <li class="post-item">
+                <time class="post-date">{formatDate(post.createTime)}</time>
+                <a href={`/post/${post.id}`} class="post-title">{post.title}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .archive-header {
+    text-align: center;
+    padding: 3rem 0 2rem;
+    border-bottom: 1px dashed #292e42;
+  }
+  
+  .archive-header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #bb9af7;
+    margin-bottom: 0.5rem;
+  }
+  
+  .archive-header p {
+    color: #a9b1d6;
+    font-size: 0.95rem;
+    font-style: italic;
+  }
+  
+  main {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 16px;
+  }
+  
+  .content {
+    width: 100%;
+    max-width: 720px;
+    padding: 0;
+  }
+  
+  .back-link {
+    display: inline-block;
+    margin-top: 2rem;
+    color: #7aa2f7;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  
+  .back-link:hover {
+    text-decoration: underline;
+  }
+  
+  .year-section {
+    margin-top: 3rem;
+  }
+  
+  .year-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #bb9af7;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed #292e42;
+  }
+  
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .post-item {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 0.35rem 0;
+  }
+  
+  .post-item:hover {
+    background: rgba(74, 158, 255, 0.05);
+  }
+  
+  .post-date {
+    font-family: "SF Mono", Monaco, monospace;
+    font-size: 0.8rem;
+    color: #565f89;
+    min-width: 90px;
+    flex-shrink: 0;
+  }
+  
+  .post-title {
+    color: #7aa2f7;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+  
+  .post-title:hover {
+    color: #c8d3f5;
+    text-decoration: underline;
+  }
+</style>
