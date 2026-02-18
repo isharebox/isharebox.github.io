@@ -1,5 +1,4 @@
 name: GitHub Actions Build and Deploy
-
 on:
   push:
     branches:
@@ -10,41 +9,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repository
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2.3.1
         with:
           persist-credentials: false
 
-      # Step 2: Install pnpm (latest version of the action, still using pnpm 8)
       - name: Install pnpm 📦
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v2
         with:
           version: 8
           run_install: false
 
-      # Step 3: Set up Node.js (v18) and enable pnpm caching
       - name: Setup Node.js 🔧
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'pnpm'
 
-      # Step 4: Install dependencies and build the project
       - name: Install and Build 🔨
         run: |
           pnpm install
           pnpm run build
 
-      # Step 5: (Optional) Verify that the build output exists
-      - name: Check build output
-        run: ls -la dist
-
-      # Step 6: Deploy to GitHub Pages
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
-          token: ${{ secrets.ACCESS_TOKEN }}   # Changed from ACCESS_TOKEN to token (v4 syntax)
-          branch: gh-pages
-          folder: dist
-          clean: true
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: dist
+          CLEAN: true
