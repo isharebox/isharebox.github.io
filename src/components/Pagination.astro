@@ -1,29 +1,96 @@
----
 interface Props {
-  page: number;
-  pages: number;
+page: number;
+pages: number;
 }
 
 const { page, pages } = Astro.props;
 
 const visible = pages > 1;
 
-const indicators = Array.from({ length: pages }, (_, i) => i);
+const maxVisible = 5;
+const getPageNumbers = () => {
+if (pages <= maxVisible) {
+return Array.from({ length: pages }, (_,
+i) => i);
+}
+
+const half = Math.floor(maxVisible / 2);
+let start = Math.max(0, page - half);
+let end = Math.min(pages - 1, page + half)
+;
+
+if (start === 0) {
+end = Math.min(maxVisible - 1, pages - 1
+);
+} else if (end === pages - 1) {
+start = Math.max(0, pages - maxVisible);
+}
+
+const result: (number | '...')[] = [];
+if (start > 0) {
+result.push(0);
+if (start > 1) {
+result.push('...');
+}
+}
+
+for (let i = start; i <= end; i++) {
+result.push(i);
+}
+
+if (end < pages - 1) {
+if (end < pages - 2) {
+result.push('...');
+}
+result.push(pages - 1);
+}
+
+return result;
+};
+
+const indicators = getPageNumbers();
 ---
 
 {
-  visible && (
-    <div class="flex justify-center flex-wrap gap-2 py-4 text-sm">
-      {indicators.map((i) => (
-        <a
-          class={
-            `rounded border w-8 h-8 overflow-hidden whitespace-pre-wrap flex items-center justify-center` +
-            (i === page ? " bg-gray text-white" : "")
-          }
-          href={`/${i === 0 ? "" : i}`}>
-          {i + 1}
-        </a>
-      ))}
-    </div>
-  )
+visible && (
+<div class="flex justify-center
+items-center flex-wrap gap-2 py-4 text-sm">
+{page > 0 && (
+<a
+class="rounded border w-20 h-8
+flex items-center justify-center"
+href={`/${page === 1 ? "" : page}
+`}>
+Previous
+</a>
+)}
+{indicators.map((item) =>
+item === '...' ? (
+<span class="rounded border w-8 h-
+8 flex items-center justify-center text
+-gray">...</span>
+) : (
+<a
+class={
+`rounded border w-8 h-8 flex
+items-center justify-center` +
+(item === page ? " bg-gray
+text-white" : "")
+}
+href={`/${item === 0 ? "" :
+item}`}>
+{item + 1}
+</a>
+)
+)}
+{page < pages - 1 && (
+<a
+class="rounded border w-20 h-8
+flex items-center justify-center"
+href={`/${page + 1}`}>
+Next
+</a>
+)}
+</div>
+)
 }
