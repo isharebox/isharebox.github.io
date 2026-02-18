@@ -16,6 +16,7 @@ export const getStaticPaths = async () => {
   return all
     .map((p) => p.tags)
     .flat()
+    .filter((t) => t && t.length > 0)
     .map((p) => ({
       params: { tag: p },
     }));
