@@ -8,143 +8,319 @@ const allPosts = sortByPin(await getPageList());
 
 // 按年份分组
 const groupedByYear = allPosts.reduce((acc, post) => {
-  const date = new Date(post.createTime);
-  const year = date.getFullYear();
-  if (!acc[year]) {
-    acc[year] = [];
-  }
-  acc[year].push(post);
-  return acc;
+const date = new Date(post.createTime);
+const year = date.getFullYear();
+if (!acc[year]) {
+acc[year] = [];
+}
+acc[year].push(post);
+return acc;
 }, {} as Record<number, any[]>);
 
 // 按年份倒序排序
 const sortedYears = Object.keys(groupedByYear)
-  .map(Number)
-  .sort((a, b) => b - a);
+.map(Number)
+.sort((a, b) => b - a);
+
+// Prepare data for client-side search
+const postsData = allPosts.map((p: any) => ({
+id: p.id,
+title: p.title,
+intro: p.intro,
+createTime: p.createTime,
+tags: p.tags || []
+}));
 
 function formatDate(dateStr: string) {
-  return new Date(dateStr).toISOString().split('T')[0];
+return new Date(dateStr).toISOString().split('T')[0];
 }
 ---
 
 <Layout title="Archive - All Posts">
-  <header class="archive-header">
-    <h1>Archive</h1>
-    <p>All posts organized by year</p>
-  </header>
-  
-  <main>
-    <div class="content">
-      <a href="/" class="back-link">← Back to Home</a>
-      
-      {sortedYears.map(year => (
-        <section class="year-section">
-          <h2 class="year-title">{year}</h2>
-          <ul class="post-list">
-            {groupedByYear[year].map(post => (
-              <li class="post-item">
-                <time class="post-date">{formatDate(post.createTime)}</time>
-                <a href={`/post/${post.id}`} class="post-title">{post.title}</a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))}
-    </div>
-  </main>
+<header class="archive-header">
+<h1>Archive</h1>
+<p>All posts organized by year</p>
+</header>
+
+<main>
+<div class="content">
+<div class="header-row">
+<a href="/" class="back-link">← Back to Home</a>
+
+<!-- 搜索框 - 深灰蓝背景 -->
+<div class="search-box">
+<svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="11" cy="11" r="8"></circle>
+<path d="m21 21-4.35-4.35"></path>
+</svg>
+<input
+type="search"
+id="search-input"
+class="search-input"
+placeholder="Search posts..."
+autocomplete="off"
+/>
+</div>
+</div>
+
+<div id="archive-content">
+{sortedYears.map(year => (
+<section class="year-section">
+<h2 class="year-title">{year}</h2>
+<ul class="post-list">
+{groupedByYear[year].map(post => (
+<li class="post-item" data-title={post.title.toLowerCase()}>
+<time class="post-date">{formatDate(post.createTime)}</time>
+<a href={`/post/${post.id}`} class="post-title">{post.title}</a>
+</li>
+))}
+</ul>
+</section>
+))}
+</div>
+
+<!-- 搜索结果 -->
+<div id="search-results" style="display: none;">
+<h2 class="results-title" id="results-title">Search Results</h2>
+<ul class="post-list" id="search-post-list"></ul>
+<a href="/archive" class="clear-search" onclick="resetSearch(event)">← Clear search</a>
+</div>
+</div>
+</main>
 </Layout>
 
+<script define:vars={{ postsData }}>
+const searchInput = document.getElementById('search-input');
+const archiveContent = document.getElementById('archive-content');
+const searchResults = document.getElementById('search-results');
+const searchPostList = document.getElementById('search-post-list');
+const resultsTitle = document.getElementById('results-title');
+
+function formatDate(dateStr) {
+return new Date(dateStr).toISOString().split('T')[0];
+}
+
+function escapeHtml(text) {
+if (!text) return '';
+return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function renderPosts(posts) {
+if (posts.length === 0) {
+searchPostList.innerHTML = '<li class="empty-state">No results found</li>';
+return;
+}
+
+searchPostList.innerHTML = posts.map(post => `
+<li class="post-item">
+<time class="post-date">${formatDate(post.createTime)}</time>
+<a href="/post/${post.id}" class="post-title">${escapeHtml(post.title)}</a>
+</li>
+`).join('');
+}
+
+function resetSearch(e) {
+e.preventDefault();
+searchInput.value = '';
+archiveContent.style.display = 'block';
+searchResults.style.display = 'none';
+}
+
+searchInput.addEventListener('input', (e) => {
+const query = e.target.value.trim().toLowerCase();
+
+if (!query) {
+archiveContent.style.display = 'block';
+searchResults.style.display = 'none';
+return;
+}
+
+archiveContent.style.display = 'none';
+searchResults.style.display = 'block';
+resultsTitle.textContent = `Search: "${query}"`;
+
+const filtered = postsData.filter(p =>
+p.title.toLowerCase().includes(query) ||
+(p.intro && p.intro.toLowerCase().includes(query)) ||
+p.tags.some(t => t.toLowerCase().includes(query))
+);
+
+renderPosts(filtered);
+});
+</script>
+
 <style>
-  .archive-header {
-    text-align: center;
-    padding: 3rem 0 2rem;
-    border-bottom: 1px dashed #292e42;
-  }
-  
-  .archive-header h1 {
-    font-size: 2rem;
-    font-weight: 600;
-    color: #bb9af7;
-    margin-bottom: 0.5rem;
-  }
-  
-  .archive-header p {
-    color: #a9b1d6;
-    font-size: 0.95rem;
-    font-style: italic;
-  }
-  
-  main {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    padding: 0 16px;
-  }
-  
-  .content {
-    width: 100%;
-    max-width: 720px;
-    padding: 0;
-  }
-  
-  .back-link {
-    display: inline-block;
-    margin-top: 2rem;
-    color: #7aa2f7;
-    text-decoration: none;
-    font-size: 0.9rem;
-  }
-  
-  .back-link:hover {
-    text-decoration: underline;
-  }
-  
-  .year-section {
-    margin-top: 3rem;
-  }
-  
-  .year-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #bb9af7;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px dashed #292e42;
-  }
-  
-  .post-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .post-item {
-    display: flex;
-    align-items: baseline;
-    gap: 1.5rem;
-    padding: 0.35rem 0;
-  }
-  
-  .post-item:hover {
-    background: rgba(74, 158, 255, 0.05);
-  }
-  
-  .post-date {
-    font-family: "SF Mono", Monaco, monospace;
-    font-size: 0.8rem;
-    color: #565f89;
-    min-width: 90px;
-    flex-shrink: 0;
-  }
-  
-  .post-title {
-    color: #7aa2f7;
-    font-size: 0.95rem;
-    text-decoration: none;
-  }
-  
-  .post-title:hover {
-    color: #c8d3f5;
-    text-decoration: underline;
-  }
+.archive-header {
+text-align: center;
+padding: 3rem 0 2rem;
+border-bottom: 1px dashed #292e42;
+}
+
+.archive-header h1 {
+font-size: 2rem;
+font-weight: 600;
+color: #bb9af7;
+margin-bottom: 0.5rem;
+}
+
+.archive-header p {
+color: #a9b1d6;
+font-size: 0.95rem;
+font-style: italic;
+}
+
+main {
+display: flex;
+justify-content: center;
+width: 100%;
+padding: 0 16px;
+}
+
+.content {
+width: 100%;
+max-width: 720px;
+padding: 0;
+}
+
+.header-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-top: 2rem;
+gap: 1rem;
+flex-wrap: wrap;
+}
+
+.back-link {
+color: #7aa2f7;
+text-decoration: none;
+font-size: 0.9rem;
+}
+
+.back-link:hover {
+text-decoration: underline;
+}
+
+/* 搜索框 - 深灰蓝背景 #2a2e45 */
+.search-box {
+display: flex;
+align-items: center;
+gap: 0.75rem;
+padding: 0.75rem 1rem;
+background: #2a2e45;
+border: 1px solid #3b4261;
+border-radius: 24px;
+min-width: 250px;
+flex: 1;
+max-width: 400px;
+}
+
+.search-icon {
+color: #565f89;
+flex-shrink: 0;
+}
+
+.search-input {
+flex: 1;
+background: transparent;
+border: none;
+color: #c8d3f5;
+font-size: 1rem;
+outline: none;
+}
+
+.search-input::placeholder {
+color: #565f89;
+}
+
+.year-section {
+margin-top: 3rem;
+}
+
+.year-title {
+font-size: 1.5rem;
+font-weight: 600;
+color: #bb9af7;
+margin-bottom: 1rem;
+padding-bottom: 0.5rem;
+border-bottom: 1px dashed #292e42;
+}
+
+.post-list {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+.post-item {
+display: flex;
+align-items: baseline;
+gap: 1.5rem;
+padding: 0.35rem 0;
+transition: background 0.15s;
+}
+
+.post-item:hover {
+background: rgba(74, 158, 255, 0.05);
+}
+
+.post-date {
+font-family: "SF Mono", Monaco, monospace;
+font-size: 0.8rem;
+color: #565f89;
+min-width: 90px;
+flex-shrink: 0;
+}
+
+.post-title {
+color: #7aa2f7;
+font-size: 0.95rem;
+text-decoration: none;
+transition: color 0.2s;
+}
+
+.post-title:hover {
+color: #c8d3f5;
+text-decoration: underline;
+}
+
+.results-title {
+font-size: 1.1rem;
+font-weight: 600;
+color: #c8d3f5;
+margin: 2rem 0 1rem;
+padding-bottom: 0.5rem;
+border-bottom: 1px dashed #292e42;
+}
+
+.clear-search {
+display: block;
+margin-top: 2rem;
+color: #565f89;
+font-size: 0.9rem;
+text-decoration: none;
+}
+
+.clear-search:hover {
+color: #7aa2f7;
+}
+
+.empty-state {
+padding: 2rem;
+text-align: center;
+color: #565f89;
+}
+
+@media (max-width: 600px) {
+.header-row {
+flex-direction: column;
+align-items: flex-start;
+}
+
+.search-box {
+max-width: 100%;
+width: 100%;
+min-width: unset;
+}
+}
 </style>
