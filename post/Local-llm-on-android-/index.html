@@ -1,0 +1,48 @@
+<!DOCTYPE html> <html lang="zh-CN" class="dark"> <head><meta charset="UTF-8"><link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="isharebox"><meta name="msapplication-TileColor" content="#1e2030"><meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"><meta name="description" content="| 方案名称 | 可行性评估 | 具体分析与建议 |"><link rel="icon" href="/favicon.ico"><title>Local llm on android  | isharebox</title><link rel="stylesheet" href="/_astro/_page_.Q94QMkaZ.css">
+<style>.outlines a[data-anchor-tag=H1]{margin-left:0}.outlines a[data-anchor-tag=H2]{margin-left:12px}.outlines a[data-anchor-tag=H3]{margin-left:24px}.outlines a[data-anchor-tag=H4]{margin-left:36px}.outlines a[data-anchor-tag=H5]{margin-left:48px}.outlines a[data-anchor-tag=H6]{margin-left:60px}
+._tabset_selm3_1 ._tab-panel_selm3_1{display:none}._tabset_selm3_1 ._tab-panels_selm3_4{display:flex}._tabset_selm3_1 input[data-tab-name=direct]{display:none}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=direct]{display:block}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-labels_selm3_13 label[data-tab-name=direct]{border-bottom:2px solid red}._tabset_selm3_1 input[data-tab-name=app]{display:none}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=app]{display:block}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-labels_selm3_13 label[data-tab-name=app]{border-bottom:2px solid red}
+</style>
+<link rel="stylesheet" href="/_astro/_page_.ypUYv9mY.css">
+<link rel="stylesheet" href="/_astro/_id_.CdoHgwyN.css"><script type="module" src="/_astro/hoisted._hzYIUG3.js"></script></head> <body class="min-h-screen"> <header class="flex justify-between items-center px-4 py-3 border-b" style="border-color: #292e42;"> <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity" style="color: #c8d3f5;"> isharebox </a> <div class="flex items-center gap-3">   <div id="auth"></div> </div> </header>  <main> <div class="content"> <div class="w-full flex gap-2 pb-2">  <a href="/tag/model" class="rounded hover:bg-gray-200 dark:hover:bg-modal px-3 py-1 cursor-pointer">
+#model </a> </div> <div class="ud-root read-only flex-1"><h1 level="1" id="Local-llm-on-android-">Local llm on android </h1><h3 level="3" id="大模型方案评估">大模型方案评估</h3><p>| 方案名称 | 可行性评估 | 具体分析与建议 |</p><p>| :--- | :--- | :--- |</p><p>| <strong>MNN Chat</strong> | ⭐⭐⭐ <strong>最推荐</strong> | 阿里这款App优化做得不错，对中端芯片友好。你可以在应用内直接下载针对手机优化过的小模型（如 <strong>Qwen2.5-1.5B</strong> 或 <strong>4B</strong> 的量化版），大概率能获得最流畅的开箱即用体验。 |</p><p>| <strong>AnythingLLM Mobile</strong> | ⭐⭐ <strong>可以尝试</strong> | 功能很强大，但运行本地知识库等操作对性能有一定要求。如果你的手机是**12GB内存版本**，可以尝试运行；如果是8GB版本，可能会出现资源紧张的情况。 |</p><p>| <strong>Termux + llama.cpp</strong> | ⭐⭐ <strong>适合动手玩家</strong> | 这条路完全走得通，能让你运行海量的GGUF模型。但需要你有心理准备去手动调整参数。建议从 <strong>2B-4B</strong> 参数量的模型（比如 <code>Phi-3-mini-4k-instruct</code> 的Q4量化版）开始尝试。 |</p><p>| <strong>MNN + KleidiAI</strong> | ⭐ <strong>开发者专用</strong> | 这是Arm官方的开发方案，是给应用开发者用来深度优化性能的，普通用户无需考虑。 |</p><p>| <strong>Cactus / Qualcomm方案</strong> | ⭐ <strong>不太适合</strong> | Cactus对普通用户不够友好。而高通的NPU方案主要针对骁龙芯片，你的天玑芯片无法直接利用其优势。 |</p><p>### 💡 给你的核心建议：从“小”开始</p><p>1.  <strong>优先看内存</strong>：你的手机有8GB或12GB版本。8GB版建议选择参数量 <strong>1.5B-4B</strong> 的模型；12GB版则可以尝试 <strong>7B</strong> 参数量模型的 <strong>超低量化版本</strong>（如 <code>q2_k</code> 或 <code>q3_k</code> 版本）。</p><p>2.  <strong>认准GGUF和“Q”字头</strong>：无论用哪个方案，在下载模型时，优先选择 <strong>GGUF格式</strong> 且文件名中带有 <code>Q4Q5</code> 等字样的文件。例如 <code>qwen2.5-1.5b-Q4_K_M.gguf</code>。这种格式是专门为在有限内存上高效运行而设计的。</p><p>3.  <strong>暂时忘掉7B以上的大模型</strong>：像 Llama 3 8B、Qwen 2.5 7B 的常规版本，对你的手机来说负担太大，强行运行会很卡顿甚至闪退，体验不会太好。</p><p></p><script type="module">const injectHtml = (root, html) => {
+  const iframe = document.createElement("iframe");
+  const htmlContent = `<html><head></head><body>${html}</body></html>`;
+  iframe.style.width = "100%";
+  iframe.style.height = "100%";
+  iframe.onload = () => {
+    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+    if (!doc) {
+      return;
+    }
+    doc.open();
+    doc.write(htmlContent);
+    doc.close();
+  };
+  root.replaceChildren(iframe);
+}
+  document.querySelectorAll('.playground')?.forEach(el=>{
+    const html = el.getAttribute('data-html');
+    if (html) {
+      injectHtml(el,html);
+    }
+    const indicator = document.createElement("div");
+    indicator.className = "indicator";
+    const showCode = document.createElement("div");
+    showCode.className = "show-code";
+    showCode.innerText = "code";
+    showCode.onclick = () => {
+      el.parentElement.classList.remove("preview-only");
+    };
+    const showPreview = document.createElement("div");
+    showPreview.className = "show-preview";
+    showPreview.innerText = "preview";
+    showPreview.onclick = () => {
+      el.parentElement.classList.add("preview-only");
+    };
+    indicator.appendChild(showCode);
+    indicator.appendChild(showPreview);
+    el.parentElement.appendChild(indicator);
+    if (window.screen.width < 768) {
+      showPreview.click();
+    }
+  });</script></div> <div data-page-id="Local-llm-on-android-" class="navigator flex justify-between items-center mt-4 py-4"> <a href="/post/TVbox接口源-" class="flex items-center gap-1 text-blue cursor-pointer flex-[45%]"> <div class="i-ri:arrow-left-double-line w-5 h-5 flex-shrink-0"></div> <div class="text-start">TVbox接口源 🌟</div> </a> <div></div> </div> </div> <div class="outline-wrapper"></div> </main>  <footer class="site-footer" data-astro-cid-sz7xmlte> <!-- 导航链接 --> <nav class="footer-nav" data-astro-cid-sz7xmlte>  <a href="/" class="footer-link" data-astro-cid-sz7xmlte> Home </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/tag/projects" class="footer-link" data-astro-cid-sz7xmlte> Projects </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/tools" class="footer-link" data-astro-cid-sz7xmlte> Notes </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="https://web.chatboxai.app/" class="footer-link" target="_blank" rel="noopener noreferrer" data-astro-cid-sz7xmlte> Chatbox </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/about" class="footer-link" data-astro-cid-sz7xmlte> About </a>  </nav> <!-- 分割线 --> <div class="footer-divider" data-astro-cid-sz7xmlte></div> <!-- 版权信息 --> <div class="footer-copyright" data-astro-cid-sz7xmlte> <a href="https://isharebox.github.io" data-astro-cid-sz7xmlte>©  isharebox  ·  since 2026    ·</a> <a href="/rss.xml" class="rss-link" target="_blank" rel="noopener noreferrer" title="RSS Feed" data-astro-cid-sz7xmlte> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 256 256" aria-label="RSS Feed" data-astro-cid-sz7xmlte> <rect width="256" height="256" rx="28" fill="#ff6b35" data-astro-cid-sz7xmlte></rect> <circle cx="68" cy="189" r="24" fill="#fff" data-astro-cid-sz7xmlte></circle> <path d="M160 213h-34a82 82 0 0 0-82-82v-34a116 116 0 0 1 116 116z" fill="#fff" data-astro-cid-sz7xmlte></path> <path d="M184 213A140 140 0 0 0 44 73V38a175 175 0 0 1 175 175z" fill="#fff" data-astro-cid-sz7xmlte></path> </svg> </a> </div> </footer>  <!-- ★ 添加回到顶部按钮组件 --> <button id="back-to-top" class="back-to-top" aria-label="Back to top" data-astro-cid-wlspcwf4> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-wlspcwf4> <path d="M18 15l-6-6-6 6" data-astro-cid-wlspcwf4></path> </svg> </button>   </body></html>
