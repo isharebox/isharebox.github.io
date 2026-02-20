@@ -1,0 +1,97 @@
+<!DOCTYPE html> <html lang="zh-CN" class="dark"> <head><meta charset="UTF-8"><link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="isharebox"><meta name="msapplication-TileColor" content="#1e2030"><meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"><meta name="description" content="单线路、多线路、多仓概念"><link rel="icon" href="/favicon.ico"><title>TVbox接口源 🌟 | isharebox</title><link rel="stylesheet" href="/_astro/_page_.Q94QMkaZ.css">
+<style>.outlines a[data-anchor-tag=H1]{margin-left:0}.outlines a[data-anchor-tag=H2]{margin-left:12px}.outlines a[data-anchor-tag=H3]{margin-left:24px}.outlines a[data-anchor-tag=H4]{margin-left:36px}.outlines a[data-anchor-tag=H5]{margin-left:48px}.outlines a[data-anchor-tag=H6]{margin-left:60px}
+._tabset_selm3_1 ._tab-panel_selm3_1{display:none}._tabset_selm3_1 ._tab-panels_selm3_4{display:flex}._tabset_selm3_1 input[data-tab-name=direct]{display:none}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=direct]{display:block}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-labels_selm3_13 label[data-tab-name=direct]{border-bottom:2px solid red}._tabset_selm3_1 input[data-tab-name=app]{display:none}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=app]{display:block}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-labels_selm3_13 label[data-tab-name=app]{border-bottom:2px solid red}
+</style>
+<link rel="stylesheet" href="/_astro/_page_.ypUYv9mY.css">
+<link rel="stylesheet" href="/_astro/_id_.CdoHgwyN.css"><script type="module" src="/_astro/hoisted._hzYIUG3.js"></script></head> <body class="min-h-screen"> <header class="flex justify-between items-center px-4 py-3 border-b" style="border-color: #292e42;"> <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity" style="color: #c8d3f5;"> isharebox </a> <div class="flex items-center gap-3">   <div id="auth"></div> </div> </header>  <main> <div class="content"> <div class="w-full flex gap-2 pb-2">  <a href="/tag/others" class="rounded hover:bg-gray-200 dark:hover:bg-modal px-3 py-1 cursor-pointer">
+#others </a> </div> <div class="ud-root read-only flex-1"><h2 level="2" id="TVbox接口源-">TVbox接口源 🌟</h2><blockquote><p>github地址使用时 请自行添加代理</p></blockquote><p>单线路、多线路、多仓概念</p><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code>单仓：
+ http://www.饭太硬.com/tv	<span class="hljs-comment" class="hljs-comment"># 饭太硬接口</span>
+ http://肥猫.com				<span class="hljs-comment" class="hljs-comment"># 肥猫接口</span>
+ http://fty.xxooo.cf/tv			<span class="hljs-comment" class="hljs-comment"># 神秘哥哥们备用接口</span>
+ https://毒盒.com/tv/	<span class="hljs-comment" class="hljs-comment"># 毒盒</span>
+ http://我不是.摸鱼儿.com			<span class="hljs-comment" class="hljs-comment"># 摸鱼儿接口</span>
+ http://ok321.top/tv		<span class="hljs-comment" class="hljs-comment"># OK影视内部接口</span>
+ http://ok321.top/ok		<span class="hljs-comment" class="hljs-comment"># OK影视公开接口</span>
+ http://tvbox.王二小放牛娃.top		<span class="hljs-comment" class="hljs-comment"># 王小二放牛娃接口</span>
+ https://www.yingm.cc/dm/dm.json  	<span class="hljs-comment" class="hljs-comment"># 动漫城接口</span>
+ http://home.jundie.top:81/top98.json	<span class="hljs-comment" class="hljs-comment"># 俊佬接口</span>
+ http://cdn.qiaoji8.com/tvbox.json		<span class="hljs-comment" class="hljs-comment"># 巧记</span>
+ https://cdn.gitmirror.com/bb/xduo/libs/master/index.json 	<span class="hljs-comment" class="hljs-comment"># 道长接口</span>
+ https://gitee.com/free-kingdom/dc/raw/main/T4.json			<span class="hljs-comment" class="hljs-comment"># T4接口</span>
+ https://raw.bgithub.xyz/yoursmile66/TVBox/main/XC.json		<span class="hljs-comment" class="hljs-comment"># 南风接口</span>
+ https://tv.菜妮丝.top			<span class="hljs-comment" class="hljs-comment"># 菜妮丝接口</span>
+ https://api.hgyx.vip/hgyx.json		<span class="hljs-comment" class="hljs-comment"># HG接口</span>
+ https://dxawi.github.io/0/0.json	<span class="hljs-comment" class="hljs-comment"># dxawi</span>
+ http://www.mitvbox.xyz/小米/DEMO.json		<span class="hljs-comment" class="hljs-comment"># 小米</span>
+ http://xhztv.top/xhz		<span class="hljs-comment" class="hljs-comment"># 小盒子单仓</span>
+ http://xhztv.top/4k.json		<span class="hljs-comment" class="hljs-comment"># 小盒子4K</span>
+ https://9877.kstore.space/AnotherD/api.json		<span class="hljs-comment" class="hljs-comment"># 潇洒接口</span>
+ https://raw.bgithub.xyz/xyq254245/xyqonlinerule/main/XYQTVBox.json	<span class="hljs-comment" class="hljs-comment"># 香雅情</span>
+ https://bitbucket.org/xduo/duoapi/raw/master/xpg.json		<span class="hljs-comment" class="hljs-comment"># 小苹果接口</span>
+ https://raw.bgithub.xyz/guot55/YGBH/main/vip2.json		<span class="hljs-comment" class="hljs-comment"># 宝盒VIP</span>
+ http://tv.nxog.top/m/111.php?ou=公众号欧歌app&amp;mz=all&amp;jar=all&amp;b=欧歌  <span class="hljs-comment" class="hljs-comment"># 欧歌</span>
+ https://哪吒.live/	<span class="hljs-comment" class="hljs-comment"># 哪吒</span>
+ https://www.252035.xyz/z/FongMi.json	<span class="hljs-comment" class="hljs-comment"># 真心</span>
+ http://www.meowtv.vip/tvbox.json	<span class="hljs-comment" class="hljs-comment"># 喵影视</span>
+ http://fmys.top/fmys.json	<span class="hljs-comment" class="hljs-comment"># 驸马</span>
+ https:/raw.bgithub.xyz/gaotianliuyun/gao/master/js.json		<span class="hljs-comment" class="hljs-comment"># 高天流云</span>
+ https://gitee.com/yiwu369/6758/raw/master/%E9%9D%92%E9%BE%99/1.json	<span class="hljs-comment" class="hljs-comment"># 青龙</span>
+ https://raw.bgithub.xyz/maoystv/6/main/000.json	<span class="hljs-comment" class="hljs-comment"># 分享</span>
+ https://cnb.cool/fish2018/duanju/-/git/raw/main/tvbox.json		<span class="hljs-comment" class="hljs-comment"># 短剧</span>
+ https://raw.bgithub.xyz/chitue/dongliTV/main/api.json	<span class="hljs-comment" class="hljs-comment"># 东篱线路</span>
+ https://cnb.cool/aooooowuuuuu/FreeSpider/-/git/raw/main/config	<span class="hljs-comment" class="hljs-comment"># 嗷呜线路</span>
+ https://android.lushunming.qzz.io/json/index.json	<span class="hljs-comment" class="hljs-comment"># L佬线路</span>
+ https://gitee.com/cpu-iy/iy/raw/master/%E5%A4%A9%E7%A5%9EIY.json	<span class="hljs-comment" class="hljs-comment"># 天神IY</span>
+ https://pastebin.com/raw/gtbKvnE1	<span class="hljs-comment" class="hljs-comment"># 苹果CMS资源站</span>
+
+多仓：
+ https://www.iyouhun.com/tv/dc   <span class="hljs-comment" class="hljs-comment"># 游魂多仓</span>
+ https://www.iyouhun.com/tv/yh   <span class="hljs-comment" class="hljs-comment"># 游魂多仓（备）</span>
+ https://9877.kstore.space/AnotherDS/api.json		<span class="hljs-comment" class="hljs-comment"># 潇洒单仓</span>
+ http://xhztv.top/dc/   <span class="hljs-comment" class="hljs-comment"># 小盒子多仓</span>
+ http://xhztv.top/DC.txt  <span class="hljs-comment" class="hljs-comment"># 小盒子多仓（备）</span>
+ https://bitbucket.org/xduo/cool/raw/main/room.json   <span class="hljs-comment" class="hljs-comment"># 多多影音</span>
+ https://qixing.myhkw.com/DC.txt   <span class="hljs-comment" class="hljs-comment"># 七星宝盒</span>
+ http://xmbjm.fh4u.org/dc.txt   <span class="hljs-comment" class="hljs-comment"># 拾光多仓</span>
+</code></pre></div></div><script type="module">const injectHtml = (root, html) => {
+  const iframe = document.createElement("iframe");
+  const htmlContent = `<html><head></head><body>${html}</body></html>`;
+  iframe.style.width = "100%";
+  iframe.style.height = "100%";
+  iframe.onload = () => {
+    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+    if (!doc) {
+      return;
+    }
+    doc.open();
+    doc.write(htmlContent);
+    doc.close();
+  };
+  root.replaceChildren(iframe);
+}
+  document.querySelectorAll('.playground')?.forEach(el=>{
+    const html = el.getAttribute('data-html');
+    if (html) {
+      injectHtml(el,html);
+    }
+    const indicator = document.createElement("div");
+    indicator.className = "indicator";
+    const showCode = document.createElement("div");
+    showCode.className = "show-code";
+    showCode.innerText = "code";
+    showCode.onclick = () => {
+      el.parentElement.classList.remove("preview-only");
+    };
+    const showPreview = document.createElement("div");
+    showPreview.className = "show-preview";
+    showPreview.innerText = "preview";
+    showPreview.onclick = () => {
+      el.parentElement.classList.add("preview-only");
+    };
+    indicator.appendChild(showCode);
+    indicator.appendChild(showPreview);
+    el.parentElement.appendChild(indicator);
+    if (window.screen.width < 768) {
+      showPreview.click();
+    }
+  });</script></div> <div data-page-id="TVbox接口源-" class="navigator flex justify-between items-center mt-4 py-4"> <a href="/post/SWE-bench-February-2026-leaderboard-update" class="flex items-center gap-1 text-blue cursor-pointer flex-[45%]"> <div class="i-ri:arrow-left-double-line w-5 h-5 flex-shrink-0"></div> <div class="text-start">SWE-bench February 2026 leaderboard update</div> </a> <div></div> </div> </div> <div class="outline-wrapper"></div> </main>  <footer class="site-footer" data-astro-cid-sz7xmlte> <!-- 导航链接 --> <nav class="footer-nav" data-astro-cid-sz7xmlte>  <a href="/" class="footer-link" data-astro-cid-sz7xmlte> Home </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/tag/projects" class="footer-link" data-astro-cid-sz7xmlte> Projects </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/tools" class="footer-link" data-astro-cid-sz7xmlte> Notes </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="https://web.chatboxai.app/" class="footer-link" target="_blank" rel="noopener noreferrer" data-astro-cid-sz7xmlte> Chatbox </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/about" class="footer-link" data-astro-cid-sz7xmlte> About </a>  </nav> <!-- 分割线 --> <div class="footer-divider" data-astro-cid-sz7xmlte></div> <!-- 版权信息 --> <div class="footer-copyright" data-astro-cid-sz7xmlte> <a href="https://isharebox.github.io" data-astro-cid-sz7xmlte>©  isharebox  ·  since 2026    ·</a> <a href="/rss.xml" class="rss-link" target="_blank" rel="noopener noreferrer" title="RSS Feed" data-astro-cid-sz7xmlte> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 256 256" aria-label="RSS Feed" data-astro-cid-sz7xmlte> <rect width="256" height="256" rx="28" fill="#ff6b35" data-astro-cid-sz7xmlte></rect> <circle cx="68" cy="189" r="24" fill="#fff" data-astro-cid-sz7xmlte></circle> <path d="M160 213h-34a82 82 0 0 0-82-82v-34a116 116 0 0 1 116 116z" fill="#fff" data-astro-cid-sz7xmlte></path> <path d="M184 213A140 140 0 0 0 44 73V38a175 175 0 0 1 175 175z" fill="#fff" data-astro-cid-sz7xmlte></path> </svg> </a> </div> </footer>  <!-- ★ 添加回到顶部按钮组件 --> <button id="back-to-top" class="back-to-top" aria-label="Back to top" data-astro-cid-wlspcwf4> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-wlspcwf4> <path d="M18 15l-6-6-6 6" data-astro-cid-wlspcwf4></path> </svg> </button>   </body></html>
