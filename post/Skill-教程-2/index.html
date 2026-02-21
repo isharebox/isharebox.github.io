@@ -1,0 +1,511 @@
+<!DOCTYPE html> <html lang="zh-CN" class="dark"> <head><meta charset="UTF-8"><link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="isharebox"><meta name="msapplication-TileColor" content="#1e2030"><meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"><meta name="description" content="想象一下这些场景:"><link rel="icon" href="/favicon.ico"><title>Skill 教程 2 | isharebox</title><link rel="stylesheet" href="/_astro/_page_.Q94QMkaZ.css">
+<style>.outlines a[data-anchor-tag=H1]{margin-left:0}.outlines a[data-anchor-tag=H2]{margin-left:12px}.outlines a[data-anchor-tag=H3]{margin-left:24px}.outlines a[data-anchor-tag=H4]{margin-left:36px}.outlines a[data-anchor-tag=H5]{margin-left:48px}.outlines a[data-anchor-tag=H6]{margin-left:60px}
+._tabset_selm3_1 ._tab-panel_selm3_1{display:none}._tabset_selm3_1 ._tab-panels_selm3_4{display:flex}._tabset_selm3_1 input[data-tab-name=direct]{display:none}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=direct]{display:block}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-labels_selm3_13 label[data-tab-name=direct]{border-bottom:2px solid red}._tabset_selm3_1 input[data-tab-name=app]{display:none}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=app]{display:block}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-labels_selm3_13 label[data-tab-name=app]{border-bottom:2px solid red}
+</style>
+<link rel="stylesheet" href="/_astro/_page_.ypUYv9mY.css">
+<link rel="stylesheet" href="/_astro/_id_.CdoHgwyN.css"><script type="module" src="/_astro/hoisted._hzYIUG3.js"></script></head> <body class="min-h-screen"> <header class="flex justify-between items-center px-4 py-3 border-b" style="border-color: #292e42;"> <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity" style="color: #c8d3f5;"> isharebox </a> <div class="flex items-center gap-3">   <div id="auth"></div> </div> </header>  <main> <div class="content"> <div class="w-full flex gap-2 pb-2">   </div> <div class="ud-root read-only flex-1"><h1 level="1" id="Skill-教程-2">Skill 教程 2</h1><h1 level="1" id="Skills-实战让-AI-成为你的领域专家">Skills 实战:让 AI 成为你的领域专家</h1><h2 level="2" id="引言从通用助手到领域专家">引言:从通用助手到领域专家</h2><p>想象一下这些场景:</p><p><strong>场景 1: 重复的上下文说明</strong></p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">vbnet</div><div class="wrapper"><pre><code class="language-vbnet">你: <span class="hljs-string" class="hljs-string">&quot;帮我分析这个 BigQuery 数据,记住要排除测试账户,使用 user_metrics 表...&quot;</span>
+<span class="hljs-symbol" class="hljs-symbol">Claude:</span> <span class="hljs-string" class="hljs-string">&quot;好的,我来分析...&quot;</span>
+
+[第二天]
+你: <span class="hljs-string" class="hljs-string">&quot;再帮我分析一次销售数据,还是那个表,记得排除测试账户...&quot;</span>
+<span class="hljs-symbol" class="hljs-symbol">Claude:</span> <span class="hljs-string" class="hljs-string">&quot;好的,我来分析...&quot;</span>  # 😓 又要重复一遍
+</code></pre></div></div><p><strong>场景 2: 领域知识的重复传授</strong></p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">vbnet</div><div class="wrapper"><pre><code class="language-vbnet">你: <span class="hljs-string" class="hljs-string">&quot;帮我处理这个 PDF 表单,PDF 的表单字段结构是...&quot;</span>
+<span class="hljs-symbol" class="hljs-symbol">Claude:</span> <span class="hljs-string" class="hljs-string">&quot;明白了&quot;</span>
+
+[一周后]
+你: <span class="hljs-string" class="hljs-string">&quot;再处理一个 PDF 表单...&quot;</span>
+<span class="hljs-symbol" class="hljs-symbol">Claude:</span> <span class="hljs-string" class="hljs-string">&quot;请告诉我 PDF 表单的结构&quot;</span>  # 😓 忘记了
+</code></pre></div></div><p><strong>场景 3: 工作流程的不一致</strong></p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash">你: <span class="hljs-string" class="hljs-string">&quot;生成 API 文档,记得包含请求示例、响应格式、错误码...&quot;</span>
+Claude: <span class="hljs-string" class="hljs-string">&quot;好的&quot;</span> <span class="hljs-comment" class="hljs-comment"># ✅ 这次做得很好</span>
+
+[下次]
+你: <span class="hljs-string" class="hljs-string">&quot;再生成一份 API 文档&quot;</span>
+Claude: [生成的文档] <span class="hljs-comment" class="hljs-comment"># ❌ 这次忘记了错误码部分</span>
+</code></pre></div></div><p>这些问题的根源是:<strong>每次对话都是全新的开始</strong>,Claude 无法记住你的领域知识、偏好和工作流程。</p><h3 level="3" id="-Skills-系统的价值">💡 Skills 系统的价值</h3><p><strong>Skills</strong> 就是解决这个问题的方案——它让你能够:</p><ol><li><p><strong>📦 封装领域知识</strong>: 把你反复向 Claude 解释的专业知识打包成 Skill</p></li><li><p><strong>🔄 自动加载</strong>: 当任务相关时,Skill 自动激活,无需重复说明</p></li><li><p><strong>♻️ 持续复用</strong>: 创建一次,跨所有对话自动使用</p></li><li><p><strong>🎯 专业能力</strong>: 让 Claude 从通用助手进化为领域专家</p></li></ol><p><strong>本文核心内容</strong>:</p><ol><li><p>Skills 的核心概念与工作原理</p></li><li><p>渐进式披露架构:三级加载机制</p></li><li><p>创建自定义 Skills:从入门到精通</p></li><li><p>最佳实践:简洁、结构化、可验证</p></li><li><p>实战案例:PDF 处理、BigQuery 分析、代码审查</p></li><li><p>评估与迭代:如何持续优化 Skills</p></li></ol><blockquote><p>&quot;把你反复向 Claude 解释的偏好、流程、领域知识打包成 Skills,让 AI 成为你的领域专家&quot;</p></blockquote><hr><h2 level="2" id="一什么是-Skills">一、什么是 Skills?</h2><h3 level="3" id="11-核心概念">1.1 核心概念</h3><p><strong>Agent Skills</strong>(智能体技能)是一种模块化的能力扩展系统,它为 Claude 提供了:</p><ul><li><p><strong>领域专业知识</strong>: 如 PDF 处理技巧、数据库 schema、业务规则</p></li><li><p><strong>工作流程</strong>: 如代码审查流程、文档生成流程、数据分析流程</p></li><li><p><strong>最佳实践</strong>: 如命名规范、代码风格、错误处理模式</p></li></ul><h3 level="3" id="12-Skills-vs-普通-Prompt">1.2 Skills vs 普通 Prompt</h3><p>维度普通 PromptSkills<strong>作用范围</strong>单次对话跨所有相关对话<strong>加载方式</strong>每次手动提供相关任务时自动加载<strong>上下文占用</strong>每次都占用按需加载,未使用时零占用<strong>知识管理</strong>分散在多次对话中集中管理,持续优化<strong>一致性</strong>依赖人工记忆标准化,确保一致</p><p><strong>类比理解</strong>:</p><ul><li><p><strong>普通 Prompt</strong> 像是每次都要&quot;现场培训&quot;新员工</p></li><li><p><strong>Skills</strong> 像是给员工提供&quot;岗位手册&quot;,需要时自己查阅</p></li></ul><h3 level="3" id="13-Skills-遵循开放标准">1.3 Skills 遵循开放标准</h3><p>Claude Code Skills 基于 <strong>Agent Skills 开放标准</strong>,这意味着:</p><ul><li><p>✅ 标准化格式,跨 AI 工具兼容</p></li><li><p>✅ 社区生态,可以使用他人创建的 Skills</p></li><li><p>✅ 长期支持,不会因产品升级而失效</p></li></ul><p>Claude Code 在标准基础上扩展了:</p><ul><li><p>🔧 调用控制机制</p></li><li><p>🤖 子代理执行能力</p></li><li><p>📥 动态上下文注入</p></li></ul><hr><h2 level="2" id="二Skills-工作原理渐进式披露架构">二、Skills 工作原理:渐进式披露架构</h2><h3 level="3" id="21-为什么需要渐进式披露">2.1 为什么需要渐进式披露?</h3><p><strong>问题</strong>:如果把所有 Skills 的详细内容都加载到上下文中会怎样?</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">makefile</div><div class="wrapper"><pre><code class="language-makefile">假设你有 10 个 Skills,每个包含 5000 tokens 的详细指导...
+<span class="hljs-section" class="hljs-section">总共: 50,000 tokens</span>
+
+但你可能只需要使用其中 1-2 个 Skill!
+<span class="hljs-section" class="hljs-section">浪费: 40,000+ tokens(80% 的上下文窗口!)</span>
+</code></pre></div></div><p><strong>解决方案</strong>:渐进式披露——<strong>只加载需要的内容,按需展开详细信息</strong>。</p><h3 level="3" id="22-三级加载机制">2.2 三级加载机制</h3><p></p><img src="https://p6-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/d05cb04a89414fa393f38676755546ab~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5Yas5aWHTGFi:q75.awebp?rk3s=f64ab15b&amp;x-expires=1772249381&amp;x-signature=A4JzDFDhzkaWWtqoM%2FFBwK46pvk%3D" alt="09-01-progressive-disclosure.png"><h4 level="4" id="第一级元数据Metadata--始终加载">第一级:元数据(Metadata)- 始终加载</h4><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown">---
+name: pdf-processing
+description: Extract text and tables from PDF files, fill forms, merge documents.
+<span class="hljs-code" class="hljs-code">             Use when working with PDF files or when the user mentions PDFs, forms,
+             or document extraction.
+---
+</span>
+</code></pre></div></div><ul><li><p><strong>加载时机</strong>: Claude 启动时</p></li><li><p><strong>Token 消耗</strong>: 每个 Skill 约 100 tokens</p></li><li><p><strong>作用</strong>: 让 Claude 知道有哪些 Skills 可用,以及何时触发</p></li></ul><p><strong>关键字段解析</strong>:</p><ul><li><p><code>name</code>: Skill 标识符(小写字母、数字、连字符)</p></li><li><p><code>description</code>: 功能说明 + 触发场景(<strong>最重要的字段!</strong>)</p></li></ul><blockquote><p>⚠️ <strong>重要</strong>: description 是 Skill 触发的关键。Claude 根据用户请求与 description 的匹配度决定是否加载该 Skill。</p></blockquote><h4 level="4" id="第二级指令Instructions--触发时加载">第二级:指令(Instructions)- 触发时加载</h4><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown"><span class="hljs-section" class="hljs-section"># PDF Processing</span>
+
+<span class="hljs-section" class="hljs-section">## Quick start</span>
+
+Use pdfplumber to extract text from PDFs:
+
+\<span class="hljs-code" class="hljs-code">`\`</span>\`python
+import pdfplumber
+
+with pdfplumber.open(&quot;document.pdf&quot;) as pdf:
+<span class="hljs-code" class="hljs-code">    text = pdf.pages[0].extract_text()
+\`\`\`
+</span>
+For advanced form filling, see [<span class="hljs-string" class="hljs-string">FORMS.md</span>](<span class="hljs-link" class="hljs-link">FORMS.md</span>).
+</code></pre></div></div><ul><li><p><strong>加载时机</strong>: 当用户请求匹配 Skill 描述时</p></li><li><p><strong>Token 消耗</strong>: 通常少于 5k tokens</p></li><li><p><strong>作用</strong>: 提供具体的操作指导和工作流程</p></li></ul><h4 level="4" id="第三级资源和代码Resources--Code--按需访问">第三级:资源和代码(Resources &amp; Code)- 按需访问</h4><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash">pdf-skill/
+├── SKILL.md          <span class="hljs-comment" class="hljs-comment"># 主指令文件(第二级)</span>
+├── FORMS.md          <span class="hljs-comment" class="hljs-comment"># 表单填写指南(按需读取)</span>
+├── REFERENCE.md      <span class="hljs-comment" class="hljs-comment"># 详细 API 参考(按需读取)</span>
+└── scripts/
+    └── fill_form.py  <span class="hljs-comment" class="hljs-comment"># 工具脚本(执行时不加载代码)</span>
+</code></pre></div></div><ul><li><p><strong>加载时机</strong>: 仅当 SKILL.md 中引用时</p></li><li><p><strong>Token 消耗</strong>: 脚本执行时只有输出占用 tokens</p></li><li><p><strong>作用</strong>: 提供专业参考材料和可执行工具</p></li></ul><h3 level="3" id="23-实例演示从触发到加载">2.3 实例演示:从触发到加载</h3><p><strong>场景</strong>: 用户请求&quot;帮我提取 PDF 中的文本&quot;</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">yaml</div><div class="wrapper"><pre><code class="language-yaml"><span class="hljs-string" class="hljs-string">┌─────────────────────────────────────────┐</span>
+<span class="hljs-string" class="hljs-string">│</span> <span class="hljs-string" class="hljs-string">步骤</span> <span class="hljs-attr" class="hljs-attr">1:</span> <span class="hljs-string" class="hljs-string">Claude</span> <span class="hljs-string" class="hljs-string">检查所有</span> <span class="hljs-string" class="hljs-string">Skill</span> <span class="hljs-string" class="hljs-string">的元数据</span> <span class="hljs-string" class="hljs-string">│</span>
+<span class="hljs-string" class="hljs-string">└─────────────────────────────────────────┘</span>
+              <span class="hljs-string" class="hljs-string">↓</span>
+<span class="hljs-string" class="hljs-string">┌─────────────────────────────────────────┐</span>
+<span class="hljs-string" class="hljs-string">│</span> <span class="hljs-string" class="hljs-string">匹配到</span> <span class="hljs-string" class="hljs-string">pdf-processing</span> <span class="hljs-string" class="hljs-string">Skill</span>             <span class="hljs-string" class="hljs-string">│</span>
+<span class="hljs-string" class="hljs-string">│</span> <span class="hljs-string" class="hljs-string">description</span> <span class="hljs-string" class="hljs-string">包含</span> <span class="hljs-string" class="hljs-string">&quot;Extract text from PDF&quot;</span><span class="hljs-string" class="hljs-string">│</span>
+<span class="hljs-string" class="hljs-string">└─────────────────────────────────────────┘</span>
+              <span class="hljs-string" class="hljs-string">↓</span>
+<span class="hljs-string" class="hljs-string">┌─────────────────────────────────────────┐</span>
+<span class="hljs-string" class="hljs-string">│</span> <span class="hljs-string" class="hljs-string">步骤</span> <span class="hljs-attr" class="hljs-attr">2:</span> <span class="hljs-string" class="hljs-string">加载</span> <span class="hljs-string" class="hljs-string">SKILL.md</span> <span class="hljs-string" class="hljs-string">的指令内容</span>        <span class="hljs-string" class="hljs-string">│</span>
+<span class="hljs-string" class="hljs-string">│</span> <span class="hljs-string" class="hljs-string">(~3k</span> <span class="hljs-string" class="hljs-string">tokens)</span>                            <span class="hljs-string" class="hljs-string">│</span>
+<span class="hljs-string" class="hljs-string">└─────────────────────────────────────────┘</span>
+              <span class="hljs-string" class="hljs-string">↓</span>
+<span class="hljs-string" class="hljs-string">┌─────────────────────────────────────────┐</span>
+<span class="hljs-string" class="hljs-string">│</span> <span class="hljs-string" class="hljs-string">步骤</span> <span class="hljs-attr" class="hljs-attr">3:</span> <span class="hljs-string" class="hljs-string">Claude</span> <span class="hljs-string" class="hljs-string">发现需要表单填写</span>         <span class="hljs-string" class="hljs-string">│</span>
+<span class="hljs-string" class="hljs-string">│</span> <span class="hljs-string" class="hljs-string">读取</span> <span class="hljs-string" class="hljs-string">FORMS.md</span> <span class="hljs-string" class="hljs-string">(~2k</span> <span class="hljs-string" class="hljs-string">tokens)</span>              <span class="hljs-string" class="hljs-string">│</span>
+<span class="hljs-string" class="hljs-string">└─────────────────────────────────────────┘</span>
+              <span class="hljs-string" class="hljs-string">↓</span>
+<span class="hljs-string" class="hljs-string">┌─────────────────────────────────────────┐</span>
+<span class="hljs-string" class="hljs-string">│</span> <span class="hljs-string" class="hljs-string">总</span> <span class="hljs-string" class="hljs-string">Token</span> <span class="hljs-string" class="hljs-string">消耗:</span> <span class="hljs-string" class="hljs-string">约</span> <span class="hljs-string" class="hljs-string">5k</span> <span class="hljs-string" class="hljs-string">tokens</span>             <span class="hljs-string" class="hljs-string">│</span>
+<span class="hljs-string" class="hljs-string">│</span> <span class="hljs-string" class="hljs-string">其他</span> <span class="hljs-number" class="hljs-number">9</span> <span class="hljs-string" class="hljs-string">个</span> <span class="hljs-attr" class="hljs-attr">Skills:</span> <span class="hljs-number" class="hljs-number">0</span> <span class="hljs-string" class="hljs-string">tokens(未加载)</span>      <span class="hljs-string" class="hljs-string">│</span>
+<span class="hljs-string" class="hljs-string">└─────────────────────────────────────────┘</span>
+</code></pre></div></div><p><strong>对比无渐进式披露</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">ini</div><div class="wrapper"><pre><code class="language-ini">❌ 传统方式: 10 个 Skills × <span class="hljs-attr" class="hljs-attr">5k</span> = <span class="hljs-number" class="hljs-number">50</span>k tokens
+✅ 渐进式披露: 只加载 1 个 <span class="hljs-attr" class="hljs-attr">Skill</span> = <span class="hljs-number" class="hljs-number">5</span>k tokens
+节省: 45k tokens (90% 的上下文!)
+</code></pre></div></div><hr><h2 level="2" id="三Skills-的文件结构">三、Skills 的文件结构</h2><h3 level="3" id="31-最小化-Skill">3.1 最小化 Skill</h3><p>最简单的 Skill 只需要一个文件:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">perl</div><div class="wrapper"><pre><code class="language-perl"><span class="hljs-keyword" class="hljs-keyword">my</span>-skill/
+└── SKILL.md          <span class="hljs-comment" class="hljs-comment"># 唯一必需的文件</span>
+</code></pre></div></div><p><strong>SKILL.md 示例</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown">---
+name: code-review-checklist
+<span class="hljs-section" class="hljs-section">description: Provides a code review checklist for pull requests. Use when reviewing code or when the user asks for code review guidelines.
+---</span>
+
+<span class="hljs-section" class="hljs-section"># Code Review Checklist</span>
+
+When reviewing code, check:
+
+<span class="hljs-bullet" class="hljs-bullet">1.</span> <span class="hljs-strong" class="hljs-strong">**Functionality**</span>: Does the code do what it&apos;s supposed to?
+<span class="hljs-bullet" class="hljs-bullet">2.</span> <span class="hljs-strong" class="hljs-strong">**Readability**</span>: Is the code easy to understand?
+<span class="hljs-bullet" class="hljs-bullet">3.</span> <span class="hljs-strong" class="hljs-strong">**Tests**</span>: Are there appropriate tests?
+<span class="hljs-bullet" class="hljs-bullet">4.</span> <span class="hljs-strong" class="hljs-strong">**Performance**</span>: Are there any obvious performance issues?
+<span class="hljs-bullet" class="hljs-bullet">5.</span> <span class="hljs-strong" class="hljs-strong">**Security**</span>: Are there any security vulnerabilities?
+
+For each item, provide specific feedback with examples.
+</code></pre></div></div><h3 level="3" id="32-完整-Skill-结构">3.2 完整 Skill 结构</h3><p>对于复杂的 Skills,可以组织成多文件结构:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash">pdf-processing-skill/
+├── SKILL.md              <span class="hljs-comment" class="hljs-comment"># 核心指令(必需)</span>
+├── FORMS.md              <span class="hljs-comment" class="hljs-comment"># 表单填写详细指南</span>
+├── REFERENCE.md          <span class="hljs-comment" class="hljs-comment"># PDF 库 API 参考</span>
+├── EXAMPLES.md           <span class="hljs-comment" class="hljs-comment"># 常见用例示例</span>
+└── scripts/
+    ├── analyze_form.py   <span class="hljs-comment" class="hljs-comment"># 分析表单工具</span>
+    ├── fill_form.py      <span class="hljs-comment" class="hljs-comment"># 填写表单工具</span>
+    └── validate.py       <span class="hljs-comment" class="hljs-comment"># 验证输出工具</span>
+</code></pre></div></div><h3 level="3" id="33-YAML-Frontmatter-规范">3.3 YAML Frontmatter 规范</h3><p><strong>必填字段</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">yaml</div><div class="wrapper"><pre><code class="language-yaml"><span class="hljs-meta" class="hljs-meta">---</span>
+<span class="hljs-attr" class="hljs-attr">name:</span> <span class="hljs-string" class="hljs-string">skill-name</span>              <span class="hljs-comment" class="hljs-comment"># 必填</span>
+<span class="hljs-attr" class="hljs-attr">description:</span> <span class="hljs-string" class="hljs-string">Skill</span> <span class="hljs-string" class="hljs-string">description</span> <span class="hljs-comment" class="hljs-comment"># 必填</span>
+<span class="hljs-meta" class="hljs-meta">---
+
+</span></code></pre></div></div><p><strong>字段要求</strong>:</p><p>字段要求示例<strong>name</strong>小写字母、数字、连字符<br>最多 64 字符<br>禁止 &quot;anthropic&quot;、&quot;claude&quot;<code>pdf-processing</code><br><code>bigquery-analytics</code><br><code>code-reviewer</code><strong>description</strong>非空<br>最多 1024 字符<br>包含功能 + 触发场景<br><strong>第三人称描述</strong><code>Extract text from PDFs. Use when...</code><br><code>Analyze BigQuery data. Use when...</code></p><p><strong>命名规范</strong>:</p><p>✅ <strong>推荐</strong>: 动名词形式(Gerund Form)</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">css</div><div class="wrapper"><pre><code class="language-css">processing-pdfs
+analyzing-spreadsheets
+reviewing-<span class="hljs-selector-tag" class="hljs-selector-tag">code</span>
+managing-databases
+</code></pre></div></div><p>❌ <strong>避免</strong>: 过于模糊</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash">helper          <span class="hljs-comment" class="hljs-comment"># 太模糊</span>
+utils           <span class="hljs-comment" class="hljs-comment"># 不知道干什么</span>
+tool            <span class="hljs-comment" class="hljs-comment"># 功能不明确</span>
+</code></pre></div></div><h3 level="3" id="34-Description-字段的重要性">3.4 Description 字段的重要性</h3><p>⚠️ <strong>警告</strong>: description 是 Skill 触发的关键,必须用<strong>第三人称</strong>!</p><p><strong>为什么必须第三人称?</strong></p><p>description 会被注入到系统提示中,视角不一致会导致困惑:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash">系统提示: <span class="hljs-string" class="hljs-string">&quot;You are Claude, an AI assistant...&quot;</span>
+Skill description: <span class="hljs-string" class="hljs-string">&quot;I can help you process PDFs&quot;</span>  <span class="hljs-comment" class="hljs-comment"># ❌ 第一人称,视角冲突!</span>
+</code></pre></div></div><p><strong>正确示例</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">yaml</div><div class="wrapper"><pre><code class="language-yaml"><span class="hljs-meta" class="hljs-meta">---</span>
+<span class="hljs-attr" class="hljs-attr">name:</span> <span class="hljs-string" class="hljs-string">pdf-processing</span>
+<span class="hljs-attr" class="hljs-attr">description:</span> <span class="hljs-string" class="hljs-string">Extract</span> <span class="hljs-string" class="hljs-string">text</span> <span class="hljs-string" class="hljs-string">and</span> <span class="hljs-string" class="hljs-string">tables</span> <span class="hljs-string" class="hljs-string">from</span> <span class="hljs-string" class="hljs-string">PDF</span> <span class="hljs-string" class="hljs-string">files,</span> <span class="hljs-string" class="hljs-string">fill</span> <span class="hljs-string" class="hljs-string">forms,</span> <span class="hljs-string" class="hljs-string">merge</span> <span class="hljs-string" class="hljs-string">documents.</span>
+             <span class="hljs-string" class="hljs-string">Use</span> <span class="hljs-string" class="hljs-string">when</span> <span class="hljs-string" class="hljs-string">working</span> <span class="hljs-string" class="hljs-string">with</span> <span class="hljs-string" class="hljs-string">PDF</span> <span class="hljs-string" class="hljs-string">files</span> <span class="hljs-string" class="hljs-string">or</span> <span class="hljs-string" class="hljs-string">when</span> <span class="hljs-string" class="hljs-string">the</span> <span class="hljs-string" class="hljs-string">user</span> <span class="hljs-string" class="hljs-string">mentions</span> <span class="hljs-string" class="hljs-string">PDFs,</span> <span class="hljs-string" class="hljs-string">forms,</span>
+             <span class="hljs-string" class="hljs-string">or</span> <span class="hljs-string" class="hljs-string">document</span> <span class="hljs-string" class="hljs-string">extraction.</span>
+<span class="hljs-meta" class="hljs-meta">---
+
+</span></code></pre></div></div><p><strong>不正确示例</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">yaml</div><div class="wrapper"><pre><code class="language-yaml"><span class="hljs-string" class="hljs-string">❌</span> <span class="hljs-attr" class="hljs-attr">description:</span> <span class="hljs-string" class="hljs-string">I</span> <span class="hljs-string" class="hljs-string">can</span> <span class="hljs-string" class="hljs-string">help</span> <span class="hljs-string" class="hljs-string">you</span> <span class="hljs-string" class="hljs-string">process</span> <span class="hljs-string" class="hljs-string">Excel</span> <span class="hljs-string" class="hljs-string">files</span>  <span class="hljs-comment" class="hljs-comment"># 第一人称</span>
+<span class="hljs-string" class="hljs-string">❌</span> <span class="hljs-attr" class="hljs-attr">description:</span> <span class="hljs-string" class="hljs-string">You</span> <span class="hljs-string" class="hljs-string">can</span> <span class="hljs-string" class="hljs-string">use</span> <span class="hljs-string" class="hljs-string">this</span> <span class="hljs-string" class="hljs-string">to</span> <span class="hljs-string" class="hljs-string">process</span> <span class="hljs-string" class="hljs-string">Excel</span>   <span class="hljs-comment" class="hljs-comment"># 第二人称</span>
+<span class="hljs-string" class="hljs-string">❌</span> <span class="hljs-attr" class="hljs-attr">description:</span> <span class="hljs-string" class="hljs-string">Helps</span> <span class="hljs-string" class="hljs-string">with</span> <span class="hljs-string" class="hljs-string">documents</span>                <span class="hljs-comment" class="hljs-comment"># 过于模糊</span>
+</code></pre></div></div><p><strong>编写技巧</strong>:</p><ol><li><p><strong>明确功能</strong>: 说清楚 Skill 能做什么</p></li><li><p><strong>包含关键词</strong>: 用户可能使用的术语(PDF、Excel、BigQuery 等)</p></li><li><p><strong>触发场景</strong>: 明确何时使用(&quot;Use when...&quot;)</p></li><li><p><strong>简洁精准</strong>: 1-2 句话说清楚</p></li></ol><hr><h2 level="2" id="四创建你的第一个-Skill">四、创建你的第一个 Skill</h2><h3 level="3" id="41-确定需求">4.1 确定需求</h3><p><strong>问题导向</strong>:</p><p>问自己:</p><ol><li><p>我反复向 Claude 解释什么内容?</p></li><li><p>哪些领域知识 Claude 不太了解?</p></li><li><p>哪些工作流程需要标准化?</p></li></ol><p><strong>示例场景</strong>:</p><p>场景 1: BigQuery 数据分析</p><ul><li><p>❌ 每次都要说明表结构</p></li><li><p>❌ 每次都要强调&quot;排除测试账户&quot;</p></li><li><p>❌ 每次都要说明查询模式</p></li><li><p>✅ 创建一个 BigQuery Skill!</p></li></ul><p>场景 2: 公司文档规范</p><ul><li><p>❌ 每次都要说明文档模板</p></li><li><p>❌ 每次都要强调格式要求</p></li><li><p>❌ 每次都要纠正不符合规范的部分</p></li><li><p>✅ 创建一个文档规范 Skill!</p></li></ul><h3 level="3" id="42-编写-SKILLmd">4.2 编写 SKILL.md</h3><p><strong>步骤 1: 创建目录和文件</strong></p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash"><span class="hljs-built_in" class="hljs-built_in">mkdir</span> my-bigquery-skill
+<span class="hljs-built_in" class="hljs-built_in">cd</span> my-bigquery-skill
+<span class="hljs-built_in" class="hljs-built_in">touch</span> SKILL.md
+</code></pre></div></div><p><strong>步骤 2: 编写 YAML Frontmatter</strong></p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown">---
+name: bigquery-analytics
+<span class="hljs-section" class="hljs-section">description: Analyze BigQuery data from the user<span class="hljs-emphasis" class="hljs-emphasis">_metrics and sales tables. Use when the user asks about data analysis, metrics, or BigQuery queries. Always exclude test accounts and apply standard date filters.
+---
+
+</span></span></code></pre></div></div><p><strong>步骤 3: 编写核心指令</strong></p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown"><span class="hljs-section" class="hljs-section"># BigQuery Analytics</span>
+
+<span class="hljs-section" class="hljs-section">## Database Schema</span>
+
+<span class="hljs-section" class="hljs-section">### user<span class="hljs-emphasis" class="hljs-emphasis">_metrics table
+- user_</span>id (STRING): Unique user identifier</span>
+<span class="hljs-bullet" class="hljs-bullet">-</span> event<span class="hljs-emphasis" class="hljs-emphasis">_date (DATE): Event date
+- metrics_</span>value (FLOAT): Metric value
+<span class="hljs-bullet" class="hljs-bullet">-</span> account<span class="hljs-emphasis" class="hljs-emphasis">_type (STRING): &quot;production&quot; or &quot;test&quot;
+
+### sales table
+- order_</span>id (STRING): Order identifier
+<span class="hljs-bullet" class="hljs-bullet">-</span> user<span class="hljs-emphasis" class="hljs-emphasis">_id (STRING): User ID (foreign key to user_</span>metrics)
+<span class="hljs-bullet" class="hljs-bullet">-</span> amount (FLOAT): Order amount
+<span class="hljs-bullet" class="hljs-bullet">-</span> order<span class="hljs-emphasis" class="hljs-emphasis">_date (DATE): Order date
+
+## Standard Filtering Rules
+
+<span class="hljs-strong" class="hljs-strong">**Always apply these filters:**</span>
+1. Exclude test accounts: `WHERE account_</span>type = &apos;production&apos;`
+<span class="hljs-bullet" class="hljs-bullet">2.</span> Date range: Default to last 30 days unless specified
+<span class="hljs-bullet" class="hljs-bullet">3.</span> Remove null values: <span class="hljs-code" class="hljs-code">`WHERE metrics_value IS NOT NULL`</span>
+
+<span class="hljs-section" class="hljs-section">## Query Patterns</span>
+
+<span class="hljs-section" class="hljs-section">### Pattern 1: User activity analysis</span>
+\<span class="hljs-code" class="hljs-code">`\`</span>\`sql
+SELECT
+  event<span class="hljs-emphasis" class="hljs-emphasis">_date,
+  COUNT(DISTINCT user_</span>id) as active<span class="hljs-emphasis" class="hljs-emphasis">_users,
+  AVG(metrics_</span>value) as avg<span class="hljs-emphasis" class="hljs-emphasis">_metric
+FROM user_</span>metrics
+WHERE account<span class="hljs-emphasis" class="hljs-emphasis">_type = &apos;production&apos;
+  AND event_</span>date &gt;= DATE<span class="hljs-emphasis" class="hljs-emphasis">_SUB(CURRENT_</span>DATE(), INTERVAL 30 DAY)
+GROUP BY event<span class="hljs-emphasis" class="hljs-emphasis">_date
+ORDER BY event_</span>date;
+\<span class="hljs-code" class="hljs-code">`\`</span>\`
+
+<span class="hljs-section" class="hljs-section">### Pattern 2: Sales analysis</span>
+\<span class="hljs-code" class="hljs-code">`\`</span>\`sql
+SELECT
+  DATE<span class="hljs-emphasis" class="hljs-emphasis">_TRUNC(order_</span>date, MONTH) as month,
+  COUNT(<span class="hljs-emphasis" class="hljs-emphasis">*) as order_count,
+  SUM(amount) as total_revenue
+FROM sales s
+JOIN user_metrics u ON s.user_id = u.user_id
+WHERE u.account_type = &apos;production&apos;
+GROUP BY month
+ORDER BY month;
+\`\`\`
+
+## Important Notes
+
+- <span class="hljs-strong" class="hljs-strong">**Performance**</span>: Always use partitioned date fields in WHERE clause
+- <span class="hljs-strong" class="hljs-strong">**Costs**</span>: Preview query cost before running on large datasets
+- <span class="hljs-strong" class="hljs-strong">**Timezone**</span>: All dates are in UTC
+
+</span></code></pre></div></div><hr><h2 level="2" id="五核心最佳实践">五、核心最佳实践</h2><h3 level="3" id="51-简洁为王Conciseness-is-Key">5.1 简洁为王(Conciseness is Key)</h3><p><strong>核心原则</strong>: 上下文窗口是公共资源,你的 Skill 要与系统提示、对话历史、其他 Skills 共享。</p><h4 level="4" id="-好的示例约-50-tokens">✅ 好的示例(约 50 tokens)</h4><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown"><span class="hljs-section" class="hljs-section">## Extract PDF Text</span>
+
+Use pdfplumber for text extraction:
+
+\<span class="hljs-code" class="hljs-code">`\`</span>\`python
+import pdfplumber
+
+with pdfplumber.open(&quot;file.pdf&quot;) as pdf:
+<span class="hljs-code" class="hljs-code">    text = pdf.pages[0].extract_text()
+\`\`\`
+</span>
+</code></pre></div></div><h4 level="4" id="-糟糕的示例约-150-tokens">❌ 糟糕的示例(约 150 tokens)</h4><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown"><span class="hljs-section" class="hljs-section">## Extract PDF Text</span>
+
+PDF(便携式文档格式)是一种常见的文件格式,包含文本、图像等内容。
+要从 PDF 中提取文本,你需要使用一个库。有很多 PDF 处理库可用,
+但我们推荐 pdfplumber,因为它易于使用且能处理大多数情况。
+首先,你需要使用 pip 安装它。然后你可以使用下面的代码...
+</code></pre></div></div><p><strong>为什么简洁版更好?</strong></p><ul><li><p>✅ 假设 Claude 已经知道 PDF 是什么</p></li><li><p>✅ 假设 Claude 知道库的工作原理</p></li><li><p>✅ 直接提供关键信息:用什么库、怎么用</p></li><li><p>✅ 节省 100 tokens,留给其他 Skills 使用</p></li></ul><blockquote><p>⚠️ <strong>记住</strong>: 不要低估 Claude 的智能!它是通用 AI,不需要你解释基础概念。</p></blockquote><h3 level="3" id="52-设置适当的自由度">5.2 设置适当的自由度</h3><p>根据任务的脆弱性和可变性,选择合适的指导程度。</p><h4 level="4" id="-高自由度基于文本的指令">🌟 高自由度(基于文本的指令)</h4><p><strong>适用场景</strong>:</p><ul><li><p>多种方法都可行</p></li><li><p>决策依赖上下文</p></li><li><p>启发式方法指导</p></li></ul><p><strong>示例:代码审查流程</strong></p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown"><span class="hljs-section" class="hljs-section">## Code Review Process</span>
+
+<span class="hljs-bullet" class="hljs-bullet">1.</span> Analyze code structure and organization
+<span class="hljs-bullet" class="hljs-bullet">2.</span> Check for potential bugs or edge cases
+<span class="hljs-bullet" class="hljs-bullet">3.</span> Suggest improvements for readability and maintainability
+<span class="hljs-bullet" class="hljs-bullet">4.</span> Verify compliance with project standards
+</code></pre></div></div><p><strong>特点</strong>: 给出大方向,信任 Claude 根据具体情况调整。</p><h4 level="4" id="-中等自由度伪代码或带参数的脚本">🎯 中等自由度(伪代码或带参数的脚本)</h4><p><strong>适用场景</strong>:</p><ul><li><p>存在首选模式</p></li><li><p>允许一定变化</p></li><li><p>配置影响行为</p></li></ul><p><strong>示例:生成报告</strong></p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown"><span class="hljs-section" class="hljs-section">## Generate Report</span>
+
+Use this template and customize as needed:
+
+\<span class="hljs-code" class="hljs-code">`\`</span>\`python
+def generate<span class="hljs-emphasis" class="hljs-emphasis">_report(data, format=&quot;markdown&quot;, include_</span>charts=True):
+<span class="hljs-code" class="hljs-code">    # Process data
+    # Generate output in specified format
+    # Optionally include visualizations
+\`\`\`
+</span>
+</code></pre></div></div><p><strong>特点</strong>: 提供模板和参数,允许根据需求调整。</p><h4 level="4" id="-低自由度特定脚本少量或无参数">🔒 低自由度(特定脚本,少量或无参数)</h4><p><strong>适用场景</strong>:</p><ul><li><p>操作易错且脆弱</p></li><li><p>一致性至关重要</p></li><li><p>必须遵循特定顺序</p></li></ul><p><strong>示例:数据库迁移</strong></p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown"><span class="hljs-section" class="hljs-section">## Database Migration</span>
+
+Execute this script strictly:
+
+\<span class="hljs-code" class="hljs-code">`\`</span>\`bash
+python scripts/migrate.py --verify --backup
+\<span class="hljs-code" class="hljs-code">`\`</span>\`
+
+Do not modify the command or add extra parameters.
+</code></pre></div></div><p><strong>特点</strong>: 精确指令,不允许偏离。</p><h4 level="4" id="-类比理解">🌉 类比理解</h4><p>把 Claude 想象成在不同地形上探索的机器人:</p><ul><li><p><strong>悬崖边的窄桥</strong>(低自由度): 只有一条安全路径 → 提供详细护栏和精确指令</p></li><li><p><strong>丘陵地带</strong>(中等自由度): 几条推荐路径 → 提供地图和指南针</p></li><li><p><strong>无障碍的开阔草地</strong>(高自由度): 多条路径都能成功 → 给出大致方向,信任 Claude 找到最佳路线</p></li></ul><h3 level="3" id="53-渐进式披露模式">5.3 渐进式披露模式</h3><h4 level="4" id="模式-1高层指南--引用">模式 1:高层指南 + 引用</h4><p><strong>结构</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">scss</div><div class="wrapper"><pre><code class="language-scss">SKILL<span class="hljs-selector-class" class="hljs-selector-class">.md</span> (简要指南)
+   ↓ 引用
+<span class="hljs-selector-attr" class="hljs-selector-attr">[FORMS.md]</span> <span class="hljs-selector-attr" class="hljs-selector-attr">[REFERENCE.md]</span> <span class="hljs-selector-attr" class="hljs-selector-attr">[EXAMPLES.md]</span>
+</code></pre></div></div><p><strong>示例</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown"><span class="hljs-section" class="hljs-section"># PDF Processing</span>
+
+<span class="hljs-section" class="hljs-section">## Quick Start</span>
+
+Use pdfplumber to extract text:
+\<span class="hljs-code" class="hljs-code">`\`</span>\`python
+import pdfplumber
+with pdfplumber.open(&quot;file.pdf&quot;) as pdf:
+<span class="hljs-code" class="hljs-code">    text = pdf.pages[0].extract_text()
+\`\`\`
+</span>
+<span class="hljs-section" class="hljs-section">## Advanced Features</span>
+
+<span class="hljs-strong" class="hljs-strong">**Form Filling**</span>: See [<span class="hljs-string" class="hljs-string">FORMS.md</span>](<span class="hljs-link" class="hljs-link">FORMS.md</span>) for complete guide
+<span class="hljs-strong" class="hljs-strong">**API Reference**</span>: See [<span class="hljs-string" class="hljs-string">REFERENCE.md</span>](<span class="hljs-link" class="hljs-link">REFERENCE.md</span>) for all methods
+<span class="hljs-strong" class="hljs-strong">**Examples**</span>: See [<span class="hljs-string" class="hljs-string">EXAMPLES.md</span>](<span class="hljs-link" class="hljs-link">EXAMPLES.md</span>) for common patterns
+</code></pre></div></div><p><strong>优势</strong>:</p><ul><li><p>Claude 只在需要时才读取 FORMS.md、REFERENCE.md 或 EXAMPLES.md</p></li><li><p>未使用的文件 = 0 tokens 消耗</p></li></ul><h4 level="4" id="模式-2按领域组织">模式 2:按领域组织</h4><p><strong>适用场景</strong>: 多领域的 Skills,避免加载无关上下文</p><p><strong>结构</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">bash</div><div class="wrapper"><pre><code class="language-bash">bigquery-skill/
+├── SKILL.md              <span class="hljs-comment" class="hljs-comment"># 概述和导航</span>
+└── reference/
+    ├── finance.md        <span class="hljs-comment" class="hljs-comment"># 财务指标</span>
+    ├── sales.md          <span class="hljs-comment" class="hljs-comment"># 销售数据</span>
+    ├── product.md        <span class="hljs-comment" class="hljs-comment"># 产品分析</span>
+    └── marketing.md      <span class="hljs-comment" class="hljs-comment"># 营销活动</span>
+</code></pre></div></div><p><strong>示例</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown"><span class="hljs-section" class="hljs-section"># BigQuery Analytics</span>
+
+<span class="hljs-section" class="hljs-section">## Domain Reference</span>
+
+<span class="hljs-bullet" class="hljs-bullet">-</span> <span class="hljs-strong" class="hljs-strong">**Finance Metrics**</span>: See [<span class="hljs-string" class="hljs-string">reference/finance.md</span>](<span class="hljs-link" class="hljs-link">reference/finance.md</span>)
+<span class="hljs-bullet" class="hljs-bullet">-</span> <span class="hljs-strong" class="hljs-strong">**Sales Data**</span>: See [<span class="hljs-string" class="hljs-string">reference/sales.md</span>](<span class="hljs-link" class="hljs-link">reference/sales.md</span>)
+<span class="hljs-bullet" class="hljs-bullet">-</span> <span class="hljs-strong" class="hljs-strong">**Product Analytics**</span>: See [<span class="hljs-string" class="hljs-string">reference/product.md</span>](<span class="hljs-link" class="hljs-link">reference/product.md</span>)
+<span class="hljs-bullet" class="hljs-bullet">-</span> <span class="hljs-strong" class="hljs-strong">**Marketing Campaigns**</span>: See [<span class="hljs-string" class="hljs-string">reference/marketing.md</span>](<span class="hljs-link" class="hljs-link">reference/marketing.md</span>)
+</code></pre></div></div><p><strong>优势</strong>:</p><ul><li><p>用户询问销售指标时,只读取 sales.md</p></li><li><p>finance.md 和其他文件保持在文件系统中,消耗 0 tokens</p></li></ul><h4 level="4" id="模式-3条件细节">模式 3:条件细节</h4><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown"><span class="hljs-section" class="hljs-section"># DOCX Processing</span>
+
+<span class="hljs-section" class="hljs-section">## Create Documents</span>
+
+Use docx-js to create new documents. See [<span class="hljs-string" class="hljs-string">DOCX-JS.md</span>](<span class="hljs-link" class="hljs-link">DOCX-JS.md</span>).
+
+<span class="hljs-section" class="hljs-section">## Edit Documents</span>
+
+For simple edits, modify XML directly.
+
+<span class="hljs-strong" class="hljs-strong">**Track Changes**</span>: See [<span class="hljs-string" class="hljs-string">REDLINING.md</span>](<span class="hljs-link" class="hljs-link">REDLINING.md</span>)
+<span class="hljs-strong" class="hljs-strong">**OOXML Details**</span>: See [<span class="hljs-string" class="hljs-string">OOXML.md</span>](<span class="hljs-link" class="hljs-link">OOXML.md</span>)
+</code></pre></div></div><p><strong>优势</strong>:</p><ul><li><p>常见操作(创建文档)在主文件中</p></li><li><p>高级功能(追踪更改)按需引用</p></li></ul><p>💡 <strong>重要</strong>: 保持引用层级为一级深度。避免 <code>SKILL.md → advanced.md → details.md</code> 这样的深层嵌套。</p><h3 level="3" id="54-工作流和反馈循环">5.4 工作流和反馈循环</h3><h4 level="4" id="复杂任务的工作流模式">复杂任务的工作流模式</h4><p>为多步骤任务提供清晰的检查清单:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown"><span class="hljs-section" class="hljs-section">## PDF Form Filling Workflow</span>
+
+Copy this checklist and track progress:
+
+\<span class="hljs-code" class="hljs-code">`\`</span>\`
+Task Progress:
+<span class="hljs-bullet" class="hljs-bullet">-</span> [ ] Step 1: Analyze form (run analyze<span class="hljs-emphasis" class="hljs-emphasis">_form.py)
+- [ ] Step 2: Create field mapping (edit fields.json)
+- [ ] Step 3: Validate mapping (run validate_</span>fields.py)
+<span class="hljs-bullet" class="hljs-bullet">-</span> [ ] Step 4: Fill form (run fill<span class="hljs-emphasis" class="hljs-emphasis">_form.py)
+- [ ] Step 5: Verify output (run verify_</span>output.py)
+\<span class="hljs-code" class="hljs-code">`\`</span>\`
+
+<span class="hljs-strong" class="hljs-strong">**Step 1: Analyze Form**</span>
+
+Run: <span class="hljs-code" class="hljs-code">`python scripts/analyze_form.py input.pdf`</span>
+
+This extracts form fields and their locations, saving to <span class="hljs-code" class="hljs-code">`fields.json`</span>.
+
+<span class="hljs-strong" class="hljs-strong">**Step 2: Create Field Mapping**</span>
+
+Edit <span class="hljs-code" class="hljs-code">`fields.json`</span> to add values for each field.
+
+<span class="hljs-strong" class="hljs-strong">**Step 3: Validate Mapping**</span>
+
+Run: <span class="hljs-code" class="hljs-code">`python scripts/validate_fields.py fields.json`</span>
+
+Fix any validation errors before proceeding.
+
+<span class="hljs-strong" class="hljs-strong">**Step 4: Fill Form**</span>
+
+Run: <span class="hljs-code" class="hljs-code">`python scripts/fill_form.py input.pdf fields.json output.pdf`</span>
+
+<span class="hljs-strong" class="hljs-strong">**Step 5: Verify Output**</span>
+
+Run: <span class="hljs-code" class="hljs-code">`python scripts/verify_output.py output.pdf`</span>
+
+If validation fails, return to Step 2.
+</code></pre></div></div><h4 level="4" id="实现反馈循环">实现反馈循环</h4><p><strong>常见模式</strong>: 运行验证器 → 修复错误 → 重复</p><p>这种模式极大提高输出质量。</p><p><strong>示例:文档编辑流程</strong></p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown"><span class="hljs-section" class="hljs-section">## Document Editing Flow</span>
+
+<span class="hljs-bullet" class="hljs-bullet">1.</span> Make edits to <span class="hljs-code" class="hljs-code">`word/document.xml`</span>
+<span class="hljs-bullet" class="hljs-bullet">2.</span> <span class="hljs-strong" class="hljs-strong">**Validate immediately**</span>: <span class="hljs-code" class="hljs-code">`python ooxml/scripts/validate.py unpacked_dir/`</span>
+<span class="hljs-bullet" class="hljs-bullet">3.</span> If validation fails:
+<span class="hljs-bullet" class="hljs-bullet">   -</span> Review error messages carefully
+<span class="hljs-bullet" class="hljs-bullet">   -</span> Fix issues in XML
+<span class="hljs-bullet" class="hljs-bullet">   -</span> Run validation again
+<span class="hljs-bullet" class="hljs-bullet">4.</span> <span class="hljs-strong" class="hljs-strong">**Only proceed when validation passes**</span>
+<span class="hljs-bullet" class="hljs-bullet">5.</span> Repack: <span class="hljs-code" class="hljs-code">`python ooxml/scripts/pack.py unpacked_dir/ output.docx`</span>
+<span class="hljs-bullet" class="hljs-bullet">6.</span> Test output document
+</code></pre></div></div><p><strong>为什么反馈循环重要?</strong></p><ul><li><p>✅ 及早发现错误(在应用更改前)</p></li><li><p>✅ 机器可验证(脚本提供客观验证)</p></li><li><p>✅ 可逆计划(Claude 可以迭代而不破坏原始文件)</p></li><li><p>✅ 清晰调试(错误消息指向具体问题)</p></li></ul><h3 level="3" id="55-内容指南">5.5 内容指南</h3><h4 level="4" id="避免时间敏感信息">避免时间敏感信息</h4><p>❌ <strong>糟糕示例</strong>(会过时):</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown">如果你在 2025 年 8 月之前做这件事,使用旧 API。
+2025 年 8 月之后,使用新 API。
+</code></pre></div></div><p>✅ <strong>好的示例</strong>(使用&quot;旧模式&quot;部分):</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown"><span class="hljs-section" class="hljs-section">## Current Method</span>
+
+Use v2 API endpoint: <span class="hljs-code" class="hljs-code">`api.example.com/v2/messages`</span>
+
+<span class="hljs-section" class="hljs-section">## Legacy Patterns</span>
+
+<span class="xml" class="xml"><span class="hljs-tag" class="hljs-tag">&lt;<span class="hljs-name" class="hljs-name">details</span>&gt;</span></span>
+<span class="xml" class="xml"><span class="hljs-tag" class="hljs-tag">&lt;<span class="hljs-name" class="hljs-name">summary</span>&gt;</span></span>Legacy v1 API (deprecated 2025-08)<span class="xml" class="xml"><span class="hljs-tag" class="hljs-tag">&lt;/<span class="hljs-name" class="hljs-name">summary</span>&gt;</span></span>
+
+v1 API uses: <span class="hljs-code" class="hljs-code">`api.example.com/v1/messages`</span>
+
+This endpoint is no longer supported.
+<span class="xml" class="xml"><span class="hljs-tag" class="hljs-tag">&lt;/<span class="hljs-name" class="hljs-name">details</span>&gt;</span></span>
+</code></pre></div></div><h4 level="4" id="使用一致的术语">使用一致的术语</h4><p>在整个 Skill 中选择一个术语并坚持使用:</p><p>✅ <strong>一致性好</strong>:</p><ul><li><p>始终使用 &quot;API endpoint&quot;</p></li><li><p>始终使用 &quot;field&quot;</p></li><li><p>始终使用 &quot;extract&quot;</p></li></ul><p>❌ <strong>不一致</strong>:</p><ul><li><p>混用 &quot;API endpoint&quot;、&quot;URL&quot;、&quot;API route&quot;、&quot;path&quot;</p></li><li><p>混用 &quot;field&quot;、&quot;box&quot;、&quot;element&quot;、&quot;control&quot;</p></li><li><p>混用 &quot;extract&quot;、&quot;pull&quot;、&quot;get&quot;、&quot;retrieve&quot;</p></li></ul><hr><h2 level="2" id="六高级技巧">六、高级技巧</h2><h3 level="3" id="61-包含可执行代码的-Skills">6.1 包含可执行代码的 Skills</h3><h4 level="4" id="解决问题而非推卸责任">解决问题,而非推卸责任</h4><p>编写 Skills 脚本时,显式处理错误情况,而非推卸给 Claude。</p><p>✅ <strong>好的示例:显式处理错误</strong></p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">python</div><div class="wrapper"><pre><code class="language-python"><span class="hljs-keyword" class="hljs-keyword">def</span> <span class="hljs-title,function_" class="hljs-title,function_">process_file</span>(<span class="hljs-params" class="hljs-params">path</span>):
+    <span class="hljs-string" class="hljs-string">&quot;&quot;&quot;处理文件,如果不存在则创建。&quot;&quot;&quot;</span>
+    <span class="hljs-keyword" class="hljs-keyword">try</span>:
+        <span class="hljs-keyword" class="hljs-keyword">with</span> <span class="hljs-built_in" class="hljs-built_in">open</span>(path) <span class="hljs-keyword" class="hljs-keyword">as</span> f:
+            <span class="hljs-keyword" class="hljs-keyword">return</span> f.read()
+    <span class="hljs-keyword" class="hljs-keyword">except</span> FileNotFoundError:
+        <span class="hljs-comment" class="hljs-comment"># 创建默认内容而非失败</span>
+        <span class="hljs-built_in" class="hljs-built_in">print</span>(<span class="hljs-string" class="hljs-string">f&quot;文件 <span class="hljs-subst" class="hljs-subst">{path}</span> 未找到,创建默认文件&quot;</span>)
+        <span class="hljs-keyword" class="hljs-keyword">with</span> <span class="hljs-built_in" class="hljs-built_in">open</span>(path, <span class="hljs-string" class="hljs-string">&apos;w&apos;</span>) <span class="hljs-keyword" class="hljs-keyword">as</span> f:
+            f.write(<span class="hljs-string" class="hljs-string">&apos;&apos;</span>)
+        <span class="hljs-keyword" class="hljs-keyword">return</span> <span class="hljs-string" class="hljs-string">&apos;&apos;</span>
+    <span class="hljs-keyword" class="hljs-keyword">except</span> PermissionError:
+        <span class="hljs-comment" class="hljs-comment"># 提供替代方案而非失败</span>
+        <span class="hljs-built_in" class="hljs-built_in">print</span>(<span class="hljs-string" class="hljs-string">f&quot;无法访问 <span class="hljs-subst" class="hljs-subst">{path}</span>,使用默认值&quot;</span>)
+        <span class="hljs-keyword" class="hljs-keyword">return</span> <span class="hljs-string" class="hljs-string">&apos;&apos;</span>
+</code></pre></div></div><p>❌ <strong>糟糕示例:推卸给 Claude</strong></p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">python</div><div class="wrapper"><pre><code class="language-python"><span class="hljs-keyword" class="hljs-keyword">def</span> <span class="hljs-title,function_" class="hljs-title,function_">process_file</span>(<span class="hljs-params" class="hljs-params">path</span>):
+    <span class="hljs-comment" class="hljs-comment"># 直接失败,让 Claude 自己想办法</span>
+    <span class="hljs-keyword" class="hljs-keyword">return</span> <span class="hljs-built_in" class="hljs-built_in">open</span>(path).read()
+</code></pre></div></div><h4 level="4" id="提供工具脚本">提供工具脚本</h4><p>即使 Claude 可以编写脚本,预制脚本也有优势:</p><p><strong>工具脚本的好处</strong>:</p><ul><li><p>比生成代码更可靠</p></li><li><p>节省 tokens(无需在上下文中包含代码)</p></li><li><p>节省时间(无需代码生成)</p></li><li><p>确保使用的一致性</p></li></ul><p></p><img src="https://p6-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/181686cffd984fea9c16bf75a192ac72~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5Yas5aWHTGFi:q75.awebp?rk3s=f64ab15b&amp;x-expires=1772249381&amp;x-signature=Z9WUEq5NtMPAYAqpFPs8n4smkWI%3D" alt="09-02-skills-file-structure.png"><p><strong>示例</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown"><span class="hljs-section" class="hljs-section">## Tool Scripts</span>
+
+<span class="hljs-strong" class="hljs-strong">**analyze<span class="hljs-emphasis" class="hljs-emphasis">_form.py**: Extract all form fields from PDF
+
+\`\`\`bash
+python scripts/analyze_</span>form.py input.pdf &gt; fields.json
+\`\`\`
+
+Output format:
+\`\`\`json
+{
+  &quot;field<span class="hljs-emphasis" class="hljs-emphasis">_name&quot;: {&quot;type&quot;: &quot;text&quot;, &quot;x&quot;: 100, &quot;y&quot;: 200},
+  &quot;signature&quot;: {&quot;type&quot;: &quot;sig&quot;, &quot;x&quot;: 150, &quot;y&quot;: 500}
+}
+\`\`\`
+
+**validate_</span>boxes.py**</span>: Check for boundary box overlaps
+
+\<span class="hljs-code" class="hljs-code">`\`</span>\`bash
+python scripts/validate<span class="hljs-emphasis" class="hljs-emphasis">_boxes.py fields.json
+# Returns: &quot;OK&quot; or lists conflicts
+\`\`\`
+
+<span class="hljs-strong" class="hljs-strong">**fill_form.py**</span>: Apply field values to PDF
+
+\`\`\`bash
+python scripts/fill_</span>form.py input.pdf fields.json output.pdf
+\<span class="hljs-code" class="hljs-code">`\`</span>\`
+</code></pre></div></div><p>💡 <strong>重要区分</strong>: 在指令中明确说明 Claude 应该:</p><ul><li><p><strong>执行脚本</strong>(最常见): &quot;运行 analyze_form.py 以提取字段&quot;</p></li><li><p><strong>读取作为参考</strong>(用于复杂逻辑): &quot;参见 analyze_form.py 了解字段提取算法&quot;</p></li></ul><h3 level="3" id="62-创建可验证的中间输出">6.2 创建可验证的中间输出</h3><p>当 Claude 执行复杂、开放式任务时,可能会出错。<strong>&quot;计划-验证-执行&quot;模式</strong>通过让 Claude 首先创建结构化格式的计划,然后在执行前用脚本验证该计划,从而及早发现错误。</p><h4 level="4" id="示例场景">示例场景</h4><p><strong>要求</strong>: Claude 根据电子表格更新 PDF 中的 50 个表单字段。</p><p><strong>没有验证</strong>:Claude 可能:</p><ul><li><p>❌ 引用不存在的字段</p></li><li><p>❌ 创建冲突的值</p></li><li><p>❌ 遗漏必填字段</p></li><li><p>❌ 错误应用更新</p></li></ul><p><strong>有验证</strong>:工作流变为:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><p>添加一个中间 <code>changes.json</code> 文件,在应用更改前进行验证。</p><h4 level="4" id="实现示例">实现示例</h4><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown"><span class="hljs-section" class="hljs-section">## Bulk Form Update Workflow</span>
+
+<span class="hljs-strong" class="hljs-strong">**Step 1: Analyze**</span>
+<span class="hljs-bullet" class="hljs-bullet">-</span> Extract current form fields
+<span class="hljs-bullet" class="hljs-bullet">-</span> Save to <span class="hljs-code" class="hljs-code">`current_fields.json`</span>
+
+<span class="hljs-strong" class="hljs-strong">**Step 2: Create Change Plan**</span>
+<span class="hljs-bullet" class="hljs-bullet">-</span> Based on spreadsheet, create <span class="hljs-code" class="hljs-code">`changes.json`</span>:
+  \<span class="hljs-code" class="hljs-code">`\`</span>\`json
+  {
+<span class="hljs-code" class="hljs-code">    &quot;field_updates&quot;: [
+      {&quot;field&quot;: &quot;customer_name&quot;, &quot;value&quot;: &quot;John Doe&quot;},
+      {&quot;field&quot;: &quot;order_total&quot;, &quot;value&quot;: &quot;1250.00&quot;}
+    ]
+  }
+  \`\`\`
+</span>
+<span class="hljs-strong" class="hljs-strong">**Step 3: Validate Plan**</span>
+<span class="hljs-bullet" class="hljs-bullet">-</span> Run: <span class="hljs-code" class="hljs-code">`python scripts/validate_changes.py changes.json`</span>
+<span class="hljs-bullet" class="hljs-bullet">-</span> Script checks:
+<span class="hljs-bullet" class="hljs-bullet">  -</span> All referenced fields exist
+<span class="hljs-bullet" class="hljs-bullet">  -</span> Values are in correct format
+<span class="hljs-bullet" class="hljs-bullet">  -</span> No conflicts
+<span class="hljs-bullet" class="hljs-bullet">-</span> <span class="hljs-strong" class="hljs-strong">**Only proceed if validation passes**</span>
+
+<span class="hljs-strong" class="hljs-strong">**Step 4: Execute**</span>
+<span class="hljs-bullet" class="hljs-bullet">-</span> Apply changes: <span class="hljs-code" class="hljs-code">`python scripts/apply_changes.py changes.json`</span>
+
+<span class="hljs-strong" class="hljs-strong">**Step 5: Verify Output**</span>
+<span class="hljs-bullet" class="hljs-bullet">-</span> Run: <span class="hljs-code" class="hljs-code">`python scripts/verify_output.py output.pdf`</span>
+</code></pre></div></div><h4 level="4" id="为什么此模式有效">为什么此模式有效</h4><ul><li><p><strong>及早发现错误</strong>: 在应用更改前验证发现问题</p></li><li><p><strong>机器可验证</strong>: 脚本提供客观验证</p></li><li><p><strong>可逆计划</strong>: Claude 可以在不触及原始文件的情况下迭代计划</p></li><li><p><strong>清晰调试</strong>: 错误消息指向具体问题</p></li></ul><h4 level="4" id="使用时机">使用时机</h4><ul><li><p>批量操作</p></li><li><p>破坏性更改</p></li><li><p>复杂验证规则</p></li><li><p>高风险操作</p></li></ul><p>💡 <strong>实现技巧</strong>: 让验证脚本输出详细的错误消息:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">arduino</div><div class="wrapper"><pre><code class="language-arduino">❌ 模糊: <span class="hljs-string" class="hljs-string">&quot;Validation failed&quot;</span>
+✅ 清晰: <span class="hljs-string" class="hljs-string">&quot;Field &apos;signature_date&apos; not found. Available fields: customer_name, order_total, signature_date_signed&quot;</span>
+</code></pre></div></div><p>这帮助 Claude 快速修复问题。</p><h3 level="3" id="63-MCP-工具引用">6.3 MCP 工具引用</h3><p>如果你的 Skill 使用 MCP(Model Context Protocol)工具,始终使用<strong>完全限定的工具名称</strong>以避免&quot;工具未找到&quot;错误。</p><h4 level="4" id="格式">格式</h4><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">makefile</div><div class="wrapper"><pre><code class="language-makefile"><span class="hljs-section" class="hljs-section">ServerName:tool_name</span>
+</code></pre></div></div><h4 level="4" id="示例">示例</h4><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown"><span class="hljs-section" class="hljs-section">## Query Database Schema</span>
+
+Use the BigQuery:bigquery<span class="hljs-emphasis" class="hljs-emphasis">_schema tool to retrieve table schema.
+
+\`\`\`
+Use tool: BigQuery:bigquery_</span>schema
+Parameters: {&quot;table&quot;: &quot;user<span class="hljs-emphasis" class="hljs-emphasis">_metrics&quot;}
+\`\`\`
+
+## Create GitHub Issue
+
+Use the GitHub:create_</span>issue tool to create an issue.
+
+\<span class="hljs-code" class="hljs-code">`\`</span>\`
+Use tool: GitHub:create<span class="hljs-emphasis" class="hljs-emphasis">_issue
+Parameters: {&quot;title&quot;: &quot;Bug report&quot;, &quot;body&quot;: &quot;Description&quot;}
+\`\`\`
+
+</span></code></pre></div></div><h4 level="4" id="说明">说明</h4><ul><li><p><code>BigQuery</code> 和 <code>GitHub</code> 是 MCP 服务器名称</p></li><li><p><code>bigquery_schema</code> 和 <code>create_issue</code> 是这些服务器中的工具名称</p></li></ul><p><strong>没有服务器前缀</strong>,Claude 可能无法找到工具,特别是当有多个 MCP 服务器可用时。</p><hr><h2 level="2" id="七常见反模式">七、常见反模式</h2><h3 level="3" id="-反模式-1Windows-风格路径">❌ 反模式 1:Windows 风格路径</h3><p><strong>问题</strong>:使用反斜杠 <code>\</code> 作为路径分隔符</p><p>❌ <strong>错误</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown">参见 scripts\helper.py
+参见 reference\guide.md
+</code></pre></div></div><p>✅ <strong>正确</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown">参见 scripts/helper.py
+参见 reference/guide.md
+</code></pre></div></div><p><strong>原因</strong>:</p><ul><li><p>Unix 风格路径跨所有平台工作</p></li><li><p>Windows 风格路径在 Unix 系统上会导致错误</p></li></ul><h3 level="3" id="-反模式-2提供太多选项">❌ 反模式 2:提供太多选项</h3><p><strong>问题</strong>:列出所有可能的方法,让 Claude 困惑</p><p>❌ <strong>错误</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown">你可以使用 pypdf,或 pdfplumber,或 PyMuPDF,或 pdf2image,
+或 pikepdf,或 PyPDF2,或 pdfrw,或 pdfminer...
+</code></pre></div></div><p>✅ <strong>正确</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown">使用 pdfplumber 进行文本提取:
+\<span class="hljs-code" class="hljs-code">`\`</span>\`python
+import pdfplumber
+\<span class="hljs-code" class="hljs-code">`\`</span>\`
+
+对于需要 OCR 的扫描 PDF,改用 pdf2image 配合 pytesseract。
+</code></pre></div></div><p><strong>原则</strong>:</p><ul><li><p>提供<strong>默认推荐方法</strong></p></li><li><p>只在特殊情况下提供替代方案</p></li><li><p>不要列出所有可能性</p></li></ul><h3 level="3" id="-反模式-3深层嵌套引用">❌ 反模式 3:深层嵌套引用</h3><p><strong>问题</strong>:引用链太长,Claude 难以跟踪</p><p>❌ <strong>错误</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">css</div><div class="wrapper"><pre><code class="language-css">SKILL<span class="hljs-selector-class" class="hljs-selector-class">.md</span> → advanced<span class="hljs-selector-class" class="hljs-selector-class">.md</span> → <span class="hljs-selector-tag" class="hljs-selector-tag">details</span><span class="hljs-selector-class" class="hljs-selector-class">.md</span> → examples<span class="hljs-selector-class" class="hljs-selector-class">.md</span>
+</code></pre></div></div><p>✅ <strong>正确</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">css</div><div class="wrapper"><pre><code class="language-css">SKILL<span class="hljs-selector-class" class="hljs-selector-class">.md</span>
+  ↓ 直接引用
+<span class="hljs-selector-attr" class="hljs-selector-attr">[ADVANCED.md]</span> <span class="hljs-selector-attr" class="hljs-selector-attr">[DETAILS.md]</span> <span class="hljs-selector-attr" class="hljs-selector-attr">[EXAMPLES.md]</span>
+</code></pre></div></div><p><strong>原则</strong>:</p><ul><li><p>保持从 SKILL.md 的引用为<strong>一级深度</strong></p></li><li><p>所有引用文件应直接从 SKILL.md 链接</p></li></ul><h3 level="3" id="-反模式-4过度解释基础概念">❌ 反模式 4:过度解释基础概念</h3><p><strong>问题</strong>:解释 Claude 已经知道的内容</p><p>❌ <strong>错误</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown">PDF(Portable Document Format,便携式文档格式)是 Adobe 公司
+开发的一种文件格式,可以在不同操作系统上保持一致的显示效果。
+PDF 文件包含文本、图像、矢量图形等多种内容类型...
+</code></pre></div></div><p>✅ <strong>正确</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">markdown</div><div class="wrapper"><pre><code class="language-markdown">使用 pdfplumber 提取 PDF 文本。
+</code></pre></div></div><p><strong>原则</strong>:</p><ul><li><p><strong>假设 Claude 的智能</strong></p></li><li><p>只提供 Claude 不知道的<strong>领域特定知识</strong></p></li></ul><h3 level="3" id="-反模式-5第一人称描述">❌ 反模式 5:第一人称描述</h3><p><strong>问题</strong>:使用&quot;我&quot;、&quot;你&quot;等人称</p><p>❌ <strong>错误</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">yaml</div><div class="wrapper"><pre><code class="language-yaml"><span class="hljs-attr" class="hljs-attr">description:</span> <span class="hljs-string" class="hljs-string">I</span> <span class="hljs-string" class="hljs-string">can</span> <span class="hljs-string" class="hljs-string">help</span> <span class="hljs-string" class="hljs-string">you</span> <span class="hljs-string" class="hljs-string">process</span> <span class="hljs-string" class="hljs-string">Excel</span> <span class="hljs-string" class="hljs-string">files</span> <span class="hljs-string" class="hljs-string">and</span> <span class="hljs-string" class="hljs-string">generate</span> <span class="hljs-string" class="hljs-string">reports.</span>
+</code></pre></div></div><p>✅ <strong>正确</strong>:</p><div class="llt-code readonly"><div class="language">auto</div><div class="wrapper"><pre><code></code></pre></div></div><div class="llt-code readonly"><div class="language">yaml</div><div class="wrapper"><pre><code class="language-yaml"><span class="hljs-attr" class="hljs-attr">description:</span> <span class="hljs-string" class="hljs-string">Process</span> <span class="hljs-string" class="hljs-string">Excel</span> <span class="hljs-string" class="hljs-string">files</span> <span class="hljs-string" class="hljs-string">and</span> <span class="hljs-string" class="hljs-string">generate</span> <span class="hljs-string" class="hljs-string">reports.</span> <span class="hljs-string" class="hljs-string">Use</span> <span class="hljs-string" class="hljs-string">when</span> <span class="hljs-string" class="hljs-string">working</span> <span class="hljs-string" class="hljs-string">with</span> <span class="hljs-string" class="hljs-string">spreadsheets</span> <span class="hljs-string" class="hljs-string">or</span> <span class="hljs-string" class="hljs-string">when</span> <span class="hljs-string" class="hljs-string">the</span> <span class="hljs-string" class="hljs-string">user</span> <span class="hljs-string" class="hljs-string">mentions</span> <span class="hljs-string" class="hljs-string">Excel,</span> <span class="hljs-string" class="hljs-string">CSV,</span> <span class="hljs-string" class="hljs-string">or</span> <span class="hljs-string" class="hljs-string">data</span> <span class="hljs-string" class="hljs-string">analysis.</span>
+</code></pre></div></div><p><strong>原因</strong>:</p><ul><li><p>description 被注入系统提示</p></li><li><p>第一人称会导致视角冲突</p></li></ul><hr><h2 level="2" id="八总结与行动">八、总结与行动</h2><h3 level="3" id="81-核心收益">8.1 核心收益</h3><p>通过 Skills 系统,你可以:</p><ol><li><p><strong>⏱️ 节省时间</strong>: 不用每次重复说明领域知识</p></li><li><p><strong>✅ 保证质量</strong>: 标准化流程,减少错误</p></li><li><p><strong>📚 积累知识</strong>: 把最佳实践封装成 Skills,团队共享</p></li><li><p><strong>🚀 提升专业性</strong>: 让 Claude 从通用助手进化为领域专家</p></li><li><p><strong>🔧 持续优化</strong>: 基于使用反馈不断改进 Skills</p></li></ol><h3 level="3" id="82-Skills-与其他功能的关系">8.2 Skills 与其他功能的关系</h3><p>功能作用与 Skills 的关系<strong>Agent</strong>处理复杂、多步骤任务Skills 为 Agent 提供领域知识<strong>MCP</strong>连接外部工具和数据源Skills 可以引用 MCP 工具<strong>claude.md</strong>项目级配置和规范Skills 是跨项目的能力扩展<strong>Hook</strong>事件触发的自动化Hook 可以在特定时机加载 Skills</p><h3 level="3" id="83-实践建议">8.3 实践建议</h3><p><strong>对于个人开发者</strong>:</p><ol><li><p>从一个简单的 Skill 开始(如代码审查清单)</p></li><li><p>识别自己反复解释的内容</p></li><li><p>逐步添加更多 Skills</p></li><li><p>持续优化基于实际使用</p></li></ol><p><strong>对于团队</strong>:</p><ol><li><p>建立团队 Skills 仓库</p></li><li><p>统一 Skills 开发规范</p></li><li><p>定期分享优秀 Skills</p></li><li><p>建立 Skills 评审机制</p></li></ol><p><strong>对于技术 Leader</strong>:</p><ol><li><p>推广 Skills 使用文化</p></li><li><p>组织 Skills 开发培训</p></li><li><p>激励团队贡献 Skills</p></li><li><p>建立 Skills 质量标准</p></li></ol><h3 level="3" id="84-未来展望">8.4 未来展望</h3><p><strong>Skills 系统的发展方向</strong>:</p><ol><li><p><strong>可视化 Skill Builder</strong>: 通过图形界面创建 Skills</p></li><li><p><strong>Skill 市场</strong>: 官方 Skills 商店,一键安装分享</p></li><li><p><strong>AI 生成 Skills</strong>: 描述需求,AI 自动生成 Skills</p></li><li><p><strong>Skill 编排</strong>: 多个 Skills 组合成工作流</p></li><li><p><strong>实时协作</strong>: 团队实时共享和更新 Skills</p></li></ol><blockquote><p>&quot;把你反复向 Claude 解释的偏好、流程、领域知识打包成 Skills,让 AI 成为你的领域专家&quot;</p></blockquote><hr><h2 level="2" id="实用资源">实用资源</h2><ul><li><p><a target="_blank" rel="noreferer" href="https://github.com/anthropics/skills">Claude Code 官方 Skills</a></p></li><li><p><a target="_blank" rel="noreferer" href="https://github.com/chendongqi/OPB-Skills">一人公司所需要的Skill集合</a></p></li><li><p><a target="_blank" rel="noreferer" href="https://github.com/chendongqi/awesome-ai-coding">AI Coding资料集合，内含github众多高星skill项目</a></p></li></ul><script type="module">const injectHtml = (root, html) => {
+  const iframe = document.createElement("iframe");
+  const htmlContent = `<html><head></head><body>${html}</body></html>`;
+  iframe.style.width = "100%";
+  iframe.style.height = "100%";
+  iframe.onload = () => {
+    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+    if (!doc) {
+      return;
+    }
+    doc.open();
+    doc.write(htmlContent);
+    doc.close();
+  };
+  root.replaceChildren(iframe);
+}
+  document.querySelectorAll('.playground')?.forEach(el=>{
+    const html = el.getAttribute('data-html');
+    if (html) {
+      injectHtml(el,html);
+    }
+    const indicator = document.createElement("div");
+    indicator.className = "indicator";
+    const showCode = document.createElement("div");
+    showCode.className = "show-code";
+    showCode.innerText = "code";
+    showCode.onclick = () => {
+      el.parentElement.classList.remove("preview-only");
+    };
+    const showPreview = document.createElement("div");
+    showPreview.className = "show-preview";
+    showPreview.innerText = "preview";
+    showPreview.onclick = () => {
+      el.parentElement.classList.add("preview-only");
+    };
+    indicator.appendChild(showCode);
+    indicator.appendChild(showPreview);
+    el.parentElement.appendChild(indicator);
+    if (window.screen.width < 768) {
+      showPreview.click();
+    }
+  });</script></div> <div data-page-id="Skill-教程-2" class="navigator flex justify-between items-center mt-4 py-4"> <a href="/post/USKG--Cloudflare" class="flex items-center gap-1 text-blue cursor-pointer flex-[45%]"> <div class="i-ri:arrow-left-double-line w-5 h-5 flex-shrink-0"></div> <div class="text-start">US.KG &gt; Cloudflare</div> </a> <div></div> </div> </div> <div class="outline-wrapper"></div> </main>  <footer class="site-footer" data-astro-cid-sz7xmlte> <!-- 导航链接 --> <nav class="footer-nav" data-astro-cid-sz7xmlte>  <a href="/" class="footer-link" data-astro-cid-sz7xmlte> Home </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/tag/projects" class="footer-link" data-astro-cid-sz7xmlte> Projects </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/tools" class="footer-link" data-astro-cid-sz7xmlte> Notes </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="https://web.chatboxai.app/" class="footer-link" target="_blank" rel="noopener noreferrer" data-astro-cid-sz7xmlte> Chatbox </a> <span class="nav-dot" data-astro-cid-sz7xmlte>·</span> <a href="/about" class="footer-link" data-astro-cid-sz7xmlte> About </a>  </nav> <!-- 分割线 --> <div class="footer-divider" data-astro-cid-sz7xmlte></div> <!-- 版权信息 --> <div class="footer-copyright" data-astro-cid-sz7xmlte> <a href="https://isharebox.github.io" data-astro-cid-sz7xmlte>©  isharebox  ·  since 2026    ·</a> <a href="/rss.xml" class="rss-link" target="_blank" rel="noopener noreferrer" title="RSS Feed" data-astro-cid-sz7xmlte> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 256 256" aria-label="RSS Feed" data-astro-cid-sz7xmlte> <rect width="256" height="256" rx="28" fill="#ff6b35" data-astro-cid-sz7xmlte></rect> <circle cx="68" cy="189" r="24" fill="#fff" data-astro-cid-sz7xmlte></circle> <path d="M160 213h-34a82 82 0 0 0-82-82v-34a116 116 0 0 1 116 116z" fill="#fff" data-astro-cid-sz7xmlte></path> <path d="M184 213A140 140 0 0 0 44 73V38a175 175 0 0 1 175 175z" fill="#fff" data-astro-cid-sz7xmlte></path> </svg> </a> </div> </footer>  <!-- ★ 添加回到顶部按钮组件 --> <button id="back-to-top" class="back-to-top" aria-label="Back to top" data-astro-cid-wlspcwf4> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-wlspcwf4> <path d="M18 15l-6-6-6 6" data-astro-cid-wlspcwf4></path> </svg> </button>   </body></html>
